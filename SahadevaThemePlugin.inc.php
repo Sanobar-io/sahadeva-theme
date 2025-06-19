@@ -53,23 +53,12 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.leftColTextFieldHeading.label'),
 		]);
 
-		$this->addOption('leftColTextField', 'FieldRichTextarea', [
-			'label' => __('plugins.themes.sahadeva.option.leftColTextField.label'),
-			'tooltip' => __('plugins.themes.sahadeva.option.leftColTextField.description'),
-			'toolbar' => 'bold italic superscript subscript | link | blockquote bullist numlist | image | code',
-			'plugins' => 'paste,link,lists,image,code',
-			'uploadUrl' => $uploadUrl,
-		]);
-		
 		$this->addOption('aboveFooterCtaHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaHeading.label'),
 		]);
 
 		$this->addOption('aboveFooterCtaContent', 'FieldRichTextarea', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaContent.label'),
-			'toolbar' => 'bold italic superscript subscript | link | blockquote bullist numlist | image | code',
-			'plugins' => 'paste,link,lists,image,code',
-			'uploadUrl' => $uploadUrl,
 		]);
 
 		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);

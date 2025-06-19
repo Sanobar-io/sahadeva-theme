@@ -18,6 +18,36 @@
  *}
 {include file="frontend/components/header.tpl" pageTitleTranslated=$currentJournal->getLocalizedName()}
 
+{if $announcements|@count}
+
+<section class="announcements">
+    <div class="announcements-wrapper inner-wrapper">
+    {foreach name=announcements from=$announcements item=announcement}
+        {if $smarty.foreach.announcements.iteration > $numAnnouncementsHomepage}
+            {break}
+        {/if}
+        {if $smarty.foreach.announcements.iteration == 1}
+        <div class="announcements-card">
+            <h3>
+                <a href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
+                    {$announcement->getLocalizedTitle()|escape}
+                </a>
+                📢
+            </h3>
+            {$announcement->getLocalizedDescriptionShort()|strip_unsafe_html}
+            <span class="read-more" aria-hidden="true" role="presentation">
+                <a href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
+                    {translate key="common.readMore"}
+                </a>
+            </span>
+        </div>
+        {/if}
+    {/foreach}
+    </div>
+</section>
+
+{/if}
+
 <main class="sahadeva-main inner-wrapper column-wrapper ">
     <div class="col-left">
         <div class="about">
@@ -57,19 +87,6 @@
     </div>
 </main>
 
-<section class="sahadeva-secondary inner-wrapper column-wrapper ">
-    <div class="col-left">
-        <div class="custom-content">
-            {if $activeTheme->getOption('leftColTextFieldHeading')}
-                <h2 class="label">{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
-            {/if}
-            {$additionalHomeContent}
-        </div>
-    </div>
-    <div class="col-right">
-    </div>
-</section>
-
 {if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}
 
 <section class="abovefooter-cta inner-wrapper">
@@ -83,5 +100,14 @@
 </section>
 
 {/if}
+
+<section class="custom-content inner-wrapper">
+    {if $activeTheme->getOption('leftColTextFieldHeading')}
+
+    <h2 class="label">{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
+
+    {/if}
+    {$additionalHomeContent}
+</section>
 
 {include file="frontend/components/footer.tpl"}

@@ -2,6 +2,42 @@
 // sahadeva/styles/sahadeva.less
 //
 
+.announcements {
+  margin-bottom: 0.5rem;
+  .announcements-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    overflow: hidden;
+    a:hover {
+      text-decoration: underline;
+    }
+    .announcements-card {
+      background-color: lighten(@lightgray, 5%);
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
+      height: 100%;
+      padding: 0.5rem;
+      text-align: center;
+      width: 100%;
+      h3 {
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        margin-bottom: 0.125rem;
+        text-transform: uppercase;
+      }
+      p {
+        font-size: 0.75rem;
+        margin: 0;
+      }
+      .read-more {
+        font-size: 0.625rem;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
 .sahadeva-main {
   .col-left {
     .about {
@@ -81,15 +117,8 @@
   }
 }
 
-.sahadeva-secondary {
-  margin-top: 3rem;
-  .col-left,
-  .col-right {
-    border-top: 4px solid @bg-base;
-  }
-  .col-left {
-    padding: 0.5rem 0;
-  }
+.custom-content {
+  margin-top: 3.4rem;
 }
 
 .abovefooter-cta {
