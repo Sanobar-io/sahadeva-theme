@@ -1,0 +1,84 @@
+//
+// sahadeva/styles/_header.less
+//
+
+.sahadeva-header {
+  border-bottom: 1px solid @lightgray;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  margin-bottom: 3rem;
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      position: relative;
+      width: max-content;
+      &:hover ul {
+        display: block;
+      }
+      ul {
+        position: absolute;
+        display: none;
+      }
+    }
+  }
+  .inner-wrapper {
+    display: flex;
+    justify-content: space-between;
+    .burger-menu {
+      align-self: center;
+      .burger-menu-btn {
+        background: none;
+        border: 0;
+        cursor: pointer;
+        padding-left: 1rem;
+        img {
+          object-fit: contain;
+          width: 32px;
+        }
+      }
+    }
+    .primary-nav-wrapper {
+      align-items: center;
+      align-self: center;
+      display: flex;
+      .site-name {
+        margin-right: 4rem;
+        img {
+          object-fit: contain;
+          max-height: 50px;
+          width: auto;
+        }
+      }
+      #primary-nav {
+        display: flex;
+        gap: 2rem;
+      }
+    }
+    .search-wrapper {
+      align-self: center;
+      margin-right: 2rem;
+    }
+    .user-nav-wrapper {
+      display: flex;
+      #user-nav {
+        align-self: stretch;
+        display: flex;
+        li {
+          align-items: center;
+          display: flex;
+          padding: 0 1rem;
+          &:first-child {
+            border-left: 1px solid @lightgray;
+          }
+          &:last-child {
+            background-color: @bg-base;
+            color: contrast(@bg-base, black, white);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+//
+// sahadeva/styles/sahadeva.less
+//
+
+.sahadeva-main {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 2fr 3fr;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-width: 380px;
+  width: 100%;
+  .col-left {
+    .about {
+      background-color: desaturate(lighten(@bg-base, 50%), 33%);
+      padding: 2rem;
+      .about-label {
+        font-size: 1.5rem;
+        line-height: 150%;
+        text-transform: uppercase;
+        .jakpp {
+          font-family: "Alike", serif;
+          font-size: 3rem;
+        }
+      }
+    }
+  }
+}
