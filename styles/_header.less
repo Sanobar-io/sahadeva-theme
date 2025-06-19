@@ -3,30 +3,54 @@
 //
 
 .sahadeva-header {
+  background-color: #fff;
   border-bottom: 1px solid @lightgray;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  margin-bottom: 3rem;
-
+  box-shadow: 0 0 4px 0 fade(darken(@bg-base, 25%), 25%);
+  height: 60px;
+  position: fixed;
+  top: 0;
+  width: 100%;
   ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-
-    li {
+    & > li {
       position: relative;
       width: max-content;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0 1rem;
       &:hover ul {
         display: block;
       }
       ul {
-        position: absolute;
+        background-color: #fff;
+        border: 1px solid @lightgray;
+        border-top-style: none;
         display: none;
+        position: absolute;
+        top: 98%;
+        left: -1rem;
+        li {
+          cursor: pointer;
+          width: 100%;
+          white-space: nowrap;
+          &:hover {
+            background-color: desaturate(lighten(@bg-base, 60%), 40%);
+          }
+        }
+        a {
+          background-color: transparent;
+          padding: 0.5rem 1rem;
+        }
       }
     }
   }
-  .inner-wrapper {
+  .header-inner {
     display: flex;
     justify-content: space-between;
+    height: 100%;
     .burger-menu {
       align-self: center;
       .burger-menu-btn {
@@ -53,8 +77,9 @@
         }
       }
       #primary-nav {
+        align-self: stretch;
         display: flex;
-        gap: 2rem;
+        gap: 1rem;
       }
     }
     .search-wrapper {

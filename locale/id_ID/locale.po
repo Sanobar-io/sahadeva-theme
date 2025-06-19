@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-11-27T16:11:07+00:00\n"
+"PO-Revision-Date: 2020-11-27T16:11:07+00:00\n"
+"Language: \n"
+
+msgid "plugins.themes.sahadeva.name"
+msgstr "Tema Sahadeva"
+
+msgid "plugins.themes.sahadeva.description"
+msgstr "Tema OJS reponsif modern dengan background header yang dapat dikustomisasi, pengaturan warna yang fleksibel, serta banyak fitur tambahan lainnya."
+
+msgid "plugins.themes.sahadeva.option.color.label"
+msgstr "Warna Utama Tema"
+
+msgid "plugins.themes.sahadeva.option.color.description"
+msgstr "Pilih warna utama tema."
+
+msgid "plugins.themes.sahadeva.issueTOC.viewAll"
+msgstr "Lihat Daftar Isi"
+
+msgid "plugins.themes.sahadeva.submitManuscript.label"
+msgstr "Submit Naskah"
+
+msgid "plugins.themes.sahadeva.option.leftColTextFieldHeading.label"
+msgstr "Judul Konten Kustom Kolom Kiri"
+
+msgid "plugins.themes.sahadeva.option.leftColTextField.label"
+msgstr "Konten Kustom Kolom Kiri"
+
+msgid "plugins.themes.sahadeva.option.leftColTextField.description"
+msgstr "Konten yang ditampilkan di bawah kotak 'Tentang JAKPP' di kolom kiri."
+
+msgid "plugins.themes.sahadeva.option.aboveFooterCtaHeading.label"
+msgstr "Judul Kotak CTA di Atas Footer"
+
+msgid "plugins.themes.sahadeva.option.aboveFooterCtaContent.label"
+msgstr "Konten Kotak CTA di Atas Footer"

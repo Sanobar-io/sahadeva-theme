@@ -31,7 +31,7 @@
         style="background-image: url('{$publicFilesDir}/{$homepageImage.uploadName|escape:"url"};');"
     {/if}
 >
-    <div class="inner-wrapper">
+    <div class="header-inner">
 
         <div class="burger-menu">
             <button class="burger-menu-btn">

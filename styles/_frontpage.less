@@ -3,13 +3,6 @@
 //
 
 .sahadeva-main {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 2fr 3fr;
-  margin: 0 auto;
-  max-width: 1200px;
-  min-width: 380px;
-  width: 100%;
   .col-left {
     .about {
       background-color: desaturate(lighten(@bg-base, 50%), 33%);
@@ -24,5 +17,108 @@
         }
       }
     }
+    .team-container {
+      display: grid;
+      gap: 1px;
+      grid-template-columns: 1fr 1fr;
+      border-top: 4px solid @bg-base;
+      a {
+        background-color: @lightgray;
+        font-weight: 600;
+        padding: 0.5rem 2rem;
+        &:hover {
+          background-color: darken(@lightgray, 15%);
+        }
+      }
+    }
+  }
+  .col-right {
+    .current-issue {
+      background-color: @lightgray;
+      padding: 2rem;
+      .metabox {
+        align-items: center;
+        display: flex;
+        font-family: "News Cycle", sans-serif;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        .label {
+          line-height: 1;
+          margin: 0;
+        }
+        .issue-info {
+          color: #3d3d3d;
+          font-size: 0.875rem;
+          font-weight: 400;
+          line-height: 100%;
+        }
+      }
+      .issue-details {
+        display: grid;
+        grid-template-areas: "overview articles";
+        grid-template-columns: 1fr 3fr;
+        .overview {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          grid-area: overview;
+          img {
+            object-fit: contain;
+            width: 100%;
+            height: auto;
+          }
+          .overview-ctas {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+        }
+        .articles {
+          grid-area: articles;
+        }
+      }
+    }
+  }
+}
+
+.sahadeva-secondary {
+  margin-top: 3rem;
+  .col-left,
+  .col-right {
+    border-top: 4px solid @bg-base;
+  }
+  .col-left {
+    padding: 0.5rem 0;
+  }
+}
+
+.abovefooter-cta {
+  background: linear-gradient(45deg, @bg-base 0%, darken(@bg-base, 25%) 100%);
+  color: contrast(@bg-base, black, white);
+  margin-top: 2rem;
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+  & > * {
+    margin: 0 auto;
+    max-width: 65ch;
+  }
+  a.cta-rounded {
+    background-color: white;
+    color: @bg-base;
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 1.7rem;
+    text-transform: uppercase;
+    &:hover {
+      background-color: darken(white, 25%);
+    }
+  }
+  h2 {
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 1.7rem;
+    text-transform: uppercase;
   }
 }

@@ -40,27 +40,59 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->addMenuArea(array('primary', 'user', 'footer'));
 
 		// add options
+		$request = Application::get()->getRequest();
+		$uploadUrl = $request->getBaseUrl() . '/api/v1/_uploadPublicFile';
+
 		$this->addOption('bg-base', 'FieldColor', [
 			'label' => __('plugins.themes.sahadeva.option.color.label'),
 			'description' => __('plugins.themes.sahadeva.option.color.description'),
 			'default' => '#1E6292',
 		]);
-
-		$this->addOption('showAboutCallToAction', 'FieldOptions', [
-			'label' => __('plugins.themes.sahadeva.option.aboutCallToAction.label'),
-			'options' => [
-				[
-					'value' => true,
-					'label' => __('plugins.themes.sahadeva.option.aboutCallToAction.description'),
-				],
-			],
-			'default' => false,
-		]);
-		$this->addOption('serialKey', 'FieldText', [
-			'label' => __('plugins.themes.sahadeva.option.serialKey.label'),
-			'description' => __('plugins.themes.sahadeva.option.serialKey.description'),
+		
+		$this->addOption('leftColTextFieldHeading', 'FieldText', [
+			'label' => __('plugins.themes.sahadeva.option.leftColTextFieldHeading.label'),
 		]);
 
+		$this->addOption('leftColTextField', 'FieldRichTextarea', [
+			'label' => __('plugins.themes.sahadeva.option.leftColTextField.label'),
+			'tooltip' => __('plugins.themes.sahadeva.option.leftColTextField.description'),
+			'toolbar' => 'bold italic superscript subscript | link | blockquote bullist numlist | image | code',
+			'plugins' => 'paste,link,lists,image,code',
+			'uploadUrl' => $uploadUrl,
+		]);
+		
+		$this->addOption('aboveFooterCtaHeading', 'FieldText', [
+			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaHeading.label'),
+		]);
+
+		$this->addOption('aboveFooterCtaContent', 'FieldRichTextarea', [
+			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaContent.label'),
+			'toolbar' => 'bold italic superscript subscript | link | blockquote bullist numlist | image | code',
+			'plugins' => 'paste,link,lists,image,code',
+			'uploadUrl' => $uploadUrl,
+		]);
+
+		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);
+
+	}
+
+	/**
+	 * Get the latest issue object
+	 * @return bool
+	 */
+	public function loadCurrentIssue($hookName, $args)
+	{
+		$templateMgr = $args[0];
+		$request = Application::get()->getRequest();
+		$journal = $request->getContext();
+
+		if ($journal) {
+			$issueDao = DAORegistry::getDAO('IssueDAO');
+			$currentIssue = $issueDao->getCurrent($journal->getId(), true);
+			$templateMgr->assign('currentIssue', $currentIssue);
+		}
+
+		return false;
 	}
 
 	/**

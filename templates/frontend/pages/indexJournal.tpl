@@ -18,7 +18,7 @@
  *}
 {include file="frontend/components/header.tpl" pageTitleTranslated=$currentJournal->getLocalizedName()}
 
-<main class="sahadeva-main">
+<main class="sahadeva-main inner-wrapper column-wrapper ">
     <div class="col-left">
         <div class="about">
             <h2 class="about-label">
@@ -26,10 +26,62 @@
                 <div class="jakpp">JAKPP</div>
             </h2>
             <p>{$currentContext->getLocalizedData('description')}</p>
+            <a class="cta-arrow" href="{url page='about'}">Aims & Scope</a>
+        </div>
+        <div class="team-container">
+            <a href="{url page='about' op='editorialTeam'}">Editorial Team</a>
+            <a href="{url page='about' op='editorialTeam'}">Reviewers</a>
+        </div>
+    </div>
+    <div class="col-right">
+        <div class="current-issue">
+            <div class="metabox">
+                <h2 class="label">Current Issue</h2>
+                <div class="issue-info">
+                    Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getYear()}
+                </div>
+            </div>
+            <div class="issue-details">
+                <div class="overview">
+                {if $issue}
+                    <img src="{$issue->getLocalizedCoverImageUrl()}" />
+                {/if}
+                    <div class="overview-ctas">
+                        <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
+                        <a class="cta-rounded" href="{url page='submissions' op='start'}">Submit Manuscript</a>
+                    </div>
+                </div>
+                <div class="articles"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<section class="sahadeva-secondary inner-wrapper column-wrapper ">
+    <div class="col-left">
+        <div class="custom-content">
+            {if $activeTheme->getOption('leftColTextFieldHeading')}
+                <h2 class="label">{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
+            {/if}
+            {$additionalHomeContent}
         </div>
     </div>
     <div class="col-right">
     </div>
-</main>
+</section>
+
+{if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}
+
+<section class="abovefooter-cta inner-wrapper">
+{if $activeTheme->getOption('aboveFooterCtaHeading')}                
+    <h2>{$activeTheme->getOption('aboveFooterCtaHeading')}</h2>
+{/if}
+{if $activeTheme->getOption('aboveFooterCtaContent')}
+    <p>{$activeTheme->getOption('aboveFooterCtaContent')}</p>
+{/if}
+<a class="cta-rounded" href="{url page='submissions' op='start'}">Submit Manuscript</a>
+</section>
+
+{/if}
 
 {include file="frontend/components/footer.tpl"}

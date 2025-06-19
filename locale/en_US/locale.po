@@ -40,3 +40,18 @@ msgstr "View Table of Contents"
 
 msgid "plugins.themes.sahadeva.submitManuscript.label"
 msgstr "Submit Manuscript"
+
+msgid "plugins.themes.sahadeva.option.leftColTextField.label"
+msgstr "Left Column Custom Content"
+
+msgid "plugins.themes.sahadeva.option.leftColTextField.description"
+msgstr "Content that appears under the About JAKPP box in the left column."
+
+msgid "plugins.themes.sahadeva.option.aboveFooterCtaHeading.label"
+msgstr "Above Footer CTA Heading"
+
+msgid "plugins.themes.sahadeva.option.aboveFooterCtaContent.label"
+msgstr "Above Footer CTA Content"
+
+msgid "plugins.themes.sahadeva.option.leftColTextFieldHeading.label"
+msgstr "Left Column Content Heading"
