@@ -48,6 +48,7 @@
             {/if}
             </ul>
             <ul class="social-media">
+                <li><b>{translate key='plugins.themes.sahadeva.footer.followUs'}</b></li>
             {if $activeTheme->getOption('instagram')}
                 <li><a href="http://instagram.com/{$activeTheme->getOption('instagram')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/instagram-social.png" /></a></li>
             {/if}

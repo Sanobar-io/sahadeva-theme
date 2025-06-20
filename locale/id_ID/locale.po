@@ -43,3 +43,9 @@ msgstr "Judul Kotak CTA di Atas Footer"
 
 msgid "plugins.themes.sahadeva.option.aboveFooterCtaContent.label"
 msgstr "Konten Kotak CTA di Atas Footer"
+
+msgid "plugins.themes.sahadeva.footer.followUs"
+msgstr "Ikuti Kami"
+
+msgid "plugins.themes.sahadeva.seeAllIssues"
+msgstr "Lihat Semua Terbitan"

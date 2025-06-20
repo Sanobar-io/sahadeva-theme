@@ -74,14 +74,21 @@
             <div class="issue-details">
                 <div class="overview">
                 {if $issue}
-                    <img src="{$issue->getLocalizedCoverImageUrl()}" />
+                    <img src="{$currentIssue->getLocalizedCoverImageUrl()}" />
                 {/if}
                     <div class="overview-ctas">
                         <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
                         <a class="cta-rounded" href="{url page='submission' op='wizard'}">Submit Manuscript</a>
                     </div>
                 </div>
-                <div class="articles"></div>
+                <div class="articles-wrapper">
+                {foreach name=sections from=$publishedSubmissions item=section}
+                    {foreach from=$section.articles item=article}
+                        {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
+                    {/foreach}
+                {/foreach}
+                    <a class="cta-arrow">{translate key="plugins.themes.sahadeva.seeAllIssues"}</a>
+                </div>
             </div>
         </div>
     </div>

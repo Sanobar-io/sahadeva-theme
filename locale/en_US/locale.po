@@ -67,3 +67,9 @@ msgstr "ISSN Print"
 
 msgid "plugins.themes.sahadeva.option.issnElectronic.label"
 msgstr "ISSN Online"
+
+msgid "plugins.themes.sahadeva.footer.followUs"
+msgstr "Follow Us"
+
+msgid "plugins.themes.sahadeva.seeAllIssues"
+msgstr "See All Issues"
