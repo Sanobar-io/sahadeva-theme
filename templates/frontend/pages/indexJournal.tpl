@@ -78,7 +78,7 @@
                 {/if}
                     <div class="overview-ctas">
                         <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
-                        <a class="cta-rounded" href="{url page='submissions' op='start'}">Submit Manuscript</a>
+                        <a class="cta-rounded" href="{url page='submission' op='wizard'}">Submit Manuscript</a>
                     </div>
                 </div>
                 <div class="articles"></div>
@@ -96,7 +96,7 @@
 {if $activeTheme->getOption('aboveFooterCtaContent')}
     <p>{$activeTheme->getOption('aboveFooterCtaContent')}</p>
 {/if}
-<a class="cta-rounded" href="{url page='submissions' op='start'}">Submit Manuscript</a>
+<a class="cta-rounded" href="{url page='submission' op='wizard'}">Submit Manuscript</a>
 </section>
 
 {/if}
