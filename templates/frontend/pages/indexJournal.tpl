@@ -78,7 +78,7 @@
                 {/if}
                     <div class="overview-ctas">
                         <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
-                        <a class="cta-rounded" href="{url page='submission' op='wizard'}">Submit Manuscript</a>
+                        <a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
                     </div>
                 </div>
                 <div class="articles-wrapper">
@@ -87,7 +87,7 @@
                         {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
                     {/foreach}
                 {/foreach}
-                    <a class="cta-arrow">{translate key="plugins.themes.sahadeva.seeAllIssues"}</a>
+                    <a class="cta-arrow" href="{url page="issue" op="archive"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
                 </div>
             </div>
         </div>
@@ -103,18 +103,26 @@
 {if $activeTheme->getOption('aboveFooterCtaContent')}
     <p>{$activeTheme->getOption('aboveFooterCtaContent')}</p>
 {/if}
-<a class="cta-rounded" href="{url page='submission' op='wizard'}">Submit Manuscript</a>
+<a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
 </section>
 
 {/if}
 
 <section class="custom-content inner-wrapper">
-    {if $activeTheme->getOption('leftColTextFieldHeading')}
+    <div class="col-left">
+        {if $activeTheme->getOption('leftColTextFieldHeading')}
 
-    <h2 class="label">{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
+        <h2>{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
 
-    {/if}
-    {$additionalHomeContent}
+        {/if}
+        {$additionalHomeContent}
+    </div>
+    <div class="col-right">
+        {capture assign="sidebarCode"}{call_hook name="Templates::Common::Sidebar"}{/capture}
+        {if $sidebarCode}
+            {$sidebarCode}
+        {/if}
+    </div>
 </section>
 
 {include file="frontend/components/footer.tpl"}

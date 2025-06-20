@@ -49,3 +49,6 @@ msgstr "Ikuti Kami"
 
 msgid "plugins.themes.sahadeva.seeAllIssues"
 msgstr "Lihat Semua Terbitan"
+
+msgid "plugins.themes.sahadeva.viewTOC"
+msgstr "Lihat Isi Terbitan Terbaru"

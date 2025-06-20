@@ -34,7 +34,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			[
 				'addLessVariables' =>
 					"@bg-base: $bgBase;",
-				]
+			]
 		);
 
 		// add scripts

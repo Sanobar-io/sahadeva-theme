@@ -16,9 +16,9 @@
  * @uses $heading string HTML heading element, default: h2
  *}
 
- {assign var=articlePath value=$article->getBestId()}
- {assign var=publication value=$article->getCurrentPublication()}
- {assign var=submissionPages value=$publication->getData('pages')}
+{assign var=articlePath value=$article->getBestId()}
+{assign var=publication value=$article->getCurrentPublication()}
+{assign var=submissionPages value=$publication->getData('pages')}
 
 <div class="article-card">
 	<div class="meta">

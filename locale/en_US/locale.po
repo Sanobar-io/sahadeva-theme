@@ -73,3 +73,6 @@ msgstr "Follow Us"
 
 msgid "plugins.themes.sahadeva.seeAllIssues"
 msgstr "See All Issues"
+
+msgid "plugins.themes.sahadeva.viewTOC"
+msgstr "View Table of Contents"
