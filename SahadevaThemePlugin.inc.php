@@ -23,7 +23,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 	 * @return null
 	 */
 	public function init() {
-		// $this->setParent('defaultthemeplugin');
+		
+		// add styles
 		$this->addStyle('stylesheet', 'styles/sahadeva.less');
 
 		$bgBase = $this->getOption('bg-base');
@@ -36,12 +37,13 @@ class SahadevaThemePlugin extends ThemePlugin {
 				]
 		);
 
+		// add scripts
+		$this->addScript('sahadeva-script', 'js/sahadeva.js');
+
 		// add navs
 		$this->addMenuArea(array('primary', 'user', 'footer'));
 
 		// add options
-		$request = Application::get()->getRequest();
-		$uploadUrl = $request->getBaseUrl() . '/api/v1/_uploadPublicFile';
 
 		$this->addOption('bg-base', 'FieldColor', [
 			'label' => __('plugins.themes.sahadeva.option.color.label'),
@@ -53,12 +55,38 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.leftColTextFieldHeading.label'),
 		]);
 
+		$this->addOption('issnPrint', 'FieldText', [
+			'label' => __('plugins.themes.sahadeva.option.issnPrint.label'),
+		]);
+
+		$this->addOption('issnElectronic', 'FieldText', [
+			'label' => __('plugins.themes.sahadeva.option.issnElectronic.label'),
+		]);
+
 		$this->addOption('aboveFooterCtaHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaHeading.label'),
 		]);
 
 		$this->addOption('aboveFooterCtaContent', 'FieldRichTextarea', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaContent.label'),
+		]);
+
+		$this->addOption('additionalFooterInfo', 'FieldRichTextarea', [
+			'label' => __('plugins.themes.sahadeva.option.additionalFooterInfo.label'),
+			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
+		]);
+
+		// Social media options
+		$this->addOption('instagram', 'FieldText', [
+			'label' => 'Instagram',
+		]);
+
+		$this->addOption('tiktok', 'FieldText', [
+			'label' => 'TikTok',
+		]);
+
+		$this->addOption('facebook', 'FieldText', [
+			'label' => 'Facebook',
 		]);
 
 		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);

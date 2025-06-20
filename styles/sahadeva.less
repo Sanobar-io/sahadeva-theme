@@ -8,6 +8,7 @@
 // imports
 @import "_variables.less";
 @import "_header.less";
+@import "_footer.less";
 @import "_frontpage.less";
 
 * {
@@ -28,7 +29,7 @@ body {
 
 body {
   position: relative;
-  top: 60px;
+  top: 66px;
 }
 
 h1,
@@ -68,13 +69,18 @@ a {
 }
 
 a.cta-arrow {
-  display: block;
+  display: inline-block;
   font-weight: 600;
+  padding: 0.5rem 1rem;
   text-transform: uppercase;
-  transition: 150ms background-color;
+  transition: 150ms ease;
   &::after {
     content: "→";
     margin-left: 4px;
+  }
+  &:hover {
+    background-color: darken(@bg-base, 5%);
+    color: contrast(darken(@bg-base, 5%), black, white);
   }
 }
 

@@ -20,9 +20,15 @@
       display: flex;
       align-items: center;
       cursor: pointer;
-      padding: 0 1rem;
-      &:hover ul {
-        display: block;
+      padding: 0 24px;
+      border-bottom: 3px solid transparent;
+      &:not(:has(ul)):hover {
+        border-bottom: 3px solid @bg-base;
+      }
+      &:hover {
+        ul {
+          display: block;
+        }
       }
       ul {
         background-color: #fff;
@@ -30,7 +36,7 @@
         border-top-style: none;
         display: none;
         position: absolute;
-        top: 98%;
+        top: 100%;
         left: -1rem;
         li {
           cursor: pointer;
@@ -79,7 +85,6 @@
       #primary-nav {
         align-self: stretch;
         display: flex;
-        gap: 1rem;
       }
     }
     .search-wrapper {

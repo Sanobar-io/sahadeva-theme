@@ -1,0 +1,57 @@
+//
+// sahadeva/styles/_footer.less
+//
+
+.sahadeva-footer {
+  background: darken(@bg-base, 25%);
+  color: contrast(desaturate(darken(@bg-base, 25%), 15%), black, white);
+  margin-top: 3.4rem;
+  padding: 2rem 0;
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      font-size: 0.825em;
+      a {
+        text-decoration: underline;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+      .site-name {
+        filter: brightness(0) invert(1);
+        max-width: 340px;
+        min-width: 80px;
+        width: 100%;
+        img {
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+        }
+      }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        li {
+          .icon {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+          }
+        }
+      }
+      .social-media {
+        align-items: center;
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+      }
+    }
+    .right-col {
+    }
+  }
+}

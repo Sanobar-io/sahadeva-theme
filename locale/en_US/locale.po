@@ -55,3 +55,15 @@ msgstr "Above Footer CTA Content"
 
 msgid "plugins.themes.sahadeva.option.leftColTextFieldHeading.label"
 msgstr "Left Column Content Heading"
+
+msgid "plugins.themes.sahadeva.option.additionalFooterInfo.label"
+msgstr "Contact Info"
+
+msgid "plugins.themes.sahadeva.option.additionalFooterInfo.description"
+msgstr "Displayed beneath the contact info in the footer."
+
+msgid "plugins.themes.sahadeva.option.issnPrint.label"
+msgstr "ISSN Print"
+
+msgid "plugins.themes.sahadeva.option.issnElectronic.label"
+msgstr "ISSN Online"
