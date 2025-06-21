@@ -54,8 +54,7 @@
     {/if}
 </section>
 
-<section class="issue-contents inner-wrapper">
-    <div class="col-left">
+{capture assign=leftCol}
     {foreach name=sections from=$publishedSubmissions item=section}
         <div class="section">
         {if $section.articles}
@@ -75,13 +74,8 @@
             <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a>
         {/if}
         </div>
-    </div>
-    <div class="col-right">
-    {capture assign="sidebarCode"}{call_hook name="Templates::Common::Sidebar"}{/capture}
-    {if $sidebarCode}
-        {$sidebarCode}
-    {/if}
-    </div>
-</section>
+{/capture}
+
+{include file="frontend/objects/content.tpl"}
 
 {include file="frontend/components/footer.tpl"}

@@ -38,6 +38,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		);
 
 		// add scripts
+		$this->addScript('jquery', 'js/lib/jquery.min.js');
 		$this->addScript('sahadeva-script', 'js/sahadeva.js');
 
 		// add navs
@@ -92,6 +93,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// hooks
 
 		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);
+		HookRegistry::register('TemplateManager::display', [$this, 'addSubmissionDates']);
 
 	}
 
@@ -115,7 +117,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$orderBy = [
 			// 'metric' => STATISTICS_ORDER_DESC
 		];
-		$range = new DBResultRange(10, 1);
+		$range = new DBResultRange(5, 1);
 
 		$topArticlesIds = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, $range);
 		
@@ -172,6 +174,53 @@ class SahadevaThemePlugin extends ThemePlugin {
 				'topViewedArticles' => $topArticles,
 			]);
 		}
+
+		return false;
+	}
+
+	public function addSubmissionDates($hookName, $args)
+	{
+		$templateMgr = $args[0];
+		$template = $args[1];
+
+		// Only run on the article view page
+		if (strpos($template, 'frontend/pages/article.tpl') === false) {
+			return;
+		}
+
+		$publication = $templateMgr->getTemplateVars('publication');
+
+		$submissionId = $publication->getData('submissionId');
+
+		$submissionDao = Application::getSubmissionDAO();
+		$submission = $submissionDao->getById($submissionId);
+
+		if (!$submission) return;
+
+		// 1. Submission date
+		$dateSubmitted = $submission->getDateSubmitted();
+
+		// // 2. Acceptance date — look through editor decisions
+		$editDecisionDao = DAORegistry::getDAO('EditDecisionDAO');
+		$decisions = $editDecisionDao->getEditorDecisions($submission->getId());
+
+		$acceptanceDate = null;
+		foreach ($decisions as $decision) {
+			if ($decision['decision'] == SUBMISSION_EDITOR_DECISION_ACCEPT) {
+				$acceptanceDate = $decision['dateDecided'];
+				break; // get the first accept
+			}
+		}
+
+		// 3. Publication date
+		$publishDate = $publication->getData('datePublished');
+
+		// Assign to template
+		$templateMgr->assign([
+			'submissionDate' => $dateSubmitted,
+			'acceptanceDate' => $acceptanceDate,
+			'publishDate' => $publishDate,
+		]);
 
 		return false;
 	}

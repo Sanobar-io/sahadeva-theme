@@ -101,21 +101,15 @@
     </div>
 </main>
 
-<section class="custom-content inner-wrapper">
-    <div class="col-left">
+{capture assign=leftCol}
     {if $topViewedArticles}
         <h2>Most Viewed Articles</h2>
         {assign var=articles value=array_column($topViewedArticles, 'article')}
         {include file="frontend/components/article_list.tpl" articles=$articles}
     {/if}
-    </div>
-    <div class="col-right">
-        {capture assign="sidebarCode"}{call_hook name="Templates::Common::Sidebar"}{/capture}
-        {if $sidebarCode}
-            {$sidebarCode}
-        {/if}
-    </div>
-</section>
+{/capture}
+
+{include file="frontend/objects/content.tpl"}
 
 <section class="additional-content inner-wrapper">
 {if $activeTheme->getOption('leftColTextFieldHeading')}

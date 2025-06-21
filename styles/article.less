@@ -1,0 +1,68 @@
+//
+// sahadeva/styles/article.less
+//
+
+.article-meta {
+  h1 {
+    font-size: 2rem;
+  }
+  .meta {
+    font-size: 0.825rem;
+    .issue-meta {
+    }
+    .process-meta {
+      display: flex;
+      gap: 1rem;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .authors {
+    list-style-type: none;
+    margin: 1rem 0;
+    padding: 0;
+    li {
+      margin-bottom: 1rem;
+    }
+    .name {
+      font-weight: 600;
+    }
+    .affiliation {
+      font-size: 0.825rem;
+    }
+  }
+}
+
+.article {
+  .abstract {
+    background-color: @lightgray;
+    padding: 1rem;
+  }
+  .cta {
+    border-color: @lightgray;
+    border-style: solid none;
+    border-width: 1px;
+    padding: 1rem 0;
+    a {
+      align-items: center;
+      background-color: @bg-base;
+      border-radius: 0.5rem;
+      color: contrast(@bg-base, black, white);
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem 1.5rem;
+      width: max-content;
+      transition: background-color 100ms;
+
+      img {
+        height: 1.7rem;
+        filter: invert();
+        width: auto;
+      }
+      &:hover {
+        background-color: darken(@bg-base, 15%);
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@
  *
  **}
 
- <footer class="sahadeva-footer">
+<footer class="sahadeva-footer">
     <div class="footer-inner inner-wrapper">
         <div class="left-col">
             <div class="site-name">
@@ -64,4 +64,10 @@
             {$pageFooter}
         </div>
     </div>
- </div>
+</div>
+
+{load_script context="frontend"}
+{call_hook name="Templates::Common::Footer::PageFooter"}
+ 
+</body>
+</html>
