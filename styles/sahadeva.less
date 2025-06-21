@@ -9,7 +9,9 @@
 @import "variables.less";
 @import "header.less";
 @import "footer.less";
+@import "breadcrumbs.less";
 @import "frontpage.less";
+@import "issue.less";
 
 * {
   box-sizing: border-box;
@@ -63,6 +65,14 @@ h4 {
   font-size: 1.5rem;
 }
 
+hr {
+  background-color: @lightgray;
+  border: none;
+  height: 1px;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -110,4 +120,20 @@ a.cta-rounded {
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr 2fr;
+}
+
+.pkp_block {
+  padding: 1rem;
+  background-color: @lightgray;
+  a {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
 }

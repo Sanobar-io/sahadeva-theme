@@ -126,19 +126,22 @@
 }
 
 .custom-content {
-  display: flex;
-  gap: 1rem;
-  margin-top: 3.4rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   & > * {
     flex: 1 1 0;
+    &:not(:first-child) {
+      border-left: 1px solid @lightgray;
+      padding-left: 1rem;
+    }
+  }
+  h2 {
+    font-size: 1.5rem;
   }
   .col-right {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 0.5rem;
-    & > * {
-      flex: ~"1 1 calc(50% - 0.5rem)";
-    }
   }
 }
 

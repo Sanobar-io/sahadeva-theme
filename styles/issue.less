@@ -1,0 +1,127 @@
+//
+// sahadeva/styles/issue.less
+//
+
+.issue-wrapper {
+  background-color: @lightgray;
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
+  .cover {
+    width: 100%;
+    max-width: 200px;
+  }
+  .overview {
+    flex: 1 1 auto;
+    h2 {
+      margin-bottom: 0.5rem;
+    }
+    .meta {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin: 1rem 0;
+      .issue-meta {
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .issue-nav {
+        display: flex;
+        gap: 0.25rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        &-btn {
+          border: 1px solid #1a1a1a;
+          border-radius: 1rem;
+          display: inline-block;
+          font-size: 0.825rem;
+          font-weight: 500;
+          padding: 0.125rem 0.75rem;
+          transition: background-color 150ms, border-color 150ms, color 150ms;
+          &:hover {
+            background-color: @bg-base;
+            border-color: @bg-base;
+            color: contrast(@bg-base, black, white);
+          }
+        }
+      }
+    }
+  }
+}
+
+.issue-contents {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2fr 1fr;
+  margin-top: 3.4rem;
+  & > * {
+    flex: 1 1 0;
+    &:not(:first-child) {
+      border-left: 1px solid @lightgray;
+      padding-left: 1rem;
+    }
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .col-left {
+    .section {
+      h2 {
+        border-bottom: 1px solid @lightgray;
+        padding-bottom: 1rem;
+      }
+      .articles-wrapper {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        li {
+          border-bottom: 1px solid @lightgray;
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          padding-bottom: 1rem;
+          .meta {
+            align-items: flex-start;
+            display: flex;
+            justify-content: space-between;
+            h3 {
+              display: inline-block;
+              font-family: "Inter", sans-serif;
+              font-size: 1.25rem;
+              margin: 0;
+              a {
+                text-decoration: underline;
+                &:hover {
+                  text-decoration: none;
+                }
+              }
+            }
+            .cta-rounded {
+              font-size: 0.75em;
+            }
+          }
+          .author-date {
+            color: lighten(#1a1a1a, 35%);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            .date {
+              font-weight: 600;
+            }
+          }
+          .description {
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Number of lines to show */
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+  .col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

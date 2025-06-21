@@ -53,7 +53,7 @@
         <div class="about">
             <h2 class="about-label">
                 About
-                <div class="jakpp">JAKPP</div>
+                <div class="jakpp">{$currentJournal->_data.abbreviation.en_US}</div>
             </h2>
             <p>{$currentContext->getLocalizedData('description')}</p>
             <a class="cta-arrow" href="{url page='about'}">Aims & Scope</a>
@@ -66,7 +66,7 @@
     <div class="col-right">
         <div class="current-issue">
             <div class="metabox">
-                <h2 class="label">Current Issue</h2>
+                <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2>
                 <div class="issue-info">
                     Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getYear()}
                 </div>
@@ -74,7 +74,9 @@
             <div class="issue-details">
                 <div class="overview">
                 {if $issue}
-                    <img src="{$currentIssue->getLocalizedCoverImageUrl()}" />
+                    <a href="{url page="issue"}">
+                        <img src="{$currentIssue->getLocalizedCoverImageUrl()}" />
+                    </a>
                 {/if}
                     <div class="overview-ctas">
                         <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
@@ -82,31 +84,26 @@
                     </div>
                 </div>
                 <div class="articles-wrapper">
+                {if $issue}
+
                 {foreach name=sections from=$publishedSubmissions item=section}
                     {foreach from=$section.articles item=article}
                         {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
                     {/foreach}
                 {/foreach}
-                    <a class="cta-arrow" href="{url page="issue" op="archive"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
+
+                    <a class="cta-arrow" href="{url page="issue"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
+
+                {/if}
                 </div>
             </div>
         </div>
     </div>
 </main>
 
-{if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}
+<hr class="inner-wrapper" />
 
-<section class="abovefooter-cta inner-wrapper">
-{if $activeTheme->getOption('aboveFooterCtaHeading')}                
-    <h2>{$activeTheme->getOption('aboveFooterCtaHeading')}</h2>
-{/if}
-{if $activeTheme->getOption('aboveFooterCtaContent')}
-    <p>{$activeTheme->getOption('aboveFooterCtaContent')}</p>
-{/if}
-<a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
-</section>
-
-{/if}
+<hr class="inner-wrapper" />
 
 <section class="custom-content inner-wrapper">
     <div class="col-left">
@@ -124,5 +121,19 @@
         {/if}
     </div>
 </section>
+
+{if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}
+
+<section class="abovefooter-cta inner-wrapper">
+{if $activeTheme->getOption('aboveFooterCtaHeading')}                
+    <h2>{$activeTheme->getOption('aboveFooterCtaHeading')}</h2>
+{/if}
+{if $activeTheme->getOption('aboveFooterCtaContent')}
+    <p>{$activeTheme->getOption('aboveFooterCtaContent')}</p>
+{/if}
+<a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
+</section>
+
+{/if}
 
 {include file="frontend/components/footer.tpl"}

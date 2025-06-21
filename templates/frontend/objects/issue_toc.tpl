@@ -29,9 +29,7 @@
 	{assign var="articleHeading" value="h6"}
 {/if}
 <div class="obj_issue_toc">
-    <div class="sahadeva-issue-info">
-        <div class="sahadeva-current-issue-name">{$currentJournal->getLocalizedName()}</div><div class="sahadeva-current-issue-volume">{$issue->getIssueIdentification()|strip_unsafe_html}</div>
-    </div>
+
 	{* Indicate if this is only a preview *}
 	{if !$issue->getPublished()}
 		{include file="frontend/components/notification.tpl" type="warning" messageKey="editor.issues.preview"}
@@ -82,20 +80,14 @@
 
 		{* Published date *}
 		{if $issue->getDatePublished()}
-            <div class="sahadeva-issue-meta">
-                <div class="sahadeva-issue-meta-published">
-                    <span class="label">
-                        {translate key="submissions.published"}:
-                    </span>
-                    <span class="value">
-                        {$issue->getDatePublished()|date_format:$dateFormatShort}
-                    </span>
-                </div>
-                <div class="sahadeva-issue-toc-view-all">
-                    <a class="highlight-link" href="{url op="view" page="issue" path=$issue->getBestIssueId()}">
-                    {translate key="plugins.themes.sahadeva.issueTOC.viewAll"}</a>
-                </div>
-            </div>
+			<div class="published">
+				<span class="label">
+					{translate key="submissions.published"}:
+				</span>
+				<span class="value">
+					{$issue->getDatePublished()|date_format:$dateFormatShort}
+				</span>
+			</div>
 		{/if}
 	</div>
 
@@ -116,24 +108,24 @@
 	{/if}
 
 	{* Articles *}
+	<div class="sections">
 	{foreach name=sections from=$publishedSubmissions item=section}
-        {if $section.articles}
-	    <div class="sections">
-		    <div class="section">
-                {if $section.title}
-                    <{$heading}>
-                        {$section.title|escape}
-                    </{$heading}>
-                {/if}
-                <ul class="cmp_article_list articles">
-                    {foreach from=$section.articles item=article}
-                        <li>
-                            {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
-                        </li>
-                    {/foreach}
-                </ul>
-            </div>
-        </div><!-- .sections -->
-        {/if}
+		<div class="section">
+		{if $section.articles}
+			{if $section.title}
+				<{$heading}>
+					{$section.title|escape}
+				</{$heading}>
+			{/if}
+			<ul class="cmp_article_list articles">
+				{foreach from=$section.articles item=article}
+					<li>
+						{include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
+					</li>
+				{/foreach}
+			</ul>
+		{/if}
+		</div>
 	{/foreach}
+	</div><!-- .sections -->
 </div>

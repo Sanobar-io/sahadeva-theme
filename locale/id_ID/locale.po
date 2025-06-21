@@ -52,3 +52,6 @@ msgstr "Lihat Semua Terbitan"
 
 msgid "plugins.themes.sahadeva.viewTOC"
 msgstr "Lihat Isi Terbitan Terbaru"
+
+msgid "plugins.themes.sahadeva.currentIssue"
+msgstr "Terbitan Terbaru"

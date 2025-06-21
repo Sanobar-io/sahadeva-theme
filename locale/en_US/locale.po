@@ -76,3 +76,6 @@ msgstr "See All Issues"
 
 msgid "plugins.themes.sahadeva.viewTOC"
 msgstr "View Table of Contents"
+
+msgid "plugins.themes.sahadeva.currentIssue"
+msgstr "Current Issue"
