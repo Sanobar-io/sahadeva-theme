@@ -10,7 +10,7 @@
             <span class="date">{$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span>
         </div>
         <div class="description">
-            {$article->getLocalizedAbstract()}
+            {$article->getLocalizedAbstract()|strip_tags}
         </div>
     </li>
 {/foreach}
