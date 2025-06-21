@@ -89,6 +89,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => 'Facebook',
 		]);
 
+		// hooks
+
 		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);
 
 	}
@@ -103,6 +105,35 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$request = Application::get()->getRequest();
 		$journal = $request->getContext();
 
+		// get most-viewed articles
+		$metricsDao = DAORegistry::getDAO('MetricsDAO');
+		$columns = ['submission_id', 'metric'];
+		$filters = [
+			'context_id' => $journal->getId(),
+			'assoc_type' => ASSOC_TYPE_SUBMISSION,
+		];
+		$orderBy = [
+			// 'metric' => STATISTICS_ORDER_DESC
+		];
+		$range = new DBResultRange(10, 1);
+
+		$topArticlesIds = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, $range);
+		
+		// load the article objects
+		$submissionDao = Application::getSubmissionDAO();
+		$topArticles = [];
+
+		foreach($topArticlesIds as $row) {
+			$submission = $submissionDao->getByid($row['submission_id']);
+			if($submission) {
+				$topArticles[] = [
+					'article' => $submission,
+					'views' => $row['metric'],
+				];
+			}
+		}
+
+		// current issue, previous issue, and next issue
 		if ($journal) {
 			$issueDao = DAORegistry::getDAO('IssueDAO');
 			$currentIssue = $issueDao->getCurrent($journal->getId(), true);
@@ -138,6 +169,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 				'currentIssue' => $currentIssue,
 				'previousIssue' => $previousIssue,
 				'nextIssue' => $nextIssue,
+				'topViewedArticles' => $topArticles,
 			]);
 		}
 

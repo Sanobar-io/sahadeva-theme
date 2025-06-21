@@ -101,18 +101,13 @@
     </div>
 </main>
 
-<hr class="inner-wrapper" />
-
-<hr class="inner-wrapper" />
-
 <section class="custom-content inner-wrapper">
     <div class="col-left">
-        {if $activeTheme->getOption('leftColTextFieldHeading')}
-
-        <h2>{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
-
-        {/if}
-        {$additionalHomeContent}
+    {if $topViewedArticles}
+        <h2>Most Viewed Articles</h2>
+        {assign var=articles value=array_column($topViewedArticles, 'article')}
+        {include file="frontend/components/article_list.tpl" articles=$articles}
+    {/if}
     </div>
     <div class="col-right">
         {capture assign="sidebarCode"}{call_hook name="Templates::Common::Sidebar"}{/capture}
@@ -120,6 +115,15 @@
             {$sidebarCode}
         {/if}
     </div>
+</section>
+
+<section class="additional-content inner-wrapper">
+{if $activeTheme->getOption('leftColTextFieldHeading')}
+
+<h2>{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
+
+{/if}
+    {$additionalHomeContent}
 </section>
 
 {if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}

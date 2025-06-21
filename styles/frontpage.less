@@ -6,6 +6,7 @@
 
 .announcements {
   margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
   .announcements-wrapper {
     display: flex;
     flex-direction: column;
@@ -127,6 +128,7 @@
 
 .custom-content {
   display: grid;
+  gap: 1rem;
   grid-template-columns: 2fr 1fr;
   & > * {
     flex: 1 1 0;
@@ -137,6 +139,12 @@
   }
   h2 {
     font-size: 1.5rem;
+  }
+  .col-left {
+    h2 {
+      border-bottom: 1px solid @lightgray;
+      padding-bottom: 1rem;
+    }
   }
   .col-right {
     display: flex;

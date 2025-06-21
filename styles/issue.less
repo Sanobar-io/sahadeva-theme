@@ -71,52 +71,6 @@
         border-bottom: 1px solid @lightgray;
         padding-bottom: 1rem;
       }
-      .articles-wrapper {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        li {
-          border-bottom: 1px solid @lightgray;
-          display: flex;
-          flex-direction: column;
-          gap: 0.25rem;
-          padding-bottom: 1rem;
-          .meta {
-            align-items: flex-start;
-            display: flex;
-            justify-content: space-between;
-            h3 {
-              display: inline-block;
-              font-family: "Inter", sans-serif;
-              font-size: 1.25rem;
-              margin: 0;
-              a {
-                text-decoration: underline;
-                &:hover {
-                  text-decoration: none;
-                }
-              }
-            }
-            .cta-rounded {
-              font-size: 0.75em;
-            }
-          }
-          .author-date {
-            color: lighten(#1a1a1a, 35%);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            .date {
-              font-weight: 600;
-            }
-          }
-          .description {
-            display: -webkit-box;
-            -webkit-line-clamp: 2; /* Number of lines to show */
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-        }
-      }
     }
   }
   .col-right {

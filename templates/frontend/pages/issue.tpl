@@ -58,38 +58,23 @@
     <div class="col-left">
     {foreach name=sections from=$publishedSubmissions item=section}
         <div class="section">
-            {if $section.articles}
-                <h2>{$section.title|escape}</h2>
-            {/if}
-            <ul class="articles-wrapper">
-            {foreach from=$section.articles item=article}
-                <li>
-                    <div class="meta">
-                        <h3><a href="{url page="article" op="view" path=$article->getBestId()}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>
-                        <a class="cta-rounded" href="{url page="article" op="view" path=$article->getBestId()}">
-                            Read More
-                        </a>
-                    </div>
-                    <div class="author-date">
-                        {$article->getAuthorString()|escape} •
-                        <span class="date">{$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span>
-                    </div>
-                    <div class="description">
-                        {$article->getLocalizedAbstract()}
-                    </div>
-                </li>
-            {/foreach}
-            </ul>
+        {if $section.articles}
+            <h2>{$section.title|escape}</h2>
+            {include file="frontend/components/article_list.tpl" articles=$section.articles}
+        {/if}
+
+
         </div>
     {/foreach}
-    <div class="issue-nav">
-    </div>
-    {if $previousIssue}
-        <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$previousIssue->getBestIssueId()}">← Previous Issue</a><
-    {/if}
-    {if $nextIssue}
-        <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a>
-    {/if}
+
+        <div class="issue-nav">
+        {if $previousIssue}
+            <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$previousIssue->getBestIssueId()}">← Previous Issue</a><
+        {/if}
+        {if $nextIssue}
+            <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a>
+        {/if}
+        </div>
     </div>
     <div class="col-right">
     {capture assign="sidebarCode"}{call_hook name="Templates::Common::Sidebar"}{/capture}
