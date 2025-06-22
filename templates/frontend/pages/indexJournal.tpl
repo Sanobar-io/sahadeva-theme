@@ -89,7 +89,7 @@
                     {if $issue}
 
                     {foreach name=sections from=$publishedSubmissions item=section}
-                        {foreach from=$section.articles item=article}
+                        {foreach from=$section.articles|@array_reverse item=article}
                             {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
                         {/foreach}
                     {/foreach}
