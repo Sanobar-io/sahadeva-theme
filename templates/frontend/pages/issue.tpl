@@ -17,65 +17,65 @@
 
 {include file="frontend/components/header.tpl" pageTitleTranslated=$issueIdentification}
 
+<div class="page">
 
-<div class="breadcrumbs inner-wrapper">
     {include file="frontend/components/breadcrumbs_issue.tpl" currentTitle=$issueIdentification}
-</div>
 
-<section class="issue-wrapper inner-wrapper">
-    {assign var=issueCover value=$issue->getLocalizedCoverImageUrl()}
-    {if $issueCover}
-    
-    <img class="cover" src="{$issueCover|escape}" />
+    <section class="issue-wrapper">
+        {assign var=issueCover value=$issue->getLocalizedCoverImageUrl()}
+        {if $issueCover}
+        
+        <img class="cover" src="{$issueCover|escape}" />
 
-    <section class="overview">
-        <h2>{$currentJournal->getLocalizedName()}</h2>
-        <div class="meta">
-            <div class="issue-meta">
-                Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getDatePublished()|date_format:"%B %e, %Y"}
+        <section class="overview">
+            <h2>{$currentJournal->getLocalizedName()}</h2>
+            <div class="meta">
+                <div class="issue-meta">
+                    Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getDatePublished()|date_format:"%B %e, %Y"}
+                </div>
+                <ul class="issue-nav">
+                {if $previousIssue}
+                    <li><a class="issue-nav-btn" href="{url router=ROUTE_PAGE page="issue" op="view" path=$previousIssue->getBestIssueId()}">← Previous Issue</a></li>
+                {/if}
+                    <li><a class="issue-nav-btn" href="{url page="issue" op="archive"}">All Issues</a></li>
+                {if $nextIssue}
+                    <li><a class="issue-nav-btn" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a></li>
+                {/if}
+                </ul>
             </div>
-            <ul class="issue-nav">
-            {if $previousIssue}
-                <li><a class="issue-nav-btn" href="{url router=ROUTE_PAGE page="issue" op="view" path=$previousIssue->getBestIssueId()}">← Previous Issue</a></li>
-            {/if}
-                <li><a class="issue-nav-btn" href="{url page="issue" op="archive"}">All Issues</a></li>
-            {if $nextIssue}
-                <li><a class="issue-nav-btn" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a></li>
-            {/if}
-            </ul>
-        </div>
-        <div class="description">
-            {if $issue->getLocalizedDescription()}
-                {$issue->getLocalizedDescription()}
-            {/if}
-        </div>
+            <div class="description">
+                {if $issue->getLocalizedDescription()}
+                    {$issue->getLocalizedDescription()}
+                {/if}
+            </div>
+        </section>
+
+        {/if}
     </section>
 
-    {/if}
-</section>
-
-{capture assign=leftCol}
-    {foreach name=sections from=$publishedSubmissions item=section}
-        <div class="section">
-        {if $section.articles}
-            <h2>{$section.title|escape}</h2>
-            {include file="frontend/components/article_list.tpl" articles=$section.articles}
-        {/if}
+    {capture assign=leftCol}
+        {foreach name=sections from=$publishedSubmissions item=section}
+            <div class="section">
+            {if $section.articles}
+                <h2>{$section.title|escape}</h2>
+                {include file="frontend/components/article_list.tpl" articles=$section.articles}
+            {/if}
 
 
-        </div>
-    {/foreach}
+            </div>
+        {/foreach}
 
-        <div class="issue-nav">
-        {if $previousIssue}
-            <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$previousIssue->getBestIssueId()}">← Previous Issue</a><
-        {/if}
-        {if $nextIssue}
-            <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a>
-        {/if}
-        </div>
-{/capture}
+            <div class="issue-nav">
+            {if $previousIssue}
+                <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$previousIssue->getBestIssueId()}">← Previous Issue</a><
+            {/if}
+            {if $nextIssue}
+                <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a>
+            {/if}
+            </div>
+    {/capture}
 
-{include file="frontend/objects/content.tpl"}
+    {include file="frontend/objects/content.tpl"}
+</div>
 
 {include file="frontend/components/footer.tpl"}

@@ -18,120 +18,124 @@
  *}
 {include file="frontend/components/header.tpl" pageTitleTranslated=$currentJournal->getLocalizedName()}
 
-{if $announcements|@count}
+<div class="page">
 
-<section class="announcements">
-    <div class="announcements-wrapper inner-wrapper">
-    {foreach name=announcements from=$announcements item=announcement}
-        {if $smarty.foreach.announcements.iteration > $numAnnouncementsHomepage}
-            {break}
-        {/if}
-        {if $smarty.foreach.announcements.iteration == 1}
-        <div class="announcements-card">
-            <h3>
-                <a href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
-                    {$announcement->getLocalizedTitle()|escape}
-                </a>
-                📢
-            </h3>
-            {$announcement->getLocalizedDescriptionShort()|strip_unsafe_html}
-            <span class="read-more" aria-hidden="true" role="presentation">
-                <a href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
-                    {translate key="common.readMore"}
-                </a>
-            </span>
-        </div>
-        {/if}
-    {/foreach}
-    </div>
-</section>
+    {if $announcements|@count}
 
-{/if}
-
-<main class="sahadeva-main inner-wrapper column-wrapper ">
-    <div class="col-left">
-        <div class="about">
-            <h2 class="about-label">
-                About
-                <div class="jakpp">{$currentJournal->_data.abbreviation.en_US}</div>
-            </h2>
-            <p>{$currentContext->getLocalizedData('description')}</p>
-            <a class="cta-arrow" href="{url page='about'}">Aims & Scope</a>
-        </div>
-        <div class="team-container">
-            <a href="{url page='about' op='editorialTeam'}">Editorial Team</a>
-            <a href="{url page='about' op='editorialTeam'}">Reviewers</a>
-        </div>
-    </div>
-    <div class="col-right">
-        <div class="current-issue">
-            <div class="metabox">
-                <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2>
-                <div class="issue-info">
-                    Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getYear()}
-                </div>
-            </div>
-            <div class="issue-details">
-                <div class="overview">
-                {if $issue}
-                    <a href="{url page="issue"}">
-                        <img src="{$currentIssue->getLocalizedCoverImageUrl()}" />
+    <section class="announcements">
+        <div class="announcements-wrapper">
+        {foreach name=announcements from=$announcements item=announcement}
+            {if $smarty.foreach.announcements.iteration > $numAnnouncementsHomepage}
+                {break}
+            {/if}
+            {if $smarty.foreach.announcements.iteration == 1}
+            <div class="announcements-card">
+                <h3>
+                    <a href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
+                        {$announcement->getLocalizedTitle()|escape}
                     </a>
-                {/if}
-                    <div class="overview-ctas">
-                        <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
-                        <a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
+                    📢
+                </h3>
+                {$announcement->getLocalizedDescriptionShort()|strip_unsafe_html}
+                <span class="read-more" aria-hidden="true" role="presentation">
+                    <a href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
+                        {translate key="common.readMore"}
+                    </a>
+                </span>
+            </div>
+            {/if}
+        {/foreach}
+        </div>
+    </section>
+
+    {/if}
+
+    <main class="sahadeva-main column-wrapper ">
+        <div class="col-left">
+            <div class="about">
+                <h2 class="about-label">
+                    About
+                    <div class="jakpp">{$currentJournal->_data.abbreviation.en_US}</div>
+                </h2>
+                <p>{$currentContext->getLocalizedData('description')}</p>
+                <a class="cta-arrow" href="{url page='about'}">Aims & Scope</a>
+            </div>
+            <div class="team-container">
+                <a href="{url page='about' op='editorialTeam'}">Editorial Team</a>
+                <a href="{url page='about' op='editorialTeam'}">Reviewers</a>
+            </div>
+        </div>
+        <div class="col-right">
+            <div class="current-issue">
+                <div class="metabox">
+                    <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2>
+                    <div class="issue-info">
+                        Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getYear()}
                     </div>
                 </div>
-                <div class="articles-wrapper">
-                {if $issue}
+                <div class="issue-details">
+                    <div class="overview">
+                    {if $issue}
+                        <a href="{url page="issue"}">
+                            <img src="{$currentIssue->getLocalizedCoverImageUrl()}" />
+                        </a>
+                    {/if}
+                        <div class="overview-ctas">
+                            <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
+                            <a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
+                        </div>
+                    </div>
+                    <div class="articles-wrapper">
+                    {if $issue}
 
-                {foreach name=sections from=$publishedSubmissions item=section}
-                    {foreach from=$section.articles item=article}
-                        {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
+                    {foreach name=sections from=$publishedSubmissions item=section}
+                        {foreach from=$section.articles item=article}
+                            {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
+                        {/foreach}
                     {/foreach}
-                {/foreach}
 
-                    <a class="cta-arrow" href="{url page="issue"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
+                        <a class="cta-arrow" href="{url page="issue"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
 
-                {/if}
+                    {/if}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
-{capture assign=leftCol}
-    {if $topViewedArticles}
-        <h2>Most Viewed Articles</h2>
-        {assign var=articles value=array_column($topViewedArticles, 'article')}
-        {include file="frontend/components/article_list.tpl" articles=$articles}
+    {capture assign=leftCol}
+        {if $topViewedArticles}
+            <h2>Most Viewed Articles</h2>
+            {assign var=articles value=array_column($topViewedArticles, 'article')}
+            {include file="frontend/components/article_list.tpl" articles=$articles}
+        {/if}
+    {/capture}
+
+    {include file="frontend/objects/content.tpl"}
+
+    <section class="additional-content">
+    {if $activeTheme->getOption('leftColTextFieldHeading')}
+
+    <h2>{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
+
     {/if}
-{/capture}
+        {$additionalHomeContent}
+    </section>
 
-{include file="frontend/objects/content.tpl"}
+    {if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}
 
-<section class="additional-content inner-wrapper">
-{if $activeTheme->getOption('leftColTextFieldHeading')}
+    <section class="abovefooter-cta">
+    {if $activeTheme->getOption('aboveFooterCtaHeading')}                
+        <h2>{$activeTheme->getOption('aboveFooterCtaHeading')}</h2>
+    {/if}
+    {if $activeTheme->getOption('aboveFooterCtaContent')}
+        <p>{$activeTheme->getOption('aboveFooterCtaContent')}</p>
+    {/if}
+    <a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
+    </section>
 
-<h2>{$activeTheme->getOption('leftColTextFieldHeading')}</h2>
+    {/if}
 
-{/if}
-    {$additionalHomeContent}
-</section>
-
-{if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}
-
-<section class="abovefooter-cta inner-wrapper">
-{if $activeTheme->getOption('aboveFooterCtaHeading')}                
-    <h2>{$activeTheme->getOption('aboveFooterCtaHeading')}</h2>
-{/if}
-{if $activeTheme->getOption('aboveFooterCtaContent')}
-    <p>{$activeTheme->getOption('aboveFooterCtaContent')}</p>
-{/if}
-<a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
-</section>
-
-{/if}
+</div>
 
 {include file="frontend/components/footer.tpl"}

@@ -19,94 +19,96 @@
  *}
 {include file="frontend/components/header.tpl" pageTitleTranslated=$article->getLocalizedFullTitle()|escape}
 
-<div class="breadcrumbs inner-wrapper">
-	{if $section}
-		{include file="frontend/components/breadcrumbs_article.tpl" currentTitle=$section->getLocalizedTitle()}
-	{else}
-		{include file="frontend/components/breadcrumbs_article.tpl" currentTitleKey="common.publication"}
-	{/if}
-</div>
+<div class="page">
 
-{capture assign=leftCol}
-<section class="article-meta">
-    <h1>{$publication->getLocalizedTitle()|escape}</h1>
-    <div class="meta">
-        <div class="issue-meta">
-            <span class="journal">{$currentContext->getLocalizedName()}</span> •
-            <span class="issue">{$issue->getIssueIdentification()}</span>
-        </div>
-        <ul class="process-meta">
-        {if $submissionDate}
-            <li><b>Submitted:</b> {$submissionDate|date_format:$dateFormatShort}</li>
-        {/if}
-        {if $acceptanceDate}
-            <li><b>Accepted:</b> {$acceptanceDate|date_format:$dateFormatShort}</li>
-        {/if}
-        {if $publishDate}
-            <li><b>Published:</b> {$publishDate|date_format:$dateFormatShort}</li>
-        {/if}
-        </ul>
-        {if $publication->getData('pub-data::doi')}
-
-        <div class="doi">
-            <b>DOI:</b> {$publication->getData('pub-data::doi')}
-        </div>
-
-        {/if}
-    </div>
-    <div class="extra-content">
-        {call_hook name="Templates::Article::Details"}
-    </div>
-    <ul class="authors">
-    {foreach from=$publication->getData('authors') item=author}
-        <li>
-            <div class="name">{$author->getFullName()|escape}</div>
-            {if $author->getLocalizedData('affiliation')}
-            
-            <div class="affiliation">
-                {$author->getLocalizedData('affiliation')}
-            </div>
-            
-            {/if}
-        </li>
-    {/foreach}
-    </ul>
-    <div class="toolbox">
-    </div>
-</section>
-
-<hr />
-
-<article class="article inner-wrapper">
-    <section class="abstract text-wrapper center">
-        <h2>Abstract</h2>
-        {$publication->getLocalizedData('abstract')}
-    </section>
-    {* Galley *}
-    {assign var=galleys value=$publication->getData('galleys')}
-    {if $galleys|@count}
-        <section class="cta text-center">
-        {foreach from=$galleys item=galley}
-            {if $galley->getFileType() == 'application/pdf'}
-                <p>This text has been made available for reading.</p>
-                <a class="center" href="{url page='article' op='view' path=$article->getBestId()|to_array:$galley->getBestGalleyId()}">Read Full Text <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" /></a>
-                {break}
-            {/if}
-        {/foreach}
-        </section>
+    {if $section}
+        {include file="frontend/components/breadcrumbs_article.tpl" currentTitle=$section->getLocalizedTitle()}
+    {else}
+        {include file="frontend/components/breadcrumbs_article.tpl" currentTitleKey="common.publication"}
     {/if}
 
-    <section class="references"></section>
-</article>
-{/capture}
+    {capture assign=leftCol}
+    <section class="article-meta">
+        <h1>{$publication->getLocalizedTitle()|escape}</h1>
+        <div class="meta">
+            <div class="issue-meta">
+                <span class="journal">{$currentContext->getLocalizedName()}</span> •
+                <span class="issue">{$issue->getIssueIdentification()}</span>
+            </div>
+            <ul class="process-meta">
+            {if $submissionDate}
+                <li><b>Submitted:</b> {$submissionDate|date_format:$dateFormatShort}</li>
+            {/if}
+            {if $acceptanceDate}
+                <li><b>Accepted:</b> {$acceptanceDate|date_format:$dateFormatShort}</li>
+            {/if}
+            {if $publishDate}
+                <li><b>Published:</b> {$publishDate|date_format:$dateFormatShort}</li>
+            {/if}
+            </ul>
+            {if $publication->getData('pub-data::doi')}
+
+            <div class="doi">
+                <b>DOI:</b> {$publication->getData('pub-data::doi')}
+            </div>
+
+            {/if}
+        </div>
+        <div class="extra-content">
+            {call_hook name="Templates::Article::Details"}
+        </div>
+        <ul class="authors">
+        {foreach from=$publication->getData('authors') item=author}
+            <li>
+                <div class="name">{$author->getFullName()|escape}</div>
+                {if $author->getLocalizedData('affiliation')}
+                
+                <div class="affiliation">
+                    {$author->getLocalizedData('affiliation')}
+                </div>
+                
+                {/if}
+            </li>
+        {/foreach}
+        </ul>
+        <div class="toolbox">
+        </div>
+    </section>
+
+    <hr />
+
+    <article class="article inner-wrapper">
+        <section class="abstract text-wrapper center">
+            <h2>Abstract</h2>
+            {$publication->getLocalizedData('abstract')}
+        </section>
+        {* Galley *}
+        {assign var=galleys value=$publication->getData('galleys')}
+        {if $galleys|@count}
+            <section class="cta text-center">
+            {foreach from=$galleys item=galley}
+                {if $galley->getFileType() == 'application/pdf'}
+                    <p>This text has been made available for reading.</p>
+                    <a class="center" href="{url page='article' op='view' path=$article->getBestId()|to_array:$galley->getBestGalleyId()}">Read Full Text <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" /></a>
+                    {break}
+                {/if}
+            {/foreach}
+            </section>
+        {/if}
+
+        <section class="references"></section>
+    </article>
+    {/capture}
 
 
-{include file="frontend/objects/content.tpl"}
+    {include file="frontend/objects/content.tpl"}
 
 
 
-<section class="footer-content">
-	{call_hook name="Templates::Article::Footer::PageFooter"}
-</section>
+    <section class="footer-content">
+        {call_hook name="Templates::Article::Footer::PageFooter"}
+    </section>
+
+</div>
 
 {include file="frontend/components/footer.tpl"}
