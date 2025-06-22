@@ -7,9 +7,17 @@
   color: contrast(desaturate(darken(@bg-base, 25%), 15%), black, white);
   margin-top: 3.4rem;
   padding: 2rem 0;
+  @media (max-width: @screen-xl) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
   .footer-inner {
     display: flex;
     justify-content: space-between;
+    @media (max-width: @screen-sm) {
+      flex-direction: column-reverse;
+      gap: 1rem;
+    }
     .left-col {
       display: flex;
       flex-direction: column;

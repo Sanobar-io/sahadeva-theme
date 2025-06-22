@@ -128,6 +128,9 @@ a.cta-rounded {
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr 2fr;
+  @media (max-width: @screen-md) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .pkp_block {
@@ -157,4 +160,21 @@ a.cta-rounded {
 
 .text-center {
   text-align: center;
+}
+
+.page,
+.pkp_page {
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 380px;
+  width: 100%;
+  max-width: 1200px;
+  @media (max-width: @screen-md) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (max-width: @screen-sm) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

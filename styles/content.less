@@ -1,11 +1,18 @@
 .content-wrapper {
   display: flex;
   gap: 1rem;
+  @media (max-width: @screen-md) {
+    flex-direction: column;
+  }
   & > * {
     flex: 1 1 0;
     &:not(:first-child) {
       border-left: 1px solid @lightgray;
       padding-left: 1rem;
+      @media (max-width: @screen-md) {
+        border-left: 0;
+        padding-left: 0;
+      }
     }
   }
   h2 {
@@ -13,6 +20,10 @@
   }
   .col-left {
     flex-grow: 2;
+    @media (max-width: @screen-sm) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
     h2 {
       border-bottom: 1px solid @lightgray;
       padding-bottom: 1rem;
