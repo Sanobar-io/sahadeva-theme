@@ -94,7 +94,34 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);
 		HookRegistry::register('TemplateManager::display', [$this, 'addSubmissionDates']);
+		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
 
+	}
+
+	public function getIssuesbyYear($hookname, $args) {
+		[$templateMgr, $template] = $args;
+
+		// Only run on the issue archive view page
+		if (strpos($template, 'frontend/pages/issueArchive.tpl') === false) {
+			return;
+		}
+
+		$journal = Application::get()->getRequest()->getJournal();
+		$issueDao = DAORegistry::getDAO('IssueDAO');
+		$issues = $issueDao->getPublishedIssues($journal->getId())->toArray();
+
+		$grouped = [];
+
+		foreach($issues as $issue) {
+			$year = date('Y', strtotime($issue->getDatePublished()));
+			$grouped[$year][] = $issue;
+		}
+
+		krsort($grouped);
+
+		$templateMgr->assign('groupedIssuesByYear', $grouped);
+
+		return false;
 	}
 
 	/**

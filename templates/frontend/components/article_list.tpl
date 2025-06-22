@@ -1,6 +1,6 @@
 
 <ul class="articles-wrapper">
-{foreach from=$articles item=article}
+{foreach from=$articles|@array_reverse item=article}
     <li>
         <div class="meta">
             <h3><a href="{url page="article" op="view" path=$article->getBestId()}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>

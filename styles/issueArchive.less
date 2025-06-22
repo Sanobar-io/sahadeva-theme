@@ -1,0 +1,64 @@
+//
+// sahadeva/styles/issueArchive.less
+//
+
+.issues-wrapper {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(6, 1fr);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  @media (max-width: @screen-xl) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  @media (max-width: @screen-lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: @screen-md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: @screen-sm) {
+    grid-template-columns: 1fr;
+  }
+  li {
+    position: relative;
+    &:hover {
+      .issue-info {
+        top: -2rem;
+      }
+    }
+    a {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      img {
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
+        min-width: 180px;
+        width: 30vw;
+        max-width: 240px;
+        height: auto;
+        margin: 0 auto;
+      }
+      .issue-info {
+        background-color: #fff;
+        padding: 0.5rem 1.5rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        width: max-content;
+        margin: 0 auto;
+        top: 0;
+        transition: top 150ms ease;
+      }
+      .date {
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .issue {
+        font-size: 0.825rem;
+      }
+    }
+  }
+}
