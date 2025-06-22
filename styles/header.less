@@ -76,6 +76,9 @@
       display: flex;
       .site-name {
         margin-right: 4rem;
+        @media (max-width: @screen-lg) {
+          margin-right: 0;
+        }
         img {
           object-fit: contain;
           max-height: 50px;
@@ -85,11 +88,17 @@
       #primary-nav {
         align-self: stretch;
         display: flex;
+        @media (max-width: @screen-lg) {
+          display: none;
+        }
       }
     }
     .search-wrapper {
       align-self: center;
       margin-right: 2rem;
+      @media (max-width: @screen-md) {
+        display: none;
+      }
     }
     .user-nav-wrapper {
       display: flex;
