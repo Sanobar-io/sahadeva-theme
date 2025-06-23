@@ -23,6 +23,7 @@
 @import "issueArchive.less";
 @import "userLogin.less";
 @import "search.less";
+@import "submission.less";
 
 html,
 body {
@@ -49,6 +50,12 @@ h4 {
   line-height: 1.25;
   margin: 0;
   margin-bottom: 1.7rem;
+}
+
+h1:not(:first-child),
+h2:not(:first-child),
+h3:not(:first-child),
+h4:not(:first-child) {
   margin-top: 1.7rem;
 }
 
@@ -129,6 +136,13 @@ a.cta-rounded {
   width: 100%;
 }
 
+.cmp_notification {
+  background: @lightgray;
+  margin-bottom: 1.7rem;
+  padding: 1rem;
+  text-align: center;
+}
+
 .column-wrapper {
   display: grid;
   gap: 2rem;
@@ -181,6 +195,9 @@ a.cta-rounded {
   @media (max-width: @screen-sm) {
     padding-left: 0;
     padding-right: 0;
+  }
+  a {
+    font-weight: 600;
   }
 }
 
