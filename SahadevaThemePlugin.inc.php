@@ -39,7 +39,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		// add scripts
 		$this->addScript('jquery', 'js/lib/jquery.min.js');
-		$this->addScript('sahadeva-script', 'js/sahadeva.js');
+		$this->addScript('sahadeva-script', 'js/sahadeva.js', ['contexts' => 'frontend']);
 
 		// add navs
 		$this->addMenuArea(array('primary', 'user', 'footer'));

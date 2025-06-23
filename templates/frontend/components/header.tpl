@@ -34,8 +34,7 @@
     <div class="header-inner">
 
         <div class="burger-menu">
-            <button class="burger-menu-btn">
-                <img src="{$baseUrl}/plugins/themes/sahadeva/images/burger-icon.svg" />
+            <button id="burger-menu-btn" data-toggle="false">
             </button>
         </div>
 
@@ -74,8 +73,10 @@
         </div>
 
     </div>
+    
+    </header>
 
-</header>
+    {include file="frontend/components/mobile_menu.tpl"}
 
 		{* Wrapper for page content and sidebars *}
 		{* {if $isFullWidth}

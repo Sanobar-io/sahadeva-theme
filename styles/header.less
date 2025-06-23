@@ -2,10 +2,11 @@
 // sahadeva/styles/_header.less
 //
 
+@import "mobile_menu.less";
+
 .sahadeva-header {
   background-color: #fff;
-  border-bottom: 1px solid @lightgray;
-  box-shadow: 0 0 4px 0 fade(darken(@bg-base, 25%), 25%);
+  box-shadow: 0 0 16px 2px fade(darken(@bg-base, 25%), 25%);
   height: 60px;
   position: fixed;
   top: 0;
@@ -68,11 +69,19 @@
     height: 100%;
     .burger-menu {
       align-self: center;
-      .burger-menu-btn {
-        background: none;
+      #burger-menu-btn {
+        background: url("/plugins/themes/sahadeva/images/burger-icon.svg");
+        background-size: 32px 32px;
         border: 0;
         cursor: pointer;
         padding-left: 1rem;
+        width: 48px;
+        height: 48px;
+        background-position: center;
+        background-repeat: no-repeat;
+        &[data-toggle="true"] {
+          background-color: lighten(@bg-base, 35%);
+        }
         img {
           object-fit: contain;
           width: 32px;
