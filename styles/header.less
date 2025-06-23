@@ -15,13 +15,20 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+    a {
+      align-items: center;
+      display: flex;
+      gap: 0.5rem;
+      height: 100%;
+      padding: 0 1.5rem;
+      justify-content: center;
+    }
     & > li {
       position: relative;
       width: max-content;
       display: flex;
       align-items: center;
       cursor: pointer;
-      padding: 0 24px;
       border-bottom: 3px solid transparent;
       &:not(:has(ul)):hover {
         border-bottom: 3px solid @bg-base;
@@ -37,7 +44,7 @@
         border-top-style: none;
         display: none;
         position: absolute;
-        top: 62px;
+        top: 61px;
         left: -1rem;
         li {
           cursor: pointer;
@@ -49,6 +56,7 @@
         }
         a {
           background-color: transparent;
+          height: 100%;
           padding: 0.5rem 1rem;
         }
       }
@@ -107,17 +115,9 @@
       #user-nav {
         align-self: stretch;
         display: flex;
-        a {
-          align-items: center;
-          display: flex;
-          gap: 0.5rem;
-          height: 100%;
-          justify-content: center;
-        }
         li {
           align-items: center;
           display: flex;
-          padding: 0 1rem;
           ul {
             color: black;
             left: auto;
