@@ -34,3 +34,21 @@ document.addEventListener("click", (ev) => {
     mobileMenu.classList.remove("show");
   }
 });
+
+/**
+ * Burger menu admin logic
+ */
+const adminExpandBtn = document.getElementById("admin-expand-btn");
+const expandedMenu = document.getElementById("user-expanded");
+
+adminExpandBtn.addEventListener("click", (ev) => {
+  const isExpanded = ev.target.dataset.expanded;
+
+  if (isExpanded === "false") {
+    expandedMenu.classList.add("expanded");
+    ev.target.dataset.expanded = "true";
+  } else {
+    expandedMenu.classList.remove("expanded");
+    ev.target.dataset.expanded = "false";
+  }
+});

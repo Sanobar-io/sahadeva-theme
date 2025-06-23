@@ -1,5 +1,20 @@
 <div id="mobile-menu">
-    {load_menu name="user" id="user-nav"}
+    {if $isUserLoggedIn}
+        <ul id="user-nav-logged">
+            <li>
+                <div class="name">
+                    <a href="{url page="submissions"}">{$loggedInUsername|escape}</a>
+                    <button id="admin-expand-btn" data-expanded="false"></button>
+                    </div>
+                <ul id="user-expanded">
+                    <li><a href="{url page="submissions"}">Dashboard</a></li>
+                    <li><a href="{url page="user" op="profile"}">View Profile</a></li>
+                </ul>
+            </li>
+        </ul>
+    {else}
+        {load_menu name="user" id="user-nav"}
+    {/if}
 
     <div class="search">
         <form class="search-form" method="get" action="{url page='search' op='search'}">
