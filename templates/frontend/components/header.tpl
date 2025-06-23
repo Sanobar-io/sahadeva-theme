@@ -26,6 +26,7 @@
 
 {* Header *}
 {call_hook name="Templates::Index::journal"}
+
 <header class="sahadeva-header" role="banner"
     {if $activeTheme->getOption('useHomepageImageAsHeader') && $homepageImage}
         style="background-image: url('{$publicFilesDir}/{$homepageImage.uploadName|escape:"url"};');"
@@ -77,6 +78,13 @@
     </header>
 
     {include file="frontend/components/mobile_menu.tpl"}
+
+    {call_hook name="Templates::Common::Header::PageHeader"}
+
+    {if !$validSerialKey}
+        {include file="frontend/components/disclaimer.tpl"}
+    {/if}
+
 
 		{* Wrapper for page content and sidebars *}
 		{* {if $isFullWidth}

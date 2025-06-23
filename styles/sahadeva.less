@@ -114,6 +114,56 @@ a.cta-arrow {
   }
 }
 
+#popup {
+  animation: throb 2s ease-in-out infinite;
+  background-color: #fff;
+  border: 1px solid @lightgray;
+  bottom: 1rem;
+  box-shadow: 0 0 8px 4px fade(lighten(@bg-base, 35%), 50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  right: 1rem;
+  padding: 2rem;
+  position: fixed;
+  text-align: center;
+  width: 65ch;
+  z-index: 100000;
+  @media (max-width: @screen-md) {
+    left: 0;
+    width: 100%;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0;
+  }
+  #view-ad {
+    cursor: pointer;
+  }
+  .buy {
+    font-size: 0.825rem;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+    b {
+      font-weight: 700;
+    }
+  }
+}
+
+@keyframes throb {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 a.cta-rounded {
   background-color: @bg-base;
   border-radius: 1rem;
@@ -216,5 +266,25 @@ a.cta-rounded {
     height: 36px;
     width: auto;
     object-fit: contain;
+  }
+}
+
+#defocus {
+  background-color: fade(darken(@bg-base, 47%), 75%);
+  backdrop-filter: blur(4px);
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition: opacity 250ms ease;
+  visibility: hidden;
+  width: 100%;
+  z-index: 99;
+  &.defocus {
+    opacity: 100%;
+    pointer-events: auto;
+    visibility: visible;
   }
 }

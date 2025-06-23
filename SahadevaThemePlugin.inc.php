@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @file plugins/themes/default/SahadevaThemePlugin.inc.php
+ * @file plugins/themes/sahadeva/SahadevaThemePlugin.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
+ * Copyright (c) 2014-2016 Simon FsettalUniversity Library
  * Copyright (c) 2003-2016 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
@@ -14,6 +14,7 @@
  */
 
 import('lib.pkp.classes.plugins.ThemePlugin');
+import('lib.pkp.classes.cache.CacheManager');
 
 class SahadevaThemePlugin extends ThemePlugin {
 	/**
@@ -46,14 +47,34 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		// add options
 
+		// Basic Theme Settings
+		$this->addOption('groupBasicSettings', 'FieldHtml', [
+			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">⚙ Sahadeva Theme Settings</h3>',
+		]);
+		$this->addOption('serialKey', 'FieldText', [
+			'label' => 'Serial Key',
+			'description' => 'Input valid serial key to remove ads. Purchase a key at <a href="https://komkom.id">KOMKOM.id</a>.',
+		]);
+
 		$this->addOption('bg-base', 'FieldColor', [
 			'label' => __('plugins.themes.sahadeva.option.color.label'),
 			'description' => __('plugins.themes.sahadeva.option.color.description'),
 			'default' => '#1E6292',
 		]);
+
+		// Extra Content
+		$this->addOption('groupAdditionalBodyContent', 'FieldHtml', [
+			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👾 Additional Body Content</h3>',
+		]);
 		
 		$this->addOption('leftColTextFieldHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.leftColTextFieldHeading.label'),
+			'description' => 'This is the heading for the Additional Content found in Settings → Website → Appearance → Advanced.'
+		]);
+
+		// ISSN Settings
+		$this->addOption('groupISSN', 'FieldHtml', [
+			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">🔢 ISSN Settings</h3>',
 		]);
 
 		$this->addOption('issnPrint', 'FieldText', [
@@ -64,6 +85,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.issnElectronic.label'),
 		]);
 
+		// Above Footer CTA
+		$this->addOption('groupAboveFooterCTA', 'FieldHtml', [
+			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👆 Large CTA Settings</h3>',
+		]);
+
 		$this->addOption('aboveFooterCtaHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaHeading.label'),
 		]);
@@ -72,12 +98,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaContent.label'),
 		]);
 
-		$this->addOption('additionalFooterInfo', 'FieldRichTextarea', [
-			'label' => __('plugins.themes.sahadeva.option.additionalFooterInfo.label'),
-			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
-		]);
-
 		// Social media options
+		$this->addOption('groupSocialMedia', 'FieldHtml', [
+			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👪 Social Media Settings</h3>',
+		]);
+		
 		$this->addOption('instagram', 'FieldText', [
 			'label' => 'Instagram',
 		]);
@@ -90,14 +115,89 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => 'Facebook',
 		]);
 
+		// Additional Footer Content
+		$this->addOption('groupAdditionalFooterContent', 'FieldHtml', [
+			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👣 Additional Footer Content</h3>',
+		]);
+
+		$this->addOption('additionalFooterInfo', 'FieldRichTextarea', [
+			'label' => __('plugins.themes.sahadeva.option.additionalFooterInfo.label'),
+			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
+		]);
+
 		// hooks
 
 		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);
 		HookRegistry::register('TemplateManager::display', [$this, 'addSubmissionDates']);
+		HookRegistry::register('TemplateManager::display', [$this, 'checkSerialKey']);
 		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
 
 	}
 
+	public function checkSerialKey($hookname, $args) {
+		[$templateMgr, $template] = $args;
+		$serialKey = $this->getOption('serialKey') ?? false;
+
+		if(!$serialKey) return false;
+
+		$cacheManager = CacheManager::getManager();
+		$cache = $cacheManager->getFileCache(
+			'sahadeva',
+			'isValid',
+			[$this, '_rebuildKeyCache'],
+		);
+
+		$data = $cache->getContents();
+		$now = time();
+
+		// check if expired or not valid
+		if(!isset($data['checkedAt']) || ($now - $data['checkedAt'] > 86400) || $data['valid'] == false || $data['serial'] !== $serialKey) {
+			// refresh cache
+			$data = $this->_rebuildKeyCache($cache, $serialKey);
+			$cache->setEntireCache($data);
+		}
+
+		$templateMgr->assign('validSerialKey', $data['valid']);
+	}
+
+	public function _rebuildKeyCache ($cache, $serialKey) {
+		$data = ['serial' => $serialKey];
+		$options = [
+			'http' => [
+				'header'  => "Content-Type: application/json\r\n",
+				'method'  => 'POST',
+				'content' => json_encode($data),
+				'ignore_errors' => true, // Get response even if HTTP error
+			],
+		];
+
+		$validateContext = stream_context_create($options);
+		$response = file_get_contents('https://api.komkom.id/license/validate/', false, $validateContext);
+
+		if($response === false) {
+			return [
+				'valid' => false,
+				'serial' => null,
+				'checkedAt' => null,
+			];
+		} else {
+			$json = json_decode($response, true);
+			if(isset($json['valid']) && $json['valid'] === true) {
+				return [
+					'valid' => true,
+					'serial' => $serialKey,
+					'checkedAt' => time(),
+				];
+			}
+		}
+
+		return [
+				'valid' => false,
+				'serial' => null,
+				'checkedAt' => null,
+			];
+	}
+	
 	public function getIssuesbyYear($hookname, $args) {
 		[$templateMgr, $template] = $args;
 

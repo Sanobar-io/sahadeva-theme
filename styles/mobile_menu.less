@@ -2,25 +2,6 @@
 // sahadeva/styles/burger_menu.less
 //
 
-#defocus {
-  background-color: fade(darken(@bg-base, 47%), 75%);
-  backdrop-filter: blur(4px);
-  height: 100%;
-  left: 0;
-  opacity: 0;
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  transition: opacity 250ms ease;
-  visibility: hidden;
-  width: 100%;
-  z-index: 99;
-  &.defocus {
-    opacity: 100%;
-    pointer-events: auto;
-    visibility: visible;
-  }
-}
 #mobile-menu {
   background-color: #fff;
   display: flex;
