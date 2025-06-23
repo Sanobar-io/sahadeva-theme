@@ -15,18 +15,35 @@
       text-decoration: underline;
     }
   }
-  fieldset {
-    background-color: @lightgray;
+  button.submit {
+    padding: 0.5rem 1rem;
+    background-color: @bg-base;
     border: 0;
+    border-radius: 0.5rem;
+    color: contrast(@bg-base, black, white);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 150ms;
+    &:hover {
+      background-color: darken(@bg-base, 15%);
+    }
+  }
+  fieldset {
+    border: 1px solid @lightgray;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     padding: 1rem;
+    fieldset {
+      border: 0;
+      legend {
+        font-size: 1rem;
+      }
+    }
     legend {
       background-color: #fff;
       font-size: 1.25rem;
       font-weight: 600;
-      padding: 0.25rem 2rem;
     }
     input:not([type="checkbox"]),
     select {
@@ -42,6 +59,7 @@
       gap: 0.5rem;
     }
   }
+  label,
   span.label,
   label:has(input[type="checkbox"]) {
     font-size: 0.825rem;
@@ -52,18 +70,10 @@
     font-size: 0.825rem;
     gap: 1rem;
     margin-top: 1rem;
-    .submit {
-      padding: 0.5rem 1rem;
-      background-color: @bg-base;
-      border: 0;
-      border-radius: 0.5rem;
-      color: contrast(@bg-base, black, white);
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 150ms;
-      &:hover {
-        background-color: darken(@bg-base, 15%);
-      }
-    }
+  }
+  input#query {
+    font-family: inherit;
+    padding: 0.5rem 1rem;
+    width: 100%;
   }
 }
