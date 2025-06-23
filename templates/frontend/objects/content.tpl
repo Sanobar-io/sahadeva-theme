@@ -10,13 +10,17 @@
     </div>
     <div class="col-right">
     {if $rightCol}
+    <div class="additionalColContent">
         {$rightCol}
+    </div>
     {/if}
-    {capture assign="sidebarCode"}
-        {call_hook name="Templates::Common::Sidebar"}
-    {/capture}
-    {if $sidebarCode}
-        {$sidebarCode}
+    {if !$sidebarDisabled}
+        {capture assign="sidebarCode"}
+            {call_hook name="Templates::Common::Sidebar"}
+        {/capture}
+        {if $sidebarCode}
+            {$sidebarCode}
+        {/if}
     {/if}
     </div>
 </section>

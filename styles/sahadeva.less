@@ -2,6 +2,10 @@
 // sahadeva/styles/sahadeva.less
 //
 
+* {
+  box-sizing: border-box;
+}
+
 // font setup
 @import url("https://fonts.googleapis.com/css2?family=Alike&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=News+Cycle:wght@400;700&display=swap");
 
@@ -10,16 +14,14 @@
 @import "header.less";
 @import "footer.less";
 @import "breadcrumbs.less";
+@import "forms.less";
 @import "frontpage.less";
 @import "issue.less";
 @import "article_list.less";
 @import "article.less";
 @import "content.less";
 @import "issueArchive.less";
-
-* {
-  box-sizing: border-box;
-}
+@import "userLogin.less";
 
 html,
 body {
@@ -178,4 +180,10 @@ a.cta-rounded {
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+.pkp_screen_reader {
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+  left: -2000px;
 }

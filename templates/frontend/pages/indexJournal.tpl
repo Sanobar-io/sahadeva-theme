@@ -89,7 +89,10 @@
                     {if $issue}
 
                     {foreach name=sections from=$publishedSubmissions item=section}
-                        {foreach from=$section.articles|@array_reverse item=article}
+                        {foreach name=articles from=$section.articles|@array_reverse item=article}
+                            {if $smarty.foreach.articles.iteration > 5}
+                                {break}
+                            {/if}
                             {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
                         {/foreach}
                     {/foreach}
