@@ -8,11 +8,19 @@ Named after the youngest Pandava brother, this theme is designed to be elegant, 
 
 **This is the free version of the Sahadeva theme, which is powered by ads.**
 
-Purchase a license to remove all ads **forever**. Contact us at [hello(at)komkom.id](mailto:hello@komkom.id).
+Get the **PRO VERSION** license to **remove all ads forever**. Contact us at [hello(at)komkom.id](mailto:hello@komkom.id).
+
+## Features
+
+- Most viewed articles on the front page
+- Customizable above-footer call to action
+- Support for displaying social media accounts
+- Fully responsive
+- Accessibility-driven design
 
 ## Installation
 
-1. Download the .tar.gz release.
+1. [Download](https://github.com/Sanobar-io/sahadeva-theme/releases) the latest release.
 2. Extract or upload it to the plugins/themes/ directory of your OJS installation.
 3. Enable the theme from Website Settings → Appearance → Themes.
 
@@ -21,5 +29,3 @@ Purchase a license to remove all ads **forever**. Contact us at [hello(at)komkom
 This version is a stable starting point for journals looking for a sleek, modern look.
 
 Future versions will include additional customization, block options, and plugin integration.
-
-**Full Changelog**: https://github.com/Bocah5Racun/sahadeva-theme/commits/v1.0.0.0
