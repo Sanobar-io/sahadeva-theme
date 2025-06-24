@@ -129,6 +129,12 @@ a.cta-arrow {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    a {
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
   @media (max-width: @screen-md) {
     width: 100%;
@@ -144,6 +150,7 @@ a.cta-arrow {
     cursor: pointer;
     margin: 0 auto;
     width: max-content;
+    text-decoration: none;
   }
   .buy {
     font-size: 0.825rem;

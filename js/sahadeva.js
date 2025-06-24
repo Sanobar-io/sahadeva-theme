@@ -67,7 +67,17 @@ if (monetagCTA) {
 }
 
 monetagCTA.addEventListener("click", () => {
-  // window.open("https://otieu.com/4/9483045");
+  const adArray = [
+    "https://otieu.com/4/9483189",
+    "https://otieu.com/4/9483045",
+  ];
+  const theAdUrl = adArray[Math.floor(Math.random() * adArray.length)];
+
+  window.open(
+    theAdUrl,
+    "_blank",
+    "width=800,height=600,resizable=yes,scrollbars=yes"
+  );
   monetagCTA.parentElement.parentElement.remove();
   defocus.style.zIndex = 99;
   defocus.classList.remove("defocus");
