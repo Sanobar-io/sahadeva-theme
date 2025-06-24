@@ -4,6 +4,8 @@
 
 Named after the youngest Pandava brother, this theme is designed to be elegant, thoughtful, and powerful beneath the surface, with responsive design, clean layout, and customizable structure that supports scholarly publishing with clarity and precision.
 
+![Sanobar logo](demo_img.jpg)
+
 **This is the free version of the Sahadeva theme, which is powered by ads.**
 
 Purchase a license to remove all ads **forever**. Contact us at [hello(at)komkom.id](mailto:hello@komkom.id).
