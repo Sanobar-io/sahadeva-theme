@@ -24,6 +24,7 @@
 @import "userLogin.less";
 @import "search.less";
 @import "submission.less";
+@import "announcements.less";
 
 html,
 body {
@@ -115,30 +116,34 @@ a.cta-arrow {
 }
 
 #popup {
-  animation: throb 2s ease-in-out infinite;
   background-color: #fff;
-  border: 1px solid @lightgray;
-  bottom: 1rem;
-  box-shadow: 0 0 8px 4px fade(lighten(@bg-base, 35%), 50%);
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  right: 1rem;
+  border: 1px solid fade(@bg-base, 15%);
+  left: 50%;
   padding: 2rem;
   position: fixed;
+  top: 50%;
   text-align: center;
-  width: 65ch;
+  transform: translate(-50%, -50%);
   z-index: 100000;
+  .popup-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
   @media (max-width: @screen-md) {
-    left: 0;
     width: 100%;
   }
   h1 {
     font-size: 2rem;
     margin-bottom: 0;
   }
+  p {
+    margin: 0;
+  }
   #view-ad {
     cursor: pointer;
+    margin: 0 auto;
+    width: max-content;
   }
   .buy {
     font-size: 0.825rem;
@@ -149,18 +154,6 @@ a.cta-arrow {
     b {
       font-weight: 700;
     }
-  }
-}
-
-@keyframes throb {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-  100% {
-    transform: translateY(0);
   }
 }
 

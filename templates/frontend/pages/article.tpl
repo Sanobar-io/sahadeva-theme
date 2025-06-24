@@ -89,7 +89,7 @@
             {foreach from=$galleys item=galley}
                 {if $galley->getFileType() == 'application/pdf'}
                     <p>This text has been made available for reading.</p>
-                    <a class="center" href="{url page='article' op='view' path=$article->getBestId()|to_array:$galley->getBestGalleyId()}">Read Full Text <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" /></a>
+                    <a class="center" href="{url page="article" op="download" path=$article->getBestId()|to_array:$galley->getBestGalleyId()}">Read Full Text <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" /></a>
                     {break}
                 {/if}
             {/foreach}

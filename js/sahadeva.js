@@ -61,7 +61,14 @@ if (adminExpandBtn) {
 
 const monetagCTA = document.getElementById("view-ad");
 
+if (monetagCTA) {
+  defocus.style.zIndex = 10000;
+  defocus.classList.add("defocus");
+}
+
 monetagCTA.addEventListener("click", () => {
-  window.open("https://otieu.com/4/9483045");
-  monetagCTA.parentElement.remove();
+  // window.open("https://otieu.com/4/9483045");
+  monetagCTA.parentElement.parentElement.remove();
+  defocus.style.zIndex = 99;
+  defocus.classList.remove("defocus");
 });
