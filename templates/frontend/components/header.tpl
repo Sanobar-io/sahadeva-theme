@@ -1,28 +1,26 @@
 {**
- * lib/pkp/templates/frontend/components/header.tpl
- *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @brief Common frontend site header.
- *
- * @uses $isFullWidth bool Should this page be displayed without sidebars? This
- *       represents a page-level override, and doesn't indicate whether or not
- *       sidebars have been configured for thesite.
- *}
+* Sahadeva Theme
+*
+* Copyright (c) 2025 Sanobario
+* Licensed under the GNU GPL v3. See the COPYING file in the OJS root.
+*
+* This is the template for the disclaimer that appears in the bottom of free version
+* of Sahadeva
+*
+* @template sahadeva:frontend/components/footer.tpl
+*}
+{* Show Logo/String *}
 {strip}
-	{* Determine whether a logo or title string is being displayed *}
-	{assign var="showingLogo" value=true}
+	{assign var="logoExists" value=true}
 	{if !$displayPageHeaderLogo}
-		{assign var="showingLogo" value=false}
+		{assign var="logoExists" value=false}
 	{/if}
 {/strip}
 <!DOCTYPE html>
 <html lang="{$currentLocale|replace:"_":"-"}" xml:lang="{$currentLocale|replace:"_":"-"}">
 {if !$pageTitleTranslated}{capture assign="pageTitleTranslated"}{translate key=$pageTitle}{/capture}{/if}
 {include file="frontend/components/headerHead.tpl"}
-<body class="pkp_page_{$requestedPage|escape|default:"index"} pkp_op_{$requestedOp|escape|default:"index"}{if $showingLogo} has_site_logo{/if}" dir="{$currentLocaleLangDir|escape|default:"ltr"}">
+<body class="pkp_page_{$requestedPage|escape|default:"index"} pkp_op_{$requestedOp|escape|default:"index"}{if $logoExists} has_site_logo{/if}" dir="{$currentLocaleLangDir|escape|default:"ltr"}">
 
 {* Header *}
 {call_hook name="Templates::Index::journal"}

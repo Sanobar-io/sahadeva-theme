@@ -23,7 +23,7 @@
                 </div>
 
                 {/if}
-                <div class="clickable">
+                <div class="sharelink clickable" data-url="{url page="article" op="view" path=$article->getBestId()}">
                     <icon data-type="link"></icon>Share
                 </div>
             </div>

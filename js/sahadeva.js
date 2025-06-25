@@ -75,3 +75,44 @@ monetagCTA.addEventListener("click", () => {
   );
   monetagCTA.parentElement.parentElement.remove();
 });
+
+/**
+ * Share clickable
+ */
+const sharelinks = document.querySelectorAll(".sharelink");
+
+sharelinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    const url = link.dataset.url;
+    navigator.clipboard
+      .writeText(url)
+      .then(showPopup("Copied to clipboard!", link))
+      .catch((err) => console.error("Failed to copy to clipboard."));
+  });
+});
+
+/**
+ * Function that copies an input to clipboard and shows a
+ * popup above the clicked element
+ */
+function showPopup(text, el) {
+  const rect = el.getBoundingClientRect();
+  const x = rect.left + window.scrollX;
+  const y = rect.top + window.scrollY - 48;
+
+  // create a popup node
+  const popup = document.createElement("div");
+  popup.className = "notify-popup";
+  popup.textContent = text;
+  document.body.appendChild(popup);
+  popup.style.opacity = "1";
+  popup.style.left = `${x}px`;
+  popup.style.top = `${y}px`;
+
+  setTimeout(() => {
+    popup.style.opacity = "0";
+    setTimeout(() => {
+      popup.remove();
+    }, 500);
+  }, 2000);
+}

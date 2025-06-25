@@ -60,7 +60,7 @@
 		{foreach from=$pubIdPlugins item=pubIdPlugin}
 			{assign var=pubId value=$issue->getStoredPubId($pubIdPlugin->getPubIdType())}
 			{if $pubId}
-				{assign var="doiUrl" value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
+				{assign var=doiUrl value=$pubIdPlugin->getResolvingURL($currentJournal->getId(), $pubId)|escape}
 				<div class="pub_id {$pubIdPlugin->getPubIdType()|escape}">
 					<span class="type">
 						{$pubIdPlugin->getPubIdDisplayType()|escape}:
