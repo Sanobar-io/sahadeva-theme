@@ -98,6 +98,11 @@
         @media (max-width: @screen-lg) {
           margin-right: 0;
         }
+        @media (max-width: @screen-md) {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+        }
         img {
           object-fit: contain;
           max-height: 50px;
@@ -114,16 +119,20 @@
     }
     .search-wrapper {
       align-self: center;
+      display: block;
       margin-right: 2rem;
-      @media (max-width: @screen-md) {
+      @media (min-width: @screen-sm) and(max-width: @screen-md) {
         display: none;
       }
     }
     .user-nav-wrapper {
       display: flex;
-      #user-nav {
-        align-self: stretch;
-        display: flex;
+    }
+    #user-nav {
+      align-self: stretch;
+      display: flex;
+      @media (max-width: @screen-sm) {
+        display: none;
         li {
           align-items: center;
           display: flex;

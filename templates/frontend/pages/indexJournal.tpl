@@ -89,7 +89,7 @@
                     {if $issue}
 
                     {foreach name=sections from=$publishedSubmissions item=section}
-                        {foreach name=articles from=$section.articles|@array_reverse item=article}
+                        {foreach name=articles from=$section.articles item=article}
                             {if $smarty.foreach.articles.iteration > 5}
                                 {break}
                             {/if}
@@ -110,7 +110,8 @@
         {if $topViewedArticles}
             <h2>Most Viewed Articles</h2>
             {assign var=articles value=array_column($topViewedArticles, 'article')}
-            {include file="frontend/components/article_list.tpl" articles=$articles}
+            {assign var=views value=array_column($topViewedArticles, 'views')}
+            {include file="frontend/components/article_list.tpl" articles=$articles views=$views}
         {/if}
     {/capture}
 

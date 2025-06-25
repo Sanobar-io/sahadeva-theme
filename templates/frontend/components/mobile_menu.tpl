@@ -26,19 +26,6 @@
     {load_menu name="primary" id="primary-nav" ulClass="sahadeva-primarynav"}
 
     <div class="footer">
-
-        <ul class="social-media">
-        {if $activeTheme->getOption('instagram')}
-            <li><a href="http://instagram.com/{$activeTheme->getOption('instagram')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/instagram-social.png" /></a></li>
-        {/if}
-        {if $activeTheme->getOption('tiktok')}
-            <li><a href="http://tiktok.com/@{$activeTheme->getOption('tiktok')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/tiktok-social.png" /></a></li>
-        {/if}
-        {if $activeTheme->getOption('facebook')}
-            <li><a href="https://facebook.com/profile.php?id={$activeTheme->getOption('facebook')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/facebook-social.png" /></a></li>
-        {/if}
-        </ul>
-
         <div class="site-name">
         {capture assign="homeUrl"}
             {url page="index" router=$smarty.const.ROUTE_PAGE}
@@ -55,6 +42,27 @@
             </a>
         {/if}
         </div>
+        <ul class="contact-info">Phone:<br />
+        {if $currentJournal->getData('contactPhone')}
+            <li>{$currentJournal->getData('contactPhone')}</li>
+        {/if}
+        {if $currentJournal->getData('contactEmail')}
+            <li>Email:<br/>
+            <a href="mailto:{$currentJournal->getData('contactEmail')}"> {$currentJournal->getData('contactEmail')}</a></li>
+        {/if}
+        </ul>
+        <ul class="social-media">
+            <li><b>{translate key='plugins.themes.sahadeva.footer.followUs'}</b></li>
+        {if $activeTheme->getOption('instagram')}
+            <li><a href="http://instagram.com/{$activeTheme->getOption('instagram')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/instagram-social.png" /></a></li>
+        {/if}
+        {if $activeTheme->getOption('tiktok')}
+            <li><a href="http://tiktok.com/@{$activeTheme->getOption('tiktok')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/tiktok-social.png" /></a></li>
+        {/if}
+        {if $activeTheme->getOption('facebook')}
+            <li><a href="https://facebook.com/profile.php?id={$activeTheme->getOption('facebook')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/facebook-social.png" /></a></li>
+        {/if}
+        </ul>
     </div>
 </div>
 <div id="defocus"></div>

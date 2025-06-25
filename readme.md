@@ -8,11 +8,12 @@ Named after the youngest Pandava brother, this theme is designed to be elegant, 
 
 **This is the free version of the Sahadeva theme, which is powered by ads.**
 
-Get the **PRO VERSION** license to **remove all ads forever**. Contact us at [hello(at)komkom.id](mailto:hello@komkom.id).
+Get the **PRO VERSION** license to **remove all ads forever**. Contact us at [hello(at)komkom.id](mailto:hello@sanobario.com).
 
 ## Features
 
 - Most viewed articles on the front page
+- Customizable colors
 - Customizable above-footer call to action
 - Support for displaying social media accounts
 - Fully responsive

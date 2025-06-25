@@ -1,9 +1,22 @@
 
 <ul class="articles-wrapper">
-{foreach from=$articles|@array_reverse item=article}
+{foreach name=articles from=$articles item=article}
     <li>
         <div class="meta">
-            <h3><a href="{url page="article" op="view" path=$article->getBestId()}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>
+            <h3 class="text-wrapper"><a href="{url page="article" op="view" path=$article->getBestId()}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>
+            <div class="meta-info">
+                {if $views}
+
+                <div>
+                    <icon data-type="views"></icon>
+                    {$views[$smarty.foreach.articles.index]}
+                </div>
+
+                {/if}
+                <div class="clickable">
+                    <icon data-type="link"></icon>Share
+                </div>
+            </div>
         </div>
         <div class="author-date">
             {$article->getAuthorString()|escape} •

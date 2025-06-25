@@ -11,6 +11,7 @@
 
 // imports
 @import "variables.less";
+@import "icons.less";
 @import "header.less";
 @import "footer.less";
 @import "breadcrumbs.less";
@@ -116,19 +117,20 @@ a.cta-arrow {
 }
 
 #popup {
-  background-color: #fff;
-  border: 1px solid fade(@bg-base, 15%);
-  left: 50%;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  border-top: 4px solid @bg-base;
+  box-shadow: 0 -8px 4px rgba(0, 0, 0, 0.15);
+  bottom: 0;
   padding: 2rem;
   position: fixed;
-  top: 50%;
   text-align: center;
-  transform: translate(-50%, -50%);
-  z-index: 100000;
+  width: 100%;
+  z-index: 100;
   .popup-inner {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
     a {
       text-decoration: underline;
       &:hover {
@@ -140,7 +142,8 @@ a.cta-arrow {
     width: 100%;
   }
   h1 {
-    font-size: 2rem;
+    font-family: "Inter", sans-serif;
+    font-size: 1.25rem;
     margin-bottom: 0;
   }
   p {
@@ -184,6 +187,10 @@ a.cta-rounded {
   max-width: 1200px;
   min-width: 380px;
   width: 100%;
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 .cmp_notification {

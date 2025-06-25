@@ -46,10 +46,10 @@
                 <li><b>Published:</b> {$publishDate|date_format:$dateFormatShort}</li>
             {/if}
             </ul>
-            {if $publication->getData('pub-data::doi')}
+            {if $publication->getStoredPubId('doi')}
 
             <div class="doi">
-                <b>DOI:</b> {$publication->getData('pub-data::doi')}
+                <b>DOI:</b> <a href="https://doi.org/{$publication->getStoredPubId('doi')}">{$publication->getStoredPubId('doi')}</a>
             </div>
 
             {/if}
