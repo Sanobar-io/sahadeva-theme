@@ -1,14 +1,18 @@
 # Sahadeva Theme FREE
 
-**Created by Janisa Pascawati and Andi Nuruljihad**
+Created by Janisa Pascawati and Andi Nuruljihad
+
+---
+
+**This is the free version of the Sahadeva theme, which is powered by ads.**
+
+Get the **PRO VERSION** license to **remove all ads forever**. Contact us at [hello(at)sanobario.com](mailto:hello@sanobario.com).
+
+---
 
 Named after the youngest Pandava brother, this theme is designed to be elegant, thoughtful, and powerful beneath the surface, with responsive design, clean layout, and customizable structure that supports scholarly publishing with clarity and precision.
 
 ![Sanobar logo](demo_img.jpg)
-
-**This is the free version of the Sahadeva theme, which is powered by ads.**
-
-Get the **PRO VERSION** license to **remove all ads forever**. Contact us at [hello(at)komkom.id](mailto:hello@sanobario.com).
 
 ## Features
 
