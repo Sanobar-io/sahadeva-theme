@@ -109,10 +109,13 @@ function showPopup(text, el) {
   popup.style.left = `${x}px`;
   popup.style.top = `${y}px`;
 
+  el.style.pointerEvents = "none";
+
   setTimeout(() => {
     popup.style.opacity = "0";
     setTimeout(() => {
       popup.remove();
+      el.style.pointerEvents = "auto";
     }, 500);
   }, 2000);
 }

@@ -1,22 +1,14 @@
 {**
- * sahadeva/frontend/pages/article.tpl
- *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @brief Display the page to view an article with all of it's details.
- *
- * @uses $article Submission This article
- * @uses $publication Publication The publication being displayed
- * @uses $firstPublication Publication The first published version of this article
- * @uses $currentPublication Publication The most recently published version of this article
- * @uses $issue Issue The issue this article is assigned to
- * @uses $section Section The journal section this article is assigned to
- * @uses $journal Journal The journal currently being viewed.
- * @uses $primaryGalleys array List of article galleys that are not supplementary or dependent
- * @uses $supplementaryGalleys array List of article galleys that are supplementary
- *}
+* Sahadeva Theme
+*
+* Copyright (c) 2025 Sanobario
+* Licensed under the GNU GPL v3. See the COPYING file in the OJS root.
+*
+* This template overrides the default article list layout
+* to match the Sahadeva theme design.
+*
+* @template sahadeva:frontend/pages/article.tpl
+*}
 {include file="frontend/components/header.tpl" pageTitleTranslated=$article->getLocalizedFullTitle()|escape}
 
 <div class="page">
@@ -46,13 +38,6 @@
                 <li><b>Published:</b> {$publishDate|date_format:$dateFormatShort}</li>
             {/if}
             </ul>
-            {if $publication->getStoredPubId('doi')}
-
-            <div class="doi">
-                <b>DOI:</b> <a href="https://doi.org/{$publication->getStoredPubId('doi')}">{$publication->getStoredPubId('doi')}</a>
-            </div>
-
-            {/if}
         </div>
         <div class="extra-content">
             {call_hook name="Templates::Article::Details"}
@@ -132,10 +117,24 @@
 
     {capture assign=rightCol}
         <section class="article-publication-info">
+            {* Volume Info *}
+            <div class="label">Found In Issue</div>
+            <div class="section-text">
+                <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
+                    {$issue->getIssueIdentification()|escape}
+                </a>
+            </div>
             {* Article Section *}
             {if $section}
             <div class="label">Section</div>
             <div class="section-text">{$section->getLocalizedTitle()|escape}</div>
+            {/if}
+            {* DOI *}
+            {if $publication->getStoredPubId('doi')}
+            <div class="label">DOI</div>
+            <div class="section-text">
+                <a href="https://doi.org/{$publication->getStoredPubId('doi')}">{$publication->getStoredPubId('doi')}</a>
+            </div>
             {/if}
             {* Licensing Info *}
             {if $publication->getLocalizedData('copyrightHolder')}

@@ -34,7 +34,6 @@
                     <a href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
                         {$announcement->getLocalizedTitle()|escape}
                     </a>
-                    📢
                 </h3>
                 {$announcement->getLocalizedDescriptionShort()|strip_unsafe_html}
                 <span class="read-more" aria-hidden="true" role="presentation">

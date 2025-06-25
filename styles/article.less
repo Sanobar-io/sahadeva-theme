@@ -46,7 +46,11 @@
 .article {
   .abstract {
     background-color: @lightgray;
-    padding: 1rem;
+    padding: 2rem;
+    h2 {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
   }
   .cta {
     border-color: @lightgray;
@@ -107,9 +111,16 @@
   & > * {
     padding: 0.5rem 1rem;
   }
+  a {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
   .label {
     background-color: @lightgray;
     border-bottom: 1px solid @lightgray;
+    font-size: 0.625rem;
     font-weight: 600;
     text-transform: uppercase;
   }
