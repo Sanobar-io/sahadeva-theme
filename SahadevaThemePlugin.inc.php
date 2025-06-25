@@ -81,6 +81,16 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaContent.label'),
 		]);
 
+		$this->addOption('aboveFooterCtaButtonText', 'FieldText', [
+			'label' => 'Above Footer CTA Button Text',
+			'description' => 'This is what appears on the CTA button.',
+		]);
+
+		$this->addOption('aboveFooterCtaButtonUrl', 'FieldText', [
+			'label' => 'Above Footer CTA Button URL',
+			'description' => 'This is the URL the CTA button links to.',
+		]);
+
 		
 		$this->addOption('instagram', 'FieldText', [
 			'label' => 'Instagram',
