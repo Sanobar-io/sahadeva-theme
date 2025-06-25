@@ -137,10 +137,18 @@
             <div class="label">Section</div>
             <div class="section-text">{$section->getLocalizedTitle()|escape}</div>
             {/if}
+            {* Licensing Info *}
+            {if $publication->getLocalizedData('copyrightHolder')}
+            <div class="label">Licensing Terms</div>
+            <div class="section-text">
+                {assign var=licenseTerms value=$currentContext->getLocalizedData('licenseTerms')}
+                © {$publishDate|date_format:"Y"} {$article->getAuthorString()|escape}. {$licenseTerms}
+            </div>
+            {/if}
         </section>
     {/capture}
 
-    {include file="frontend/objects/content.tpl"}
+    {include file="frontend/objects/content.tpl" sidebarDisabled=true}
 
     <section class="footer-content">
         {call_hook name="Templates::Article::Footer::PageFooter"}
