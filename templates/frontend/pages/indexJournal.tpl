@@ -57,12 +57,9 @@
                     <div class="jakpp">{$currentJournal->_data.abbreviation.en_US}</div>
                 </h2>
                 <p>{$currentContext->getLocalizedData('description')}</p>
-                <a class="cta-arrow" href="{url page='about'}">Aims & Scope</a>
+                <a class="cta-arrow" href="{url page='about'}">Read More</a>
             </div>
-            <div class="team-container">
-                <a href="{url page='about' op='editorialTeam'}">Editorial Team</a>
-                <a href="{url page='about' op='editorialTeam'}">Reviewers</a>
-            </div>
+            {load_menu name="belowAbout" id="belowAbout-nav"}
         </div>
         <div class="col-right">
 

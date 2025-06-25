@@ -32,6 +32,8 @@
             {if $currentJournal->getData('mailingAddress')}
                 <li>{$currentJournal->getData('mailingAddress')}</li>
             {/if}
+            </ul>
+            <ul class="issn-info">
             {if $activeTheme->getOption('issnPrint')}
                 <li>ISSN Print: <a href="https://portal.issn.org/resource/ISSN/{$activeTheme->getOption('issnPrint')}" target="_blank">{$activeTheme->getOption('issnPrint')}</a></li>
             {/if}

@@ -57,14 +57,17 @@
         }
       }
     }
-    .team-container {
-      display: grid;
-      gap: 1px;
-      grid-template-columns: 1fr 1fr;
+    #belowAbout-nav {
       border-top: 4px solid @bg-base;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
       a {
         background-color: @lightgray;
-        font-weight: 600;
+        display: inline-block;
+        width: 100%;
         padding: 0.5rem 2rem;
         &:hover {
           background-color: darken(@lightgray, 15%);

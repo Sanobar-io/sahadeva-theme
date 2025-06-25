@@ -49,10 +49,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		// add options
 
-		// Basic Theme Settings
-		// $this->addOption('groupBasicSettings', 'FieldHtml', [
-		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">⚙ Sahadeva Theme Settings</h3>',
-		// ]);
 		$this->addOption('serialKey', 'FieldText', [
 			'label' => 'Serial Key',
 			'description' => 'Input valid serial key to remove ads. Purchase a key from <a href="mailto:hello@sanobario.com">Sanobario</a>.',
@@ -63,21 +59,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'description' => __('plugins.themes.sahadeva.option.color.description'),
 			'default' => '#1E6292',
 		]);
-
-		// Extra Content
-		// $this->addOption('groupAdditionalBodyContent', 'FieldHtml', [
-		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👾 Additional Body Content</h3>',
-		// ]);
 		
 		$this->addOption('leftColTextFieldHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.leftColTextFieldHeading.label'),
 			'description' => 'This is the heading for the Additional Content found in Settings → Website → Appearance → Advanced.'
 		]);
-
-		// ISSN Settings
-		// $this->addOption('groupISSN', 'FieldHtml', [
-		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">🔢 ISSN Settings</h3>',
-		// ]);
 
 		$this->addOption('issnPrint', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.issnPrint.label'),
@@ -87,11 +73,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.issnElectronic.label'),
 		]);
 
-		// Above Footer CTA
-		// $this->addOption('groupAboveFooterCTA', 'FieldHtml', [
-		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👆 Large CTA Settings</h3>',
-		// ]);
-
 		$this->addOption('aboveFooterCtaHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaHeading.label'),
 		]);
@@ -100,10 +81,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaContent.label'),
 		]);
 
-		// Social media options
-		// $this->addOption('groupSocialMedia', 'FieldHtml', [
-		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👪 Social Media Settings</h3>',
-		// ]);
 		
 		$this->addOption('instagram', 'FieldText', [
 			'label' => 'Instagram',
@@ -117,15 +94,13 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => 'Facebook',
 		]);
 
-		// Additional Footer Content
-		// $this->addOption('groupAdditionalFooterContent', 'FieldHtml', [
-		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👣 Additional Footer Content</h3>',
-		// ]);
-
 		$this->addOption('additionalFooterInfo', 'FieldRichTextarea', [
 			'label' => __('plugins.themes.sahadeva.option.additionalFooterInfo.label'),
 			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
 		]);
+
+		// add menu
+		$this->addMenuArea('belowAbout');
 
 		// hooks
 
