@@ -29,12 +29,14 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->addStyle('stylesheet', 'styles/sahadeva.less');
 
 		$bgBase = $this->getOption('bg-base');
+		$baseUrl = Application::get()->getRequest()->getBaseUrl();
 
 		$this->modifyStyle(
 			'stylesheet',
 			[
 				'addLessVariables' =>
 					"@bg-base: $bgBase;",
+					"@base-url: $baseUrl;",
 			]
 		);
 

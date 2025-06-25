@@ -20,8 +20,11 @@
 <div class="page">
 
     {include file="frontend/components/breadcrumbs_issue.tpl" currentTitle=$issueIdentification}
+    
 
     <section class="issue-wrapper">
+        {if $issue}
+
         {assign var=issueCover value=$issue->getLocalizedCoverImageUrl()}
         {if $issueCover}
         
@@ -49,6 +52,11 @@
                 {/if}
             </div>
         </section>
+
+        {/if}
+
+        {else}
+            <h1>No articles have been published</h1>
 
         {/if}
     </section>
