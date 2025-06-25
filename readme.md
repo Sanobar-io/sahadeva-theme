@@ -10,6 +10,8 @@ Get the **PRO VERSION** license to **remove all ads forever**. Contact us at [he
 
 ---
 
+## About Sahadeva Theme
+
 Named after the youngest Pandava brother, this theme is designed to be elegant, thoughtful, and powerful beneath the surface, with responsive design, clean layout, and customizable structure that supports scholarly publishing with clarity and precision.
 
 ![Sanobar logo](demo_img.jpg)
