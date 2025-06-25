@@ -113,15 +113,33 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->addMenuArea('belowAbout');
 
 		// hooks
-		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);
-		HookRegistry::register('TemplateManager::display', [$this, 'addSubmissionDates']);
-		HookRegistry::register('TemplateManager::display', [$this, 'checkSerialKey']);
+		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
 		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
 
 	}
 
-	public function checkSerialKey($hookname, $args) {
+	public function handleTemplateDisplay($hookName, $args) {
 		[$templateMgr, $template] = $args;
+
+		// Serial key check (applies to all pages)
+		$this->checkSerialKey($templateMgr, $template);
+
+		// Homepage logic (load current/previous/next issue)
+		if (strpos($template, 'frontend/pages/indexSite.tpl') !== false ||
+			strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
+			strpos($template, 'frontend/pages/issue.tpl') !== false) {
+			$this->loadCurrentIssue($templateMgr);
+		}
+
+		// Article page logic (submission dates)
+		if (strpos($template, 'frontend/pages/article.tpl') !== false) {
+			$this->addSubmissionDates($templateMgr);
+		}
+
+		return false;
+	}
+
+	public function checkSerialKey($templateMgr, $template) {
 		$serialKey = $this->getOption('serialKey') ?? false;
 
 		if(!$serialKey) return false;
@@ -184,7 +202,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			];
 	}
 	
-	public function getIssuesbyYear($hookname, $args) {
+	public function getIssuesbyYear($templateMgr) {
 		[$templateMgr, $template] = $args;
 
 		// Only run on the issue archive view page
@@ -214,9 +232,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 	 * Get the latest issue object
 	 * @return bool
 	 */
-	public function loadCurrentIssue($hookName, $args)
+	public function loadCurrentIssue($templateMgr)
 	{
-		$templateMgr = $args[0];
 		$request = Application::get()->getRequest();
 		$journal = $request->getContext();
 
@@ -291,15 +308,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		return false;
 	}
 
-	public function addSubmissionDates($hookName, $args)
+	public function addSubmissionDates($templateMgr)
 	{
-		$templateMgr = $args[0];
-		$template = $args[1];
-
-		// Only run on the article view page
-		if (strpos($template, 'frontend/pages/article.tpl') === false) {
-			return;
-		}
 
 		$publication = $templateMgr->getTemplateVars('publication');
 
