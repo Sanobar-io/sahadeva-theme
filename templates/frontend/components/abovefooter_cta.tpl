@@ -1,3 +1,15 @@
+{**
+* Sahadeva Theme
+*
+* Copyright (c) 2025 Sanobario
+* Licensed under the GNU GPL v3. See the COPYING file in the OJS root.
+*
+* This is the style for the Above Footer CTA.
+*
+* @template sahadeva:frontend/components/abovefooter_cta.tpl
+* @uses $announcement Announcement The announcement to display
+*}
+
 {if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}
 
 <section class="abovefooter-cta">

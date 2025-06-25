@@ -1,4 +1,14 @@
-
+{**
+* Sahadeva Theme
+*
+* Copyright (c) 2025 Sanobario
+* Licensed under the GNU GPL v3. See the COPYING file in the OJS root.
+*
+* This template overrides the default article list layout
+* to match the Sahadeva theme design.
+*
+* @template sahadeva:frontend/components/article_list.tpl
+*}
 <ul class="articles-wrapper">
 {foreach name=articles from=$articles item=article}
     <li>

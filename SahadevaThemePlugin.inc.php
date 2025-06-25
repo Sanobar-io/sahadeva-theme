@@ -55,7 +55,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// ]);
 		$this->addOption('serialKey', 'FieldText', [
 			'label' => 'Serial Key',
-			'description' => 'Input valid serial key to remove ads. Purchase a key at <a href="https://komkom.id">KOMKOM.id</a>.',
+			'description' => 'Input valid serial key to remove ads. Purchase a key from <a href="mailto:hello@sanobario.com">Sanobario</a>.',
 		]);
 
 		$this->addOption('bg-base', 'FieldColor', [

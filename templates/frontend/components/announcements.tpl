@@ -1,14 +1,14 @@
 {**
- * templates/frontend/components/announcements.tpl
- *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @brief Display a list of announcements
- *
- * @uses $announcements array List of announcements
- *}
+* Sahadeva Theme
+*
+* Copyright (c) 2025 Sanobario
+* Licensed under the GNU GPL v3. See the COPYING file in the OJS root.
+*
+* This template overrides the default announcements archive layout to
+* to match the Sahadeva theme design.
+*
+* @template sahadeva:frontend/components/announcements.tpl
+*}
 
 <ul class="cmp_announcements">
 	{foreach from=$announcements item=announcement}

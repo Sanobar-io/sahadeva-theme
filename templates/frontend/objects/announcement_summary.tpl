@@ -1,15 +1,15 @@
 {**
- * templates/frontend/objects/announcement_summary.tpl
- *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @brief Display a summary view of an announcement
- *
- * @uses $announcement Announcement The announcement to display
- * @uses $heading string HTML heading element, default: h2
- *}
+* Sahadeva Theme
+*
+* Copyright (c) 2025 Sanobario
+* Licensed under the GNU GPL v3. See the COPYING file in the OJS root.
+*
+* This template overrides the default announcement summary layout
+* to match the Sahadeva theme design.
+*
+* @template sahadeva:frontend/objects/announcement_summary.tpl
+* @uses $announcement Announcement The announcement to display
+*}
 {if !$heading}
 	{assign var="heading" value="h2"}
 {/if}
