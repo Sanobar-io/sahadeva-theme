@@ -23,10 +23,6 @@
     <section class="article-meta">
         <h1>{$publication->getLocalizedTitle()|escape}</h1>
         <div class="meta">
-            <div class="issue-meta">
-                <span class="journal">{$currentContext->getLocalizedName()}</span> •
-                <span class="issue">{$issue->getIssueIdentification()}</span>
-            </div>
             <ul class="process-meta">
             {if $submissionDate}
                 <li><b>Submitted:</b> {$submissionDate|date_format:$dateFormatShort}</li>
