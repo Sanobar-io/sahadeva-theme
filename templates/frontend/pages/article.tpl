@@ -130,6 +130,15 @@
     
     {/capture}
 
+    {capture assign=rightCol}
+        <section class="article-publication-info">
+            {* Article Section *}
+            {if $section}
+            <div class="label">Section</div>
+            <div class="section-text">{$section->getLocalizedTitle()|escape}</div>
+            {/if}
+        </section>
+    {/capture}
 
     {include file="frontend/objects/content.tpl"}
 
