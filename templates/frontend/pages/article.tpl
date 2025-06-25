@@ -81,6 +81,18 @@
         <section class="abstract text-wrapper center">
             <h2>Abstract</h2>
             {$publication->getLocalizedData('abstract')}
+            {* Keywords *}
+            {if $publication->getData('keywords')}
+            <hr />
+            <div class="keywords-wrapper">
+                <div class="label">Keywords</div>
+                <ul class="keywords">
+                    {foreach from=$publication->getLocalizedData('keywords') item=keyword}
+                    <li class="keyword">{$keyword}</li>
+                    {/foreach}
+                </ul>
+            </div>
+            {/if}
         </section>
         {* Galley *}
         {assign var=galleys value=$publication->getData('galleys')}
