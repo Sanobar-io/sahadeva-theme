@@ -38,6 +38,9 @@ msgstr "Show a call to action button in your journal summary (must enable 'Show 
 msgid "plugins.themes.sahadeva.issueTOC.viewAll"
 msgstr "View Table of Contents"
 
+msgid "plugins.themes.sahadeva.submitManuscript.label"
+msgstr "Submit Manuscript"
+
 msgid "plugins.themes.sahadeva.option.leftColTextField.label"
 msgstr "Left Column Custom Content"
 
