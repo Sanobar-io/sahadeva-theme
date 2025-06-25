@@ -85,25 +85,41 @@
         {* Galley *}
         {assign var=galleys value=$publication->getData('galleys')}
         {if $galleys|@count}
-            <section class="cta text-center">
-            {foreach from=$galleys item=galley}
-                {if $galley->getFileType() == 'application/pdf'}
-                    <p>This text has been made available for reading.</p>
-                    <a class="center" href="{url page="article" op="download" path=$article->getBestId()|to_array:$galley->getBestGalleyId()}">Read Full Text <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" /></a>
-                    {break}
-                {/if}
-            {/foreach}
-            </section>
+        <section class="cta text-center">
+        {foreach from=$galleys item=galley}
+            {if $galley->getFileType() == 'application/pdf'}
+                <p>This text has been made available for reading.</p>
+                <a class="center" href="{url page="article" op="download" path=$article->getBestId()|to_array:$galley->getBestGalleyId()}">Read Full Text <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" /></a>
+                {break}
+            {/if}
+        {/foreach}
+        </section>
         {/if}
 
-        <section class="references"></section>
+        {* References *}
+        {if $parsedCitations || $publication->getData('citationsRaw')}
+        <hr/>
+        <section class="item references">
+            <h3>
+                {translate key="submission.citations"}
+            </h3>
+            <div class="value">
+                {if $parsedCitations}
+                    {foreach from=$parsedCitations item="parsedCitation"}
+                        <p>{$parsedCitation->getCitationWithLinks()|strip_unsafe_html} {call_hook name="Templates::Article::Details::Reference" citation=$parsedCitation}</p>
+                    {/foreach}
+                {else}
+                    {$publication->getData('citationsRaw')|escape|nl2br}
+                {/if}
+            </div>
+        </section>
+        {/if}
     </article>
+    
     {/capture}
 
 
     {include file="frontend/objects/content.tpl"}
-
-
 
     <section class="footer-content">
         {call_hook name="Templates::Article::Footer::PageFooter"}
