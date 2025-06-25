@@ -5,14 +5,14 @@
 .issue-wrapper {
   background-color: @lightgray;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   padding: 2rem;
   .cover {
+    max-width: 400px;
+    object-fit: contain;
     width: 100%;
-    max-width: 200px;
   }
   .overview {
-    flex: 1 1 auto;
     h2 {
       margin-bottom: 0.5rem;
     }
@@ -21,6 +21,12 @@
       display: flex;
       justify-content: space-between;
       margin: 1rem 0;
+      @media (max-width: @screen-lg) {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: flex-start;
+      }
       .issue-meta {
         font-weight: 600;
         text-transform: uppercase;

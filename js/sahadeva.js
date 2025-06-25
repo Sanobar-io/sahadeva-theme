@@ -61,20 +61,22 @@ if (adminExpandBtn) {
 
 const monetagCTA = document.getElementById("view-ad");
 
-monetagCTA.addEventListener("click", () => {
-  const adArray = [
-    "https://otieu.com/4/9483189",
-    "https://otieu.com/4/9483045",
-  ];
-  const theAdUrl = adArray[Math.floor(Math.random() * adArray.length)];
+if (monetagCTA) {
+  monetagCTA.addEventListener("click", () => {
+    const adArray = [
+      "https://otieu.com/4/9483189",
+      "https://otieu.com/4/9483045",
+    ];
+    const theAdUrl = adArray[Math.floor(Math.random() * adArray.length)];
 
-  window.open(
-    theAdUrl,
-    "_blank",
-    "width=800,height=600,resizable=yes,scrollbars=yes"
-  );
-  monetagCTA.parentElement.parentElement.remove();
-});
+    window.open(
+      theAdUrl,
+      "_blank",
+      "width=800,height=600,resizable=yes,scrollbars=yes"
+    );
+    monetagCTA.parentElement.parentElement.remove();
+  });
+}
 
 /**
  * Share clickable

@@ -30,7 +30,7 @@
         
         <img class="cover" src="{$issueCover|escape}" />
 
-        <section class="overview">
+        <section class="overview text-wrapper">
             <h2>{$currentJournal->getLocalizedName()}</h2>
             <div class="meta">
                 <div class="issue-meta">
