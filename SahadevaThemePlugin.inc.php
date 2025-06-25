@@ -113,11 +113,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->addMenuArea('belowAbout');
 
 		// hooks
-
-		HookRegistry::register('TemplateManager::display', function($hookName, $args) {
-			error_log("Template loaded: " . $args[1]); // path to the .tpl file
-			return false; // don't block further execution
-		});
 		HookRegistry::register('TemplateManager::display', [$this, 'loadCurrentIssue']);
 		HookRegistry::register('TemplateManager::display', [$this, 'addSubmissionDates']);
 		HookRegistry::register('TemplateManager::display', [$this, 'checkSerialKey']);

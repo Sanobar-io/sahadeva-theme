@@ -5,6 +5,8 @@ Created by Janisa Pascawati and Andi Nuruljihad
 > **This is the free version of the Sahadeva theme, which is powered by ads.**
 >
 > Get the **PRO VERSION** license to **remove all ads forever**. Contact us at [hello(at)sanobario.com](mailto:hello@sanobario.com).
+>
+> See a live demo of the theme at: <https://sanobario.com/journal/index.php/refsi/index>
 
 ## About Sahadeva Theme
 
