@@ -66,7 +66,11 @@
             </div>
         </div>
         <div class="col-right">
+
             <div class="current-issue">
+                {* Check If Issue Exists *}
+                {if $issue}
+
                 <div class="metabox">
                     <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2>
                     <div class="issue-info">
@@ -102,7 +106,12 @@
                     {/if}
                     </div>
                 </div>
+
+                {else}
+                    <h2>No Issues Published</h2>
+                {/if}
             </div>
+            
         </div>
     </main>
 

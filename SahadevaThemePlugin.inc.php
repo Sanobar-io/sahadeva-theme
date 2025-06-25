@@ -48,9 +48,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// add options
 
 		// Basic Theme Settings
-		$this->addOption('groupBasicSettings', 'FieldHtml', [
-			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">⚙ Sahadeva Theme Settings</h3>',
-		]);
+		// $this->addOption('groupBasicSettings', 'FieldHtml', [
+		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">⚙ Sahadeva Theme Settings</h3>',
+		// ]);
 		$this->addOption('serialKey', 'FieldText', [
 			'label' => 'Serial Key',
 			'description' => 'Input valid serial key to remove ads. Purchase a key at <a href="https://komkom.id">KOMKOM.id</a>.',
@@ -63,9 +63,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		// Extra Content
-		$this->addOption('groupAdditionalBodyContent', 'FieldHtml', [
-			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👾 Additional Body Content</h3>',
-		]);
+		// $this->addOption('groupAdditionalBodyContent', 'FieldHtml', [
+		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👾 Additional Body Content</h3>',
+		// ]);
 		
 		$this->addOption('leftColTextFieldHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.leftColTextFieldHeading.label'),
@@ -73,9 +73,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		// ISSN Settings
-		$this->addOption('groupISSN', 'FieldHtml', [
-			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">🔢 ISSN Settings</h3>',
-		]);
+		// $this->addOption('groupISSN', 'FieldHtml', [
+		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">🔢 ISSN Settings</h3>',
+		// ]);
 
 		$this->addOption('issnPrint', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.issnPrint.label'),
@@ -86,9 +86,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		// Above Footer CTA
-		$this->addOption('groupAboveFooterCTA', 'FieldHtml', [
-			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👆 Large CTA Settings</h3>',
-		]);
+		// $this->addOption('groupAboveFooterCTA', 'FieldHtml', [
+		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👆 Large CTA Settings</h3>',
+		// ]);
 
 		$this->addOption('aboveFooterCtaHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaHeading.label'),
@@ -99,9 +99,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		// Social media options
-		$this->addOption('groupSocialMedia', 'FieldHtml', [
-			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👪 Social Media Settings</h3>',
-		]);
+		// $this->addOption('groupSocialMedia', 'FieldHtml', [
+		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👪 Social Media Settings</h3>',
+		// ]);
 		
 		$this->addOption('instagram', 'FieldText', [
 			'label' => 'Instagram',
@@ -116,9 +116,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		// Additional Footer Content
-		$this->addOption('groupAdditionalFooterContent', 'FieldHtml', [
-			'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👣 Additional Footer Content</h3>',
-		]);
+		// $this->addOption('groupAdditionalFooterContent', 'FieldHtml', [
+		// 	'description' => '<h3 style="border-bottom: 1px solid lightgray; padding-bottom: 0.5rem; margin-top: 3.4rem;">👣 Additional Footer Content</h3>',
+		// ]);
 
 		$this->addOption('additionalFooterInfo', 'FieldRichTextarea', [
 			'label' => __('plugins.themes.sahadeva.option.additionalFooterInfo.label'),
