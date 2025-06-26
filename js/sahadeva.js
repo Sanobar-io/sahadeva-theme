@@ -73,7 +73,6 @@ function showAdPopup() {
   // check if it's been 5 minutes (300,000ms)
   if (!lastClick || now - parseInt(lastClick, 10) > 5 * 60 * 1000) {
     popupEl.dataset.hidden = "false";
-    localStorage.setItem("lastAdClick", now);
   } else {
     popupEl.dataset.hidden = "true";
   }
@@ -91,6 +90,8 @@ monetagCTA?.addEventListener("click", () => {
     "_blank",
     "width=800,height=600,resizable=yes,scrollbars=yes"
   );
+
+  localStorage.setItem("lastAdClick", now);
   popupEl.dataset.hidden = "true";
 });
 

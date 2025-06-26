@@ -172,7 +172,19 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function _rebuildKeyCache ($serialKey) {
-		$data = ['serial' => $serialKey];
+		$context = $this->request->getContext();
+		$contextPath = $this->request->getDispatcher()->url(
+			$this->request,
+			ROUTE_PAGE,
+			$context ? $context->getPath() : null,
+			null
+		);
+
+		$origin = $contextPath;
+		$data = [
+			'serial' => $serialKey,
+			'origin' => $origin,
+		];
 		$options = [
 			'http' => [
 				'header'  => "Content-Type: application/json\r\n",
