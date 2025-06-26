@@ -22,12 +22,9 @@
     .meta {
       align-items: flex-start;
       display: flex;
-      gap: 2rem;
+      flex-direction: column;
+      gap: 0.625rem;
       justify-content: space-between;
-      @media (max-width: @screen-md) {
-        flex-direction: column;
-        gap: 0.75rem;
-      }
       h3 {
         display: inline-block;
         font-family: "Inter", sans-serif;
@@ -45,14 +42,18 @@
         font-size: 0.75em;
       }
       .meta-info {
+        border-radius: 32px;
+        border: 1px solid @lightgray;
         display: flex;
-        flex-direction: column;
+        gap: 0.325rem;
+        padding: 0.125rem;
         @media (max-width: @screen-md) {
           flex-direction: row;
         }
         & > * {
           align-items: center;
-          border-radius: 16px;
+          border: 1px solid rgba(0, 0, 0, 0.15);
+          border-radius: 24px;
           display: flex;
           font-size: 0.7rem;
           font-weight: 600;
