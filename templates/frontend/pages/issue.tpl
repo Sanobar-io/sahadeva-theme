@@ -36,15 +36,6 @@
                 <div class="issue-meta">
                     Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getDatePublished()|date_format:"%B %e, %Y"}
                 </div>
-                <ul class="issue-nav">
-                {if $previousIssue}
-                    <li><a class="issue-nav-btn" href="{url router=ROUTE_PAGE page="issue" op="view" path=$previousIssue->getBestIssueId()}">← Previous Issue</a></li>
-                {/if}
-                    <li><a class="issue-nav-btn" href="{url page="issue" op="archive"}">All Issues</a></li>
-                {if $nextIssue}
-                    <li><a class="issue-nav-btn" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a></li>
-                {/if}
-                </ul>
             </div>
             <div class="description">
                 {if $issue->getLocalizedDescription()}
@@ -72,15 +63,6 @@
 
             </div>
         {/foreach}
-
-            <div class="issue-nav">
-            {if $previousIssue}
-                <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$previousIssue->getBestIssueId()}">← Previous Issue</a><
-            {/if}
-            {if $nextIssue}
-                <a class="cta-rounded" href="{url router=ROUTE_PAGE page="issue" op="view" path=$nextIssue->getBestIssueId()}">Next Issue →</a>
-            {/if}
-            </div>
     {/capture}
 
     {include file="frontend/objects/content.tpl"}

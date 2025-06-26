@@ -326,38 +326,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// current issue, previous issue, and next issue
 		if ($journal) {
 			$currentIssue = $this->issueDao->getCurrent($journal->getId(), true);
-
-			$previousIssue = null;
-			$nextIssue = null;
-
-			if ($currentIssue) {
-				// Get all published issues ordered by datePublished descending
-				$issues = $this->issueDao->getPublishedIssues($journal->getId());
-				$issuesArray = [];
-				while ($issue = $issues->next()) {
-					$issuesArray[] = $issue;
-				}
-				$issuesArray = array_values($issuesArray); // Ensure it's numerically indexed
-
-				// Find index of current issue
-				foreach ($issuesArray as $i => $issue) {
-					if ($issue->getId() === $currentIssue->getId()) {
-						if (isset($issuesArray[$i + 1])) {
-							$previousIssue = $issuesArray[$i + 1]; // later in time = older = previous
-						}
-						if (isset($issuesArray[$i - 1])) {
-							$nextIssue = $issuesArray[$i - 1]; // earlier in time = newer = next
-						}
-						break;
-					}
-				}
-			}
-
 			// Assign to template
 			$templateMgr->assign([
 				'currentIssue' => $currentIssue,
-				'previousIssue' => $previousIssue,
-				'nextIssue' => $nextIssue,
 			]);
 		}
 
