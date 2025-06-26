@@ -17,16 +17,17 @@
             <h3 class="text-wrapper"><a href="{url page="article" op="view" path=$id}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>
             <div class="meta-info">
                 {assign var=views value=$submissionIdsByViews[$id]}
-                {if $views}
-
+                
                 <div>
-                    <icon data-type="views"></icon>
+                <icon data-type="eye"></icon>
+                    {if $views}
                     {$views}
+                    {else}
+                    0
+                    {/if}
                 </div>
-
-                {/if}
                 <div class="sharelink clickable" data-url="{url page="article" op="view" path=$id}">
-                    <icon data-type="link"></icon>Share
+                    <icon data-type="share"></icon>Share
                 </div>
             </div>
         </div>
