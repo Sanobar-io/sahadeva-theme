@@ -235,6 +235,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$now = time();
 
 		if(
+			!is_array($data) ||
 			($now - $data['checkedAt'] > 86400) ||
 			$data['top_articles'] == null
 		) {
