@@ -23,13 +23,19 @@ class SahadevaThemePlugin extends ThemePlugin {
 	 *
 	 * @return null
 	 */
+
 	public function init() {
+
+		$this->request = Application::get()->getRequest();
+		$this->issueDao = DAORegistry::getDAO('IssueDAO');
+		$this->submissionDao = Application::getSubmissionDAO();
+		$this->cacheManager = CacheManager::getManager();
 		
 		// add styles
 		$this->addStyle('stylesheet', 'styles/sahadeva.less');
 
 		$bgBase = $this->getOption('bg-base');
-		$baseUrl = Application::get()->getRequest()->getBaseUrl();
+		$baseUrl = $this->request->getBaseUrl();
 
 		$this->modifyStyle(
 			'stylesheet',
@@ -41,14 +47,12 @@ class SahadevaThemePlugin extends ThemePlugin {
 		);
 
 		// add scripts
-		$this->addScript('jquery', 'js/lib/jquery.min.js');
 		$this->addScript('sahadeva-script', 'js/sahadeva.js', ['contexts' => 'frontend']);
 
 		// add navs
-		$this->addMenuArea(array('primary', 'user', 'footer'));
+		$this->addMenuArea(array('primary', 'user', 'footer', 'belowAbout'));
 
-		// add options
-
+		// add options		
 		$this->addOption('serialKey', 'FieldText', [
 			'label' => 'Serial Key',
 			'description' => 'Input valid serial key to remove ads. Purchase a key from <a href="mailto:hello@sanobario.com">Sanobario</a>.',
@@ -68,7 +72,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->addOption('issnPrint', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.issnPrint.label'),
 		]);
-
 		$this->addOption('issnElectronic', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.issnElectronic.label'),
 		]);
@@ -76,41 +79,30 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->addOption('aboveFooterCtaHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaHeading.label'),
 		]);
-
 		$this->addOption('aboveFooterCtaContent', 'FieldRichTextarea', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaContent.label'),
 		]);
-
 		$this->addOption('aboveFooterCtaButtonText', 'FieldText', [
 			'label' => 'Above Footer CTA Button Text',
 			'description' => 'This is what appears on the CTA button.',
 		]);
-
 		$this->addOption('aboveFooterCtaButtonUrl', 'FieldText', [
 			'label' => 'Above Footer CTA Button URL',
 			'description' => 'This is the URL the CTA button links to.',
 		]);
 
-		
-		$this->addOption('instagram', 'FieldText', [
-			'label' => 'Instagram',
-		]);
-
-		$this->addOption('tiktok', 'FieldText', [
-			'label' => 'TikTok',
-		]);
-
-		$this->addOption('facebook', 'FieldText', [
-			'label' => 'Facebook',
-		]);
+		foreach([
+			'instagram',
+			'tiktok',
+			'facebook'
+		] as $socialField) {
+			$this->addOption($socialField, 'FieldText', ['label' => ucfirst($socialField)]);
+		}
 
 		$this->addOption('additionalFooterInfo', 'FieldRichTextarea', [
 			'label' => __('plugins.themes.sahadeva.option.additionalFooterInfo.label'),
 			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
 		]);
-
-		// add menu
-		$this->addMenuArea('belowAbout');
 
 		// hooks
 		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
@@ -129,6 +121,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
 			strpos($template, 'frontend/pages/issue.tpl') !== false) {
 			$this->loadCurrentIssue($templateMgr);
+			$this->getArticleViews($templateMgr);
 		}
 
 		// Article page logic (submission dates)
@@ -144,27 +137,32 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		if(!$serialKey) return false;
 
-		$cacheManager = CacheManager::getManager();
-		$cache = $cacheManager->getFileCache(
+		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
 			'isValid',
-			[$this, '_rebuildKeyCache'],
+			function($cache) use ($serialKey) {
+				return $this->_rebuildKeyCache($cache, $serialKey);
+			},
 		);
 
 		$data = $cache->getContents();
 		$now = time();
 
 		// check if expired or not valid
-		if(!isset($data['checkedAt']) || ($now - $data['checkedAt'] > 86400) || $data['valid'] == false || $data['serial'] !== $serialKey) {
+		if(
+			!isset($data['checkedAt']) ||
+			($now - $data['checkedAt'] > 86400) ||
+			$data['valid'] == false ||
+			$data['serial'] !== $serialKey) {
 			// refresh cache
-			$data = $this->_rebuildKeyCache($cache, $serialKey);
+			$data = $this->_rebuildKeyCache($serialKey);
 			$cache->setEntireCache($data);
 		}
 
 		$templateMgr->assign('validSerialKey', $data['valid']);
 	}
 
-	public function _rebuildKeyCache ($cache, $serialKey) {
+	public function _rebuildKeyCache ($serialKey) {
 		$data = ['serial' => $serialKey];
 		$options = [
 			'http' => [
@@ -203,16 +201,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 	
 	public function getIssuesbyYear($templateMgr) {
-		[$templateMgr, $template] = $args;
 
-		// Only run on the issue archive view page
-		if (strpos($template, 'frontend/pages/issueArchive.tpl') === false) {
-			return;
-		}
+		$start = mictrotime(true);
 
-		$journal = Application::get()->getRequest()->getJournal();
-		$issueDao = DAORegistry::getDAO('IssueDAO');
-		$issues = $issueDao->getPublishedIssues($journal->getId())->toArray();
+		$journal = $this->request->getJournal();
+		$issues = $this->issueDao->getPublishedIssues($journal->getId())->toArray();
 
 		$grouped = [];
 
@@ -225,17 +218,50 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		$templateMgr->assign('groupedIssuesByYear', $grouped);
 
+		error_log("getIssuesByYear " . (microtime(true) - $start) . "s");
+
 		return false;
 	}
 
-	/**
-	 * Get the latest issue object
-	 * @return bool
-	 */
-	public function loadCurrentIssue($templateMgr)
-	{
-		$request = Application::get()->getRequest();
-		$journal = $request->getContext();
+	public function getArticleViews($templateMgr) {
+
+		$cache = $this->cacheManager->getFileCache(
+			'sahadeva',
+			'viewsCache',
+			[$this, '_rebuildViewsCache'],
+		);
+
+		$data = $cache->getContents();
+		$now = time();
+
+		if(
+			($now - $data['checkedAt'] > 86400) ||
+			$data['top_articles'] == null
+		) {
+			$data = $this->_rebuildViewsCache();
+			$cache->setEntireCache($data);
+		}
+
+		// Convert IDs to submission objects
+		$topArticles = [];
+
+		foreach ($data['top_articles'] as $item) {
+			$submission = $this->submissionDao->getById($item['article_ids']);
+			if ($submission) {
+				$topArticles[] = [
+					'article' => $submission,
+					'views' => $item['views'],
+				];
+			}
+		}
+
+		$templateMgr->assign('topViewedArticles', $topArticles);
+	}
+
+	public function _rebuildViewsCache() {
+		error_log("Rebuilding views cache");
+
+		$journal = $this->request->getContext();
 
 		// get most-viewed articles
 		$metricsDao = DAORegistry::getDAO('MetricsDAO');
@@ -245,37 +271,50 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'assoc_type' => ASSOC_TYPE_SUBMISSION,
 		];
 		$orderBy = [
-			// 'metric' => STATISTICS_ORDER_DESC
+			'metric' => STATISTICS_ORDER_DESC
 		];
 		$range = new DBResultRange(5, 1);
 
 		$topArticlesIds = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, $range);
 		
 		// load the article objects
-		$submissionDao = Application::getSubmissionDAO();
 		$topArticles = [];
 
 		foreach($topArticlesIds as $row) {
-			$submission = $submissionDao->getByid($row['submission_id']);
+			$submission = $this->submissionDao->getByid($row['submission_id']);
 			if($submission) {
 				$topArticles[] = [
-					'article' => $submission,
+					'article_ids' => $row['submission_id'],
 					'views' => $row['metric'],
 				];
 			}
 		}
 
+		return [
+			'top_articles' => $topArticles,
+			'checkedAt' => time(),
+		];
+	}
+
+	/**
+	 * Get the latest issue object
+	 * @return bool
+	 */
+	public function loadCurrentIssue($templateMgr)
+	{
+		
+		$journal = $this->request->getContext();
+
 		// current issue, previous issue, and next issue
 		if ($journal) {
-			$issueDao = DAORegistry::getDAO('IssueDAO');
-			$currentIssue = $issueDao->getCurrent($journal->getId(), true);
+			$currentIssue = $this->issueDao->getCurrent($journal->getId(), true);
 
 			$previousIssue = null;
 			$nextIssue = null;
 
 			if ($currentIssue) {
 				// Get all published issues ordered by datePublished descending
-				$issues = $issueDao->getPublishedIssues($journal->getId());
+				$issues = $this->issueDao->getPublishedIssues($journal->getId());
 				$issuesArray = [];
 				while ($issue = $issues->next()) {
 					$issuesArray[] = $issue;
@@ -301,7 +340,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 				'currentIssue' => $currentIssue,
 				'previousIssue' => $previousIssue,
 				'nextIssue' => $nextIssue,
-				'topViewedArticles' => $topArticles,
 			]);
 		}
 
@@ -311,12 +349,13 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public function addSubmissionDates($templateMgr)
 	{
 
+		$start = microtime(true);
+
 		$publication = $templateMgr->getTemplateVars('publication');
 
 		$submissionId = $publication->getData('submissionId');
 
-		$submissionDao = Application::getSubmissionDAO();
-		$submission = $submissionDao->getById($submissionId);
+		$submission = $this->submissionDao->getById($submissionId);
 
 		if (!$submission) return;
 
@@ -344,6 +383,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'acceptanceDate' => $acceptanceDate,
 			'publishDate' => $publishDate,
 		]);
+
+		error_log("addSubmissionDates took " . (microtime(true) - $start) . "s");
 
 		return false;
 	}
