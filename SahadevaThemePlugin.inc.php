@@ -259,7 +259,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function _rebuildViewsCache() {
-		error_log("Rebuilding views cache");
 
 		$journal = $this->request->getContext();
 
