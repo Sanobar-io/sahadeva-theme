@@ -134,8 +134,12 @@ a.cta-arrow {
   padding: 1rem;
   position: fixed;
   text-align: center;
+  transition: bottom 1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
   width: 100%;
   z-index: 100;
+  &[data-hidden="true"] {
+    bottom: -400px;
+  }
   .popup-inner {
     align-items: center;
     display: flex;

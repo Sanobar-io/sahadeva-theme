@@ -8,7 +8,7 @@
 *
 * @template sahadeva:frontend/components/article_list.tpl
 *}
-<div id="popup">
+<div id="popup" data-hidden="true">
     <div class="popup-inner center">
         <div>
             <b>

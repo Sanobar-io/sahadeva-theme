@@ -58,25 +58,41 @@ if (adminExpandBtn) {
 /**
  * Monetag logic
  */
-
+const popupEl = document.getElementById("popup");
 const monetagCTA = document.getElementById("view-ad");
 
-if (monetagCTA) {
-  monetagCTA.addEventListener("click", () => {
-    const adArray = [
-      "https://otieu.com/4/9483189",
-      "https://otieu.com/4/9483045",
-    ];
-    const theAdUrl = adArray[Math.floor(Math.random() * adArray.length)];
-
-    window.open(
-      theAdUrl,
-      "_blank",
-      "width=800,height=600,resizable=yes,scrollbars=yes"
-    );
-    monetagCTA.parentElement.parentElement.remove();
-  });
+if (monetagCTA && popupEl) {
+  showAdPopup();
+  setInterval(showAdPopup, 1000);
 }
+
+function showAdPopup() {
+  const lastClick = localStorage.getItem("lastAdClick");
+  const now = Date.now();
+
+  // check if it's been 5 minutes (300,000ms)
+  if (!lastClick || now - parseInt(lastClick, 10) > 5 * 60 * 1000) {
+    popupEl.dataset.hidden = "false";
+    localStorage.setItem("lastAdClick", now);
+  } else {
+    popupEl.dataset.hidden = "true";
+  }
+}
+
+monetagCTA?.addEventListener("click", () => {
+  const adArray = [
+    "https://otieu.com/4/9483189",
+    "https://otieu.com/4/9483045",
+  ];
+  const theAdUrl = adArray[Math.floor(Math.random() * adArray.length)];
+
+  window.open(
+    theAdUrl,
+    "_blank",
+    "width=800,height=600,resizable=yes,scrollbars=yes"
+  );
+  popupEl.dataset.hidden = "true";
+});
 
 /**
  * Share clickable

@@ -4,7 +4,7 @@
 * Copyright (c) 2025 Sanobario
 * Licensed under the GNU GPL v3. See the COPYING file in the OJS root.
 *
-* This is the template for the disclaimer that appears in the bottom of free version
+* This is the template for the footer that appears in the bottom of free version
 * of Sahadeva
 *
 * @template sahadeva:frontend/components/footer.tpl
