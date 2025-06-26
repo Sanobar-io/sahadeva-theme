@@ -18,7 +18,8 @@
                 {$currentContext->getLocalizedName()}
             {/if}
             is using the free version of Sahadeva Theme.
-            </b> Click the button to close this and support the developers by viewing an ad.
+            </b>
+            Click the button to close this popup for 5 minutes and support the developers by viewing an ad.
         </div>
         <a id="view-ad" class="cta-rounded">Close (View Ad)</a>     
         <div><a href="mailto:hello@sanobario.com" class="buy">Purchase the full version and <b>remove all ads forever</b></a>.</div>
