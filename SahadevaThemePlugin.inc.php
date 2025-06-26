@@ -119,7 +119,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// Homepage logic (load current/previous/next issue)
 		if (strpos($template, 'frontend/pages/indexSite.tpl') !== false ||
 			strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
-			strpos($template, 'frontend/pages/issue.tpl') !== false) {
+			strpos($template, 'frontend/pages/issue.tpl') !== false ||
+			strpos($template, 'frontend/pages/article.tpl') !== false) {
 			$this->loadCurrentIssue($templateMgr);
 			$this->getArticleViews($templateMgr);
 		}
@@ -238,26 +239,26 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if(
 			!is_array($data) ||
 			($now - $data['checkedAt'] > 86400) ||
-			$data['top_articles'] == null
+			$data['articlesByViews'] == null
 		) {
 			$data = $this->_rebuildViewsCache();
 			$cache->setEntireCache($data);
 		}
 
-		// Convert IDs to submission objects
+		$articlesByViews = $data['articlesByViews'];
+		
 		$topArticles = [];
 
-		foreach ($data['top_articles'] as $item) {
-			$submission = $this->submissionDao->getById($item['article_ids']);
-			if ($submission) {
-				$topArticles[] = [
-					'article' => $submission,
-					'views' => $item['views'],
-				];
-			}
+		// get top 5
+		foreach(array_slice($articlesByViews, 0, 5, true) as $id => $views) {
+			$submission = $this->submissionDao->getByid($id);
+			if($submission) $topArticles[] = $submission;
 		}
 
-		$templateMgr->assign('topViewedArticles', $topArticles);
+		$templateMgr->assign([
+			'topArticles' => $topArticles,
+			'submissionIdsByViews' => $articlesByViews,
+		]);
 	}
 
 	public function _rebuildViewsCache() {
@@ -272,27 +273,23 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'assoc_type' => ASSOC_TYPE_SUBMISSION,
 		];
 		$orderBy = [
-			'metric' => STATISTICS_ORDER_DESC
+			'metric' => STATISTICS_ORDER_DESC,
 		];
-		$range = new DBResultRange(5, 1);
 
-		$topArticlesIds = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, $range);
+		$articles = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy);
 		
 		// load the article objects
-		$topArticles = [];
+		$articlesByViews = [];
 
-		foreach($topArticlesIds as $row) {
+		foreach($articles as $row) {
 			$submission = $this->submissionDao->getByid($row['submission_id']);
 			if($submission) {
-				$topArticles[] = [
-					'article_ids' => $row['submission_id'],
-					'views' => $row['metric'],
-				];
+				$articlesByViews[$row['submission_id']] = $row['metric'];
 			}
 		}
 
 		return [
-			'top_articles' => $topArticles,
+			'articlesByViews' => $articlesByViews,
 			'checkedAt' => time(),
 		];
 	}

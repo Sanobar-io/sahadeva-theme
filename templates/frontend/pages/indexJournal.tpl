@@ -112,11 +112,10 @@
     </main>
 
     {capture assign=leftCol}
-        {if $topViewedArticles}
+        {if $topArticles}
             <h2>Most Viewed Articles</h2>
-            {assign var=articles value=array_column($topViewedArticles, 'article')}
-            {assign var=views value=array_column($topViewedArticles, 'views')}
-            {include file="frontend/components/article_list.tpl" articles=$articles views=$views}
+            {assign var=articles value=$topArticles}
+            {include file="frontend/components/article_list.tpl" articles=$articles}
         {/if}
     {/capture}
 

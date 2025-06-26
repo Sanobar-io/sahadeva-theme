@@ -11,19 +11,21 @@
 *}
 <ul class="articles-wrapper">
 {foreach name=articles from=$articles item=article}
+    {assign var=id value=$article->getBestId()}
     <li>
         <div class="meta">
-            <h3 class="text-wrapper"><a href="{url page="article" op="view" path=$article->getBestId()}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>
+            <h3 class="text-wrapper"><a href="{url page="article" op="view" path=$id}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>
             <div class="meta-info">
+                {assign var=views value=$submissionIdsByViews[$id]}
                 {if $views}
 
                 <div>
                     <icon data-type="views"></icon>
-                    {$views[$smarty.foreach.articles.index]}
+                    {$views}
                 </div>
 
                 {/if}
-                <div class="sharelink clickable" data-url="{url page="article" op="view" path=$article->getBestId()}">
+                <div class="sharelink clickable" data-url="{url page="article" op="view" path=$id}">
                     <icon data-type="link"></icon>Share
                 </div>
             </div>
