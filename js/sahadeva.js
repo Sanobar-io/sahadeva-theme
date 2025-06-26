@@ -82,6 +82,14 @@ if (monetagCTA) {
  * Share clickable
  */
 const sharelinks = document.querySelectorAll(".sharelink");
+const seeViews = document.querySelectorAll(".see-views");
+
+seeViews.forEach((el) => {
+  el.addEventListener("click", () => {
+    const text = el.dataset.text;
+    showPopup(text, el);
+  });
+});
 
 sharelinks.forEach((link) => {
   link.addEventListener("click", () => {
@@ -98,9 +106,15 @@ sharelinks.forEach((link) => {
  * popup above the clicked element
  */
 function showPopup(text, el) {
+  // remove existing popups
+  const existingPopup = document.querySelector(".notify-popup");
+  if (existingPopup) {
+    existingPopup.remove();
+  }
+
   const rect = el.getBoundingClientRect();
-  const x = rect.left + window.scrollX;
-  const y = rect.top + window.scrollY - 48;
+  const x = rect.left + window.scrollX + 12;
+  const y = rect.top + window.scrollY - 36;
 
   // create a popup node
   const popup = document.createElement("div");

@@ -30,6 +30,14 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->issueDao = DAORegistry::getDAO('IssueDAO');
 		$this->submissionDao = Application::getSubmissionDAO();
 		$this->cacheManager = CacheManager::getManager();
+		$this->templateMgr = TemplateManager::getManager($this->request);
+
+		// plugins
+		if (!isset($GLOBALS['__viewcountPluginRegistered'])) {
+			require_once(__DIR__ . '/plugins/modifier.viewcount.php');
+			$this->templateMgr->registerPlugin('modifier', 'viewcount', 'smarty_modifier_viewcount');
+			$GLOBALS['__viewcountPluginRegistered'] = true;
+		}
 		
 		// add styles
 		$this->addStyle('stylesheet', 'styles/sahadeva.less');

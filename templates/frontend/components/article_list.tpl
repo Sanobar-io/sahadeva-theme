@@ -16,12 +16,12 @@
         <div class="meta">
             <h3 class="text-wrapper"><a href="{url page="article" op="view" path=$id}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>
             <div class="meta-info">
-                {assign var=views value=$submissionIdsByViews[$id]}
+                {assign var=views value=$submissionIdsByViews[$id]|default:0}
                 
-                <div>
+                <div class="clickable see-views" data-text="Viewed {$views} times">
                 <icon data-type="eye"></icon>
                     {if $views}
-                    {$views}
+                    {$views|viewcount}
                     {else}
                     0
                     {/if}
