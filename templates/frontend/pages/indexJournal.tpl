@@ -79,7 +79,10 @@
                     <div class="overview">
                     {if $issue}
                         <a href="{url page="issue"}">
-                            <img loading="lazy" src="{$currentIssue->getLocalizedCoverImageUrl()}" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src="{$currentIssue->getLocalizedCoverImageUrl()}" />
                         </a>
                     {/if}
                         <div class="overview-ctas">
