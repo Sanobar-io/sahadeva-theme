@@ -21,11 +21,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="{$metaDesc}">
 	<title>
-		{$pageTitleTranslated|strip_tags}
-		{* Add the journal name to the end of page titles *}
-		{if $requestedPage|escape|default:"index" != 'index' && $currentContext && $currentContext->getLocalizedName()}
-			| {$currentContext->getLocalizedName()}
-		{/if}
+	{$pageTitleTranslated|strip_tags}
+	{* Add the journal name to the end of page titles *}
+	{if $requestedPage|escape|default:"index" != 'index' && $currentContext && $currentContext->getLocalizedName()}
+		| {$currentContext->getLocalizedName()}
+	{/if}
 	</title>
 
 	<link
@@ -38,12 +38,12 @@
 		href="https://fonts.gstatic.com"
 		crossorigin
 	>
+	
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Alike&family=News+Cycle:wght@400;700&display=swap" rel="stylesheet">
 
 
 	<script src="{$baseUrl}/plugins/themes/sahadeva/js/sahadeva.js" defer></script>
 
-	{assign var=host value=$smarty.server.HTTP_HOST}
 	{load_header context="frontend"}
 	{load_stylesheet context="frontend"}
 </head>
