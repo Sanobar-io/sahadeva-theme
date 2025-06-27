@@ -73,7 +73,7 @@
                     <a href="{url page="issue"}">
                     <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2></a>
                     <div class="issue-info">
-                        Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getYear()}
+                        Volume {$issue->getVolume()} | Number {$issue->getNumber()} | {$issue->getYear()}
                     </div>
                 </div>
                 <div class="issue-details">
@@ -83,7 +83,7 @@
                             <img
                                 loading="lazy"
                                 decoding="async"
-                                src="{$currentIssue->getLocalizedCoverImageUrl()}" />
+                                src="{$issue->getLocalizedCoverImageUrl()}" />
                         </a>
                     {/if}
                         <div class="overview-ctas">

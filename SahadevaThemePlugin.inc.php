@@ -154,7 +154,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
 			strpos($template, 'frontend/pages/issue.tpl') !== false ||
 			strpos($template, 'frontend/pages/article.tpl') !== false) {
-			$this->loadCurrentIssue($templateMgr);
 			$this->getArticleViews($templateMgr);
 		}
 
@@ -323,36 +322,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'articlesByViews' => $articlesByViews,
 			'checkedAt' => time(),
 		];
-	}
-
-	/**
-	 * Loads the current issue and assigns it to the template manager.
-	 *
-	 * This function retrieves the current issue for the current journal context
-	 * and assigns it to the Smarty template via `$templateMgr->assign()`
-	 * under the variable name `currentIssue`.
-	 *
-	 * Assigned variables:
-	 * - `currentIssue` (Issue|null) — The currently published issue or null if none exists.
-	 *
-	 * @param TemplateManager $templateMgr The template manager used to assign template variables
-	 * @return false Always returns false to allow normal template rendering to proceed
-	 */
-	public function loadCurrentIssue($templateMgr)
-	{
-		
-		$journal = $this->request->getContext();
-
-		// current issue, previous issue, and next issue
-		if ($journal) {
-			$currentIssue = $this->issueDao->getCurrent($journal->getId(), true);
-			// Assign to template
-			$templateMgr->assign([
-				'currentIssue' => $currentIssue,
-			]);
-		}
-
-		return false;
 	}
 
 	/**

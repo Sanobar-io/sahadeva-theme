@@ -34,7 +34,7 @@
             <h2>{$currentJournal->getLocalizedName()}</h2>
             <div class="meta">
                 <div class="issue-meta">
-                    Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getDatePublished()|date_format:"%B %e, %Y"}
+                    Volume {$issue->getVolume()} | Number {$issue->getNumber()} | {$issue->getDatePublished()|date_format:"%B %e, %Y"}
                 </div>
             </div>
             <div class="description">
