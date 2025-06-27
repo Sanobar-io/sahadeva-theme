@@ -131,12 +131,20 @@
             }
           }
         }
-        .articles-wrapper {
+        .issue-articles {
           display: flex;
           flex-direction: column;
-          .cta-arrow {
-            margin-left: auto;
-            margin-top: 0.5rem;
+          align-items: flex-end;
+          .articles-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 440px;
+            overflow-y: auto;
+            padding-right: 8px;
+            .cta-arrow {
+              margin-left: auto;
+              margin-top: 0.5rem;
+            }
           }
         }
       }

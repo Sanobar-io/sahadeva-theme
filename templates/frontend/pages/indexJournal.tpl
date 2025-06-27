@@ -79,7 +79,7 @@
                     <div class="overview">
                     {if $issue}
                         <a href="{url page="issue"}">
-                            <img src="{$currentIssue->getLocalizedCoverImageUrl()}" />
+                            <img loading="lazy" src="{$currentIssue->getLocalizedCoverImageUrl()}" />
                         </a>
                     {/if}
                         <div class="overview-ctas">
@@ -87,21 +87,22 @@
                             <a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
                         </div>
                     </div>
-                    <div class="articles-wrapper">
-                    {if $issue}
+                    <div class="issue-articles">
+                        <div class="articles-wrapper">
+                        {if $issue}
 
-                    {foreach name=sections from=$publishedSubmissions item=section}
-                        {foreach name=articles from=$section.articles item=article}
-                            {if $smarty.foreach.articles.iteration > 5}
-                                {break}
-                            {/if}
-                            {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
+                        {foreach name=sections from=$publishedSubmissions item=section}
+                            {foreach name=articles from=$section.articles item=article}
+                                {if $smarty.foreach.articles.iteration > 5}
+                                    {break}
+                                {/if}
+                                {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
+                            {/foreach}
                         {/foreach}
-                    {/foreach}
 
+                        {/if}
+                        </div>
                         <a class="cta-arrow" href="{url page="issue"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
-
-                    {/if}
                     </div>
                 </div>
 
