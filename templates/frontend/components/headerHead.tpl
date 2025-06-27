@@ -19,7 +19,7 @@
 
 	<meta charset="{$defaultCharset|escape}">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="{$metaDesc}>
+	<meta name="description" content="{$metaDesc}">
 	<title>
 		{$pageTitleTranslated|strip_tags}
 		{* Add the journal name to the end of page titles *}
@@ -27,8 +27,6 @@
 			| {$currentContext->getLocalizedName()}
 		{/if}
 	</title>
-
-	{assign var=host value=$smarty.server.HTTP_HOST}
 
 	<link
 		rel="preconnect"
@@ -45,6 +43,7 @@
 		rel="stylesheet"
 	/>
 
+	{assign var=host value=$smarty.server.HTTP_HOST}
 	{load_header context="frontend"}
 	{load_stylesheet context="frontend"}
 </head>
