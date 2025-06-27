@@ -106,7 +106,9 @@
 
                         {/if}
                         </div>
-                        <a class="cta-arrow" href="{url page="issue"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
+                        <div class="viewToc-wrapper">
+                            <a class="cta-arrow" href="{url page="issue"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
+                        </div>
                     </div>
                 </div>
 
