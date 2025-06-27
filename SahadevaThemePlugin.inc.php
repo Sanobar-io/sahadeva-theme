@@ -44,6 +44,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$GLOBALS['__viewcountPluginRegistered'] = true;
 		}
 		
+		/**
+		 * Styles setup
+		 */
 		$this->addStyle('stylesheet', 'styles/sahadeva.less');
 
 		$bgBase = $this->getOption('bg-base');
@@ -58,11 +61,31 @@ class SahadevaThemePlugin extends ThemePlugin {
 			]
 		);
 
-		$this->addScript('sahadeva-script', 'js/sahadeva.js', ['contexts' => 'frontend']);
-		$this->addMenuArea(array('primary', 'user', 'footer', 'belowAbout'));
-		$this->addSahadevaOptions();
+		/**
+		 * Scripts setup
+		 */
 
-		// hooks
+		$this->addScript(
+			'sahadeva-script',
+			'js/sahadeva.js',
+			[
+				'contexts' => 'frontend',
+				'priority' => STYLE_SEQUENCE_LATE, // ensures it loads after core
+			]);
+
+		/**
+		 * Menu Areas setup
+		 */
+		$this->addMenuArea(array('primary', 'user', 'footer', 'belowAbout'));
+
+		/**
+		 * Options Setup
+		 */
+		$this->addSahadevaOptions();
+		
+		/**
+		 * The Hooks
+		 */
 		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
 		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
 
