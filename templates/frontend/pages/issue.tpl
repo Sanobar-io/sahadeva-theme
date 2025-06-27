@@ -28,7 +28,7 @@
         {assign var=issueCover value=$issue->getLocalizedCoverImageUrl()}
         {if $issueCover}
         
-        <img class="cover" src="{$issueCover|escape}" />
+        <img class="cover" fetchpriority="high" loading="eager" decoding="async" src="{$issueCover|escape}" />
 
         <section class="overview text-wrapper">
             <h2>{$currentJournal->getLocalizedName()}</h2>
