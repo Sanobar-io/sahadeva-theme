@@ -23,7 +23,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 		 */
 		$this->request = Application::get()->getRequest();
 		$this->issueDao = DAORegistry::getDAO('IssueDAO');
-		$this->submissionDao = Application::getSubmissionDAO();
+
+		import('plugins.themes.sahadeva.classes.SahadevaSubmissionDAO');
+		$this->submissionDao = new SahadevaSubmissionDAO();
+
 		$this->cacheManager = CacheManager::getManager();
 		$this->templateMgr = TemplateManager::getManager($this->request);
 
@@ -246,8 +249,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 	
 	public function getIssuesbyYear($templateMgr) {
 
-		$start = mictrotime(true);
-
 		$journal = $this->request->getJournal();
 		$issues = $this->issueDao->getPublishedIssues($journal->getId())->toArray();
 
@@ -261,8 +262,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		krsort($grouped);
 
 		$templateMgr->assign('groupedIssuesByYear', $grouped);
-
-		error_log("getIssuesByYear " . (microtime(true) - $start) . "s");
 
 		return false;
 	}
@@ -288,14 +287,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		}
 
 		$articlesByViews = $data['articlesByViews'];
+		$ids = array_keys($articlesByViews);
 		
-		$topArticles = [];
-
-		// get top 5
-		foreach(array_slice($articlesByViews, 0, 5, true) as $id => $views) {
-			$submission = $this->submissionDao->getByid($id);
-			if($submission) $topArticles[] = $submission;
-		}
+		$topArticles = $this->submissionDao->getByIds($ids);
 
 		$templateMgr->assign([
 			'topArticles' => $topArticles,
@@ -384,12 +378,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public function addSubmissionDates($templateMgr)
 	{
 
-		$start = microtime(true);
-
 		$publication = $templateMgr->getTemplateVars('publication');
-
 		$submissionId = $publication->getData('submissionId');
-
 		$submission = $this->submissionDao->getById($submissionId);
 
 		if (!$submission) return;
@@ -418,8 +408,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'acceptanceDate' => $acceptanceDate,
 			'publishDate' => $publishDate,
 		]);
-
-		error_log("addSubmissionDates took " . (microtime(true) - $start) . "s");
 
 		return false;
 	}
