@@ -70,7 +70,8 @@
                 {if $issue}
 
                 <div class="metabox">
-                    <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2>
+                    <a href="{url page="issue"}">
+                    <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2></a>
                     <div class="issue-info">
                         Volume {$currentIssue->getVolume()} | Number {$currentIssue->getNumber()} | {$currentIssue->getYear()}
                     </div>
