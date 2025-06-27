@@ -26,20 +26,24 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	public function init() {
 
+		/**
+		 * Initial method calls to reduce excessive calls down the line
+		 */
 		$this->request = Application::get()->getRequest();
 		$this->issueDao = DAORegistry::getDAO('IssueDAO');
 		$this->submissionDao = Application::getSubmissionDAO();
 		$this->cacheManager = CacheManager::getManager();
 		$this->templateMgr = TemplateManager::getManager($this->request);
 
-		// plugins
+		/**
+		 * Register plugins
+		 */
 		if (!isset($GLOBALS['__viewcountPluginRegistered'])) {
 			require_once(__DIR__ . '/plugins/modifier.viewcount.php');
 			$this->templateMgr->registerPlugin('modifier', 'viewcount', 'smarty_modifier_viewcount');
 			$GLOBALS['__viewcountPluginRegistered'] = true;
 		}
 		
-		// add styles
 		$this->addStyle('stylesheet', 'styles/sahadeva.less');
 
 		$bgBase = $this->getOption('bg-base');
@@ -54,29 +58,43 @@ class SahadevaThemePlugin extends ThemePlugin {
 			]
 		);
 
-		// add scripts
 		$this->addScript('sahadeva-script', 'js/sahadeva.js', ['contexts' => 'frontend']);
-
-		// add navs
 		$this->addMenuArea(array('primary', 'user', 'footer', 'belowAbout'));
+		$this->addSahadevaOptions();
 
-		// add options		
+		// hooks
+		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
+		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
+
+	}
+
+	private function addSahadevaOptions() {
+		/**
+		 * Serial Key Options
+		 */
 		$this->addOption('serialKey', 'FieldText', [
 			'label' => 'Serial Key',
 			'description' => 'Input valid serial key to remove ads. Purchase a key from <a href="mailto:hello@sanobario.com">Sanobario</a>.',
 		]);
 
+		/** Primary Color Options */
 		$this->addOption('bg-base', 'FieldColor', [
 			'label' => __('plugins.themes.sahadeva.option.color.label'),
 			'description' => __('plugins.themes.sahadeva.option.color.description'),
 			'default' => '#1E6292',
 		]);
-		
+
+		/**
+		 * Body Content Options
+		 */		
 		$this->addOption('leftColTextFieldHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.leftColTextFieldHeading.label'),
 			'description' => 'This is the heading for the Additional Content found in Settings → Website → Appearance → Advanced.'
 		]);
 
+		/**
+		 * ISSN Options
+		 */
 		$this->addOption('issnPrint', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.issnPrint.label'),
 		]);
@@ -84,6 +102,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.issnElectronic.label'),
 		]);
 
+		/**
+		 * Above Footer CTA Options
+		 */
 		$this->addOption('aboveFooterCtaHeading', 'FieldText', [
 			'label' => __('plugins.themes.sahadeva.option.aboveFooterCtaHeading.label'),
 		]);
@@ -99,6 +120,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'description' => 'This is the URL the CTA button links to.',
 		]);
 
+		/**
+		 * Social Media Options
+		 */
 		foreach([
 			'instagram',
 			'tiktok',
@@ -111,11 +135,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.additionalFooterInfo.label'),
 			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
 		]);
-
-		// hooks
-		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
-		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
-
 	}
 
 	public function handleTemplateDisplay($hookName, $args) {
@@ -393,6 +412,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 	function getDescription() {
 		return __('plugins.themes.sahadeva.description');
 	}
+
 }
 
 ?>

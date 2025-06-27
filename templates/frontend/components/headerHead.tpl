@@ -19,6 +19,7 @@
 
 	<meta charset="{$defaultCharset|escape}">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="{$metaDesc}>
 	<title>
 		{$pageTitleTranslated|strip_tags}
 		{* Add the journal name to the end of page titles *}
@@ -28,6 +29,21 @@
 	</title>
 
 	{assign var=host value=$smarty.server.HTTP_HOST}
+
+	<link
+		rel="preconnect"
+		href="https://fonts.googleapis.com"
+		crossorigin
+	>
+	<link
+		rel="preconnect"
+		href="https://fonts.gstatic.com"
+		crossorigin
+	>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Alike&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=News+Cycle:wght@400;700&display=swap"
+		rel="stylesheet"
+	/>
 
 	{load_header context="frontend"}
 	{load_stylesheet context="frontend"}
