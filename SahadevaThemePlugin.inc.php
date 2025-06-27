@@ -175,7 +175,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'sahadeva',
 			'isValid',
 			function($cache) use ($serialKey) {
-				return $this->_rebuildKeyCache($cache, $serialKey);
+				return $this->_rebuildKeyCache($serialKey);
 			},
 		);
 
@@ -186,7 +186,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if(
 			!isset($data['checkedAt']) ||
 			($now - $data['checkedAt'] > 86400) ||
-			$data['valid'] == false ||
 			$data['serial'] !== $serialKey) {
 			// refresh cache
 			$data = $this->_rebuildKeyCache($serialKey);
@@ -226,8 +225,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if($response === false) {
 			return [
 				'valid' => false,
-				'serial' => null,
-				'checkedAt' => null,
+				'serial' => $serialKey,
+				'checkedAt' => time(),
 			];
 		} else {
 			$json = json_decode($response, true);
@@ -239,12 +238,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 				];
 			}
 		}
-
-		return [
-				'valid' => false,
-				'serial' => null,
-				'checkedAt' => null,
-			];
 	}
 	
 	public function getIssuesbyYear($templateMgr) {
@@ -298,6 +291,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function _rebuildViewsCache() {
+
+		error_log('⏱ Rebuilding views cache at ' . date('c'));
 
 		$journal = $this->request->getContext();
 

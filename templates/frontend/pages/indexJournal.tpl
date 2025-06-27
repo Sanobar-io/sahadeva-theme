@@ -97,9 +97,6 @@
 
                         {foreach name=sections from=$publishedSubmissions item=section}
                             {foreach name=articles from=$section.articles item=article}
-                                {if $smarty.foreach.articles.iteration > 5}
-                                    {break}
-                                {/if}
                                 {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
                             {/foreach}
                         {/foreach}

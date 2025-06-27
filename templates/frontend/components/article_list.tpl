@@ -8,6 +8,8 @@
 * to match the Sahadeva theme design.
 *
 * @template sahadeva:frontend/components/article_list.tpl
+* @param $articles an array of Submission objects
+* @param 
 *}
 <ul class="articles-wrapper">
 {foreach name=articles from=$articles item=article}
