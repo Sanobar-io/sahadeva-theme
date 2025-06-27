@@ -43,6 +43,8 @@
 		rel="stylesheet"
 	/>
 
+	<script src="{$baseUrl}/plugins/themes/sahadeva/js/sahadeva.js" defer></script>
+
 	{assign var=host value=$smarty.server.HTTP_HOST}
 	{load_header context="frontend"}
 	{load_stylesheet context="frontend"}

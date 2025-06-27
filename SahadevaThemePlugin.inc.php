@@ -62,18 +62,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		);
 
 		/**
-		 * Scripts setup
-		 */
-
-		$this->addScript(
-			'sahadeva-script',
-			'js/sahadeva.js',
-			[
-				'contexts' => 'frontend',
-				'priority' => STYLE_SEQUENCE_LATE, // ensures it loads after core
-			]);
-
-		/**
 		 * Menu Areas setup
 		 */
 		$this->addMenuArea(array('primary', 'user', 'footer', 'belowAbout'));
