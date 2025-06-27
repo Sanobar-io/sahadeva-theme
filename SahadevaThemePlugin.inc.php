@@ -1,28 +1,20 @@
 <?php
 
 /**
- * @file plugins/themes/sahadeva/SahadevaThemePlugin.inc.php
- *
- * Copyright (c) 2014-2016 Simon FsettalUniversity Library
- * Copyright (c) 2003-2016 John Willinsky
- * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
- *
- * @class SahadevaThemePlugin
- * @ingroup plugins_themes_default
- *
- * @brief Default theme
- */
+* Sahadeva Theme
+*
+* Copyright (c) 2025 Sanobario
+* Licensed under the GNU GPL v3.
+*
+* This is the style for the Above Footer CTA.
+*
+* @class SahadevaThemePlugin
+*/
 
 import('lib.pkp.classes.plugins.ThemePlugin');
 import('lib.pkp.classes.cache.CacheManager');
 
 class SahadevaThemePlugin extends ThemePlugin {
-	/**
-	 * Initialize the theme's styles, scripts and hooks. This is only run for
-	 * the currently active theme.
-	 *
-	 * @return null
-	 */
 
 	public function init() {
 
@@ -345,8 +337,17 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	/**
-	 * Get the latest issue object
-	 * @return bool
+	 * Loads the current issue and assigns it to the template manager.
+	 *
+	 * This function retrieves the current issue for the current journal context
+	 * and assigns it to the Smarty template via `$templateMgr->assign()`
+	 * under the variable name `currentIssue`.
+	 *
+	 * Assigned variables:
+	 * - `currentIssue` (Issue|null) — The currently published issue or null if none exists.
+	 *
+	 * @param TemplateManager $templateMgr The template manager used to assign template variables
+	 * @return false Always returns false to allow normal template rendering to proceed
 	 */
 	public function loadCurrentIssue($templateMgr)
 	{
@@ -365,6 +366,21 @@ class SahadevaThemePlugin extends ThemePlugin {
 		return false;
 	}
 
+	/**
+	 * Assigns submission-related dates to the template for display on the article page.
+	 *
+	 * This function retrieves the submission, acceptance, and publication dates
+	 * from the submission and its associated editorial decisions, then assigns them
+	 * to the Smarty template manager $templateMgr using assign().
+	 *
+	 * Assigned variables:
+	 * - `submissionDate` (string|null)
+	 * - `acceptanceDate` (string|null)
+	 * - `publishDate` (string|null)
+	 *
+	 * @param TemplateManager $templateMgr
+	 * @return false Always returns false to continue normal template rendering flow
+	 */
 	public function addSubmissionDates($templateMgr)
 	{
 

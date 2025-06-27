@@ -2,7 +2,7 @@
 * Sahadeva Theme
 *
 * Copyright (c) 2025 Sanobario
-* Licensed under the GNU GPL v3. See the COPYING file in the OJS root.
+* Licensed under the GNU GPL v3.
 *
 * This template overrides the default article list layout
 * to match the Sahadeva theme design.
