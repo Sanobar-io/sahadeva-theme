@@ -14,7 +14,9 @@
  * @uses $issueGalleys array Galleys for the entire issue
  * @uses $primaryGenreIds array List of file genre IDs for primary types
  *}
-
+ 
+{assign var=issueCover value=$issue->getLocalizedCoverImageUrl()}
+{assign var=doi value=$issue->getStoredPubId('doi')}
 {include file="frontend/components/header.tpl" pageTitleTranslated=$issueIdentification}
 
 <div class="page">
@@ -25,7 +27,6 @@
     <section class="issue-wrapper">
         {if $issue}
 
-        {assign var=issueCover value=$issue->getLocalizedCoverImageUrl()}
         {if $issueCover}
         
         <img class="cover" fetchpriority="high" loading="eager" decoding="async" src="{$issueCover|escape}" />
@@ -37,6 +38,12 @@
                     Volume {$issue->getVolume()} | Number {$issue->getNumber()} | {$issue->getDatePublished()|date_format:"%B %e, %Y"}
                 </div>
             </div>
+            {if $doi}
+            <div class="issue-pubid tab">
+                <icon data-type="doi"></icon>
+                <a href="https://doi.or/{$doi}">{$doi}</a>
+            </div>
+            {/if}
             <div class="description">
                 {if $issue->getLocalizedDescription()}
                     {$issue->getLocalizedDescription()}
