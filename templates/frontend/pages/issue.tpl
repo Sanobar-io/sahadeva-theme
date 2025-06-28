@@ -30,7 +30,7 @@
         
         <img class="cover" fetchpriority="high" loading="eager" decoding="async" src="{$issueCover|escape}" />
 
-        <section class="overview text-wrapper">
+        <div class="overview text-wrapper">
             <h2>{$currentJournal->getLocalizedName()}</h2>
             <div class="meta">
                 <div class="issue-meta">
@@ -42,7 +42,7 @@
                     {$issue->getLocalizedDescription()}
                 {/if}
             </div>
-        </section>
+        </div>
 
         {/if}
 
