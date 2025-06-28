@@ -74,7 +74,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
 		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
 
-		error_log('init() function took ' . (microtime() - $start) . 's');
+		error_log('init() function took ' . (microtime(true) - $start) . 's');
 
 	}
 
