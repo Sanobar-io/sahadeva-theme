@@ -117,7 +117,15 @@
             <div class="label">Found In Issue</div>
             <div class="section-text">
                 <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
-                    {$issue->getIssueIdentification()|escape}
+                    {if $issue->getVolume()}
+                        <span>Vol. {$issue->getVolume()}</span>
+                    {/if}
+                    {if $issue->getNumber()}
+                        <span>No. {$issue->getNumber()}</span>
+                    {/if}
+                    {if $issue->getYear()}
+                        <span>, {$issue->getYear()}</span>
+                    {/if}
                 </a>
             </div>
             {* Article Section *}

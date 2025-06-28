@@ -16,6 +16,17 @@
     {assign var=id value=$article->getBestId()}
     {assign var=publication value=$article->getCurrentPublication()}
     {assign var=title value=$article->getLocalizedTitle()|strip_unsafe_html}
+    {capture assign=issueId}
+        {if $issue->getVolume()}
+            <span>Vol. {$issue->getVolume()}</span>
+        {/if}
+        {if $issue->getNumber()}
+            <span>No. {$issue->getNumber()}</span>
+        {/if}
+        {if $issue->getYear()}
+            <span>, {$issue->getYear()}</span>
+        {/if}
+    {/capture}
     {assign var=views value=$submissionIdsByViews[$id]|default:0}
     {assign var=doi value=$publication->getStoredPubId('doi')}
     {assign var=authorString value=$article->getAuthorString()|escape}
@@ -24,16 +35,16 @@
 
     <li>
         <div class="meta">
-            <h3 class="text-wrapper"><a href="{url page="article" op="view" path=$id}">{$article->getLocalizedTitle()|strip_unsafe_html}</a></h3>
+            <h3 class="text-wrapper"><a href="{url page="article" op="view" path=$id}">{$title}</a></h3>
         </div>
         <div class="author-date">
-            {$article->getAuthorString()|escape} •
+            {$authorString} •
             <span class="date">{$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span>
         </div>
         <div class="meta-info">
             <div class="clickable">
                 <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
-                    {$issue->getIssueIdentification()|escape}
+                    {$issueId}
                 </a>
             </div>
             {if $doi}
@@ -51,7 +62,7 @@
             </div>
         </div>
         <div class="description">
-            {$article->getLocalizedAbstract()|strip_tags}
+            {$abstract}
         </div>
     </li>
 {/foreach}
