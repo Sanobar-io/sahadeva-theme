@@ -6,32 +6,25 @@ const burgerBtn = document.getElementById("burger-menu-btn");
 const mobileMenu = document.getElementById("mobile-menu");
 const defocus = document.getElementById("defocus");
 
-burgerBtn.addEventListener("click", (ev) => {
-  const toggleBeforeClick = ev.target.dataset && ev.target.dataset.toggle;
-
-  if (toggleBeforeClick === "true") {
-    defocus.classList.remove("defocus");
-    mobileMenu.classList.remove("show");
-    ev.target.dataset.toggle = "false";
-  } else {
-    defocus.classList.add("defocus");
-    mobileMenu.classList.add("show");
-    ev.target.dataset.toggle = "true";
-  }
+burgerBtn.addEventListener("click", () => {
+  const isOpen = burgerBtn.dataset.toggle === "true";
+  defocus.classList.toggle("defocus", !isOpen);
+  mobileMenu.classList.toggle("show", !isOpen);
+  burgerBtn.dataset.toggle = (!isOpen).toString();
 });
 
 document.addEventListener("click", (ev) => {
-  const toggleBeforeClick = burgerBtn.dataset && burgerBtn.dataset.toggle;
+  const isOpen = burgerBtn.dataset.toggle === "true";
 
-  if (toggleBeforeClick === "false") return;
+  if (!isOpen) return;
 
   const clickedOutside =
-    !mobileMenu.contains(ev.target) && !burgerBtn.contains(ev.target); // clicked outside of menu
+    !mobileMenu.contains(ev.target) && !burgerBtn.contains(ev.target);
 
   if (clickedOutside) {
     defocus.classList.remove("defocus");
-    burgerBtn.dataset.toggle = "false";
     mobileMenu.classList.remove("show");
+    burgerBtn.dataset.toggle = "false";
   }
 });
 
@@ -43,15 +36,8 @@ const expandedMenu = document.getElementById("user-expanded");
 
 if (adminExpandBtn) {
   adminExpandBtn.addEventListener("click", (ev) => {
-    const isExpanded = ev.target.dataset.expanded;
-
-    if (isExpanded === "false") {
-      expandedMenu.classList.add("expanded");
-      ev.target.dataset.expanded = "true";
-    } else {
-      expandedMenu.classList.remove("expanded");
-      ev.target.dataset.expanded = "false";
-    }
+    const expanded = expandedMenu.classList.toggle("expanded");
+    ev.target.dataset.expanded = expanded;
   });
 }
 
