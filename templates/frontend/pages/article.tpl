@@ -20,7 +20,7 @@
     {/if}
 
     {capture assign=leftCol}
-    <section class="article-meta">
+    <div class="article-meta">
         <h1>{$publication->getLocalizedTitle()|escape}</h1>
         <div class="meta">
             <ul class="process-meta">
@@ -54,7 +54,7 @@
         </ul>
         <div class="toolbox">
         </div>
-    </section>
+    </div>
 
     <hr />
 
@@ -77,11 +77,11 @@
         </section>
         {* Galley *}
         {assign var=galleys value=$publication->getData('galleys')}
-        {if $galleys|@count}
+        {if $galleys|@count && $hasAccess}
         <section class="cta text-center">
         {foreach from=$galleys item=galley}
             {if $galley->getFileType() == 'application/pdf'}
-                <p>This text has been made available for reading.</p>
+                <p>Access the full text by clicking the button below.</p>
                 <a class="center" href="{url page="article" op="download" path=$article->getBestId()|to_array:$galley->getBestGalleyId()}">Read Full Text <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" /></a>
                 {break}
             {/if}
@@ -112,7 +112,7 @@
     {/capture}
 
     {capture assign=rightCol}
-        <section class="article-publication-info">
+        <div class="article-publication-info">
             {* Volume Info *}
             <div class="label">Found In Issue</div>
             <div class="section-text">
@@ -148,7 +148,7 @@
                 © {$publishDate|date_format:"Y"} {$article->getAuthorString()|escape}. {$licenseTerms}
             </div>
             {/if}
-        </section>
+        </div>
     {/capture}
 
     {include file="frontend/objects/content.tpl" sidebarDisabled=true}
