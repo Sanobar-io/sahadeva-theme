@@ -43,6 +43,7 @@
         </div>
         <div class="meta-info">
             <div class="clickable tab">
+                <icon data-type="book"></icon>
                 <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
                     {$issueId}
                 </a>
