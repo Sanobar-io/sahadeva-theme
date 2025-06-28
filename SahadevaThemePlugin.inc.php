@@ -17,9 +17,6 @@ import('lib.pkp.classes.cache.CacheManager');
 class SahadevaThemePlugin extends ThemePlugin {
 
 	public function init() {
-
-		$start = microtime(true);
-
 		/**
 		 * Initial method calls to reduce excessive calls down the line
 		 */
@@ -73,8 +70,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		 */
 		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
 		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
-
-		error_log('init() function took ' . (microtime(true) - $start) . 's');
 
 	}
 
