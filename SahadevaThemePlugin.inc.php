@@ -18,6 +18,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	public function init() {
 
+		$start = microtime(true);
+
 		/**
 		 * Initial method calls to reduce excessive calls down the line
 		 */
@@ -71,6 +73,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		 */
 		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
 		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
+
+		error_log('init() function took ' . microtime() - $start . 's');
 
 	}
 
@@ -259,7 +263,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function getArticleViews($templateMgr) {
-
+		$start = microtime(true);
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
 			'viewsCache',
@@ -287,6 +291,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'topArticles' => $topArticles,
 			'submissionIdsByViews' => $articlesByViews,
 		]);
+		error_log("Method getArticleViews() took " . microtime(true) - $start . "s" );
 	}
 
 	public function _rebuildViewsCache() {
