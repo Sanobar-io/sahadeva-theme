@@ -263,7 +263,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function getArticleViews($templateMgr) {
-		$start = microtime(true);
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
 			'viewsCache',
@@ -291,7 +290,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'topArticles' => $topArticles,
 			'submissionIdsByViews' => $articlesByViews,
 		]);
-		error_log("Method getArticleViews() took " . (microtime(true) - $start) . "s" );
 	}
 
 	public function _rebuildViewsCache() {
