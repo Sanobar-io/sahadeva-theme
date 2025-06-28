@@ -42,28 +42,28 @@
             <span class="date">{$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span>
         </div>
         <div class="meta-info">
-            <div class="clickable">
+            <div class="clickable tab">
                 <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
                     {$issueId}
                 </a>
             </div>
-            {if $doi}
-            <div class="the-doi">
-                <icon data-type="doi"></icon>
-                <a href="https://doi.org/{$doi}" target="_blank" rel="noopener">https://doi.org/{$doi}</a>
-            </div>
-            {/if}
-            <div class="clickable see-views" data-text="Viewed {$views} times">
+            <div class="clickable tab see-views" data-text="Viewed {$views} times">
                 <icon data-type="eye"></icon>
                     {$views|viewcount}
             </div>
-            <div class="sharelink clickable" data-url="{url page="article" op="view" path=$id}">
+            <div class="sharelink clickable tab" data-url="{url page="article" op="view" path=$id}">
                 <icon data-type="share"></icon>Share
             </div>
         </div>
         <div class="description">
             {$abstract}
         </div>
+        {if $doi}
+        <div class="the-doi clickable tab">
+            <icon data-type="doi"></icon>
+            <a href="https://doi.org/{$doi}" target="_blank" rel="noopener">https://doi.org/{$doi}</a>
+        </div>
+        {/if}
     </li>
 {/foreach}
 </ul>
