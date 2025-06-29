@@ -77,7 +77,7 @@ monetagCTA?.addEventListener("click", () => {
     "width=800,height=600,resizable=yes,scrollbars=yes"
   );
 
-  localStorage.setItem("lastAdClick", now);
+  localStorage.setItem("lastAdClick", Date.now());
   popupEl.dataset.hidden = "true";
 });
 

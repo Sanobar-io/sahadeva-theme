@@ -38,8 +38,6 @@
 		href="https://fonts.gstatic.com"
 		crossorigin
 	>
-	
-	<script src="{$baseUrl}/plugins/themes/sahadeva/js/sahadeva.js" defer></script>
 
 	{load_header context="frontend"}
 	{load_stylesheet context="frontend"}

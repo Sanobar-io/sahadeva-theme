@@ -56,6 +56,19 @@ class SahadevaThemePlugin extends ThemePlugin {
 		);
 
 		/**
+		 * Get jQuery from CDN
+		 */
+		$min = Config::getVar('general', 'enable_minified') ? '.min' : '';
+		$jquery = $this->request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jquery/jquery' . $min . '.js';
+		$jqueryUI = $this->request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jqueryui/jquery-ui' . $min . '.js';
+
+		$this->addScript('jQuery', $jquery, array('baseUrl' => ''));
+		$this->addScript('jQueryUI', $jqueryUI, array('baseUrl' => ''));
+
+		// Load custom JavaScript for this theme
+		$this->addScript('sahadeva', 'js/sahadeva.js');
+
+		/**
 		 * Menu Areas setup
 		 */
 		$this->addMenuArea(array('primary', 'user', 'footer', 'belowAbout'));
