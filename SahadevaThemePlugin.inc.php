@@ -203,7 +203,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$cache->setEntireCache($data);
 		}
 
-		$templateMgr->assign('validSerialKey', $data['valid']);
+		$templateMgr->assign('jfhr1239hrf973', $data['valid']);
 	}
 
 	public function _rebuildKeyCache ($serialKey) {
@@ -220,9 +220,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'serial' => $serialKey,
 			'origin' => $origin,
 		];
+
 		$options = [
 			'http' => [
-				'header'  => "Content-Type: application/json\r\n",
+				'header'  => "Content-Type: application/json\r\nAccept: application/json\r\n",
 				'method'  => 'POST',
 				'content' => json_encode($data),
 				'ignore_errors' => true, // Get response even if HTTP error
@@ -241,13 +242,14 @@ class SahadevaThemePlugin extends ThemePlugin {
 			];
 		} else {
 			$json = json_decode($response, true);
-			if(isset($json['valid']) && $json['valid'] === true) {
-				return [
-					'valid' => true,
-					'serial' => $serialKey,
-					'checkedAt' => time(),
-				];
+			if (json_last_error() !== JSON_ERROR_NONE) {
+				echo "Whoa! There's an error!";
 			}
+			return [
+				'valid' => $json['valid'],
+				'serial' => $serialKey,
+				'checkedAt' => time(),
+			];
 		}
 	}
 	

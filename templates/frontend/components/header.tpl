@@ -77,16 +77,3 @@
     {include file="frontend/components/mobile_menu.tpl"}
 
     {call_hook name="Templates::Common::Header::PageHeader"}
-
-    {if !$validSerialKey}
-        {include file="frontend/components/disclaimer.tpl"}
-    {/if}
-
-
-		{* Wrapper for page content and sidebars *}
-		{* {if $isFullWidth}
-			{assign var=hasSidebar value=0}
-		{/if}
-		<div class="pkp_structure_content{if $hasSidebar} has_sidebar{/if}">
-			<div class="pkp_structure_main" role="main">
-				<a id="pkp_content_main"></a> *}
