@@ -52,9 +52,6 @@
                 <icon data-type="eye"></icon>
                     {$views|viewcount}
             </div>
-            <div class="sharelink clickable tab" data-url="{url page="article" op="view" path=$id}">
-                <icon data-type="share"></icon>Share
-            </div>
         </div>
         <div class="description">
             {$abstract}

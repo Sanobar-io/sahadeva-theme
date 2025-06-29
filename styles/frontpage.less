@@ -140,14 +140,18 @@
           .articles-wrapper {
             display: flex;
             flex-direction: column;
-            height: 440px;
+            max-height: 440px;
             overflow-y: auto;
             padding-right: 16px;
             scrollbar-width: thin;
             scrollbar-color: @bg-base #3d3d3d;
+            @media (max-width: @screen-sm) {
+              padding-left: 16px;
+            }
           }
           .viewToc-wrapper {
             margin-right: 1rem;
+            margin-top: auto;
           }
         }
       }

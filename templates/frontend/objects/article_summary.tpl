@@ -25,7 +25,7 @@
 		<div class="authors">{$article->getAuthorString()|escape}</div>
 		<div class="pages">
 		{if $submissionPages}
-			{$submissionPages}
+			pp. {$submissionPages}
 		{/if}
 		</div>
 	</div>

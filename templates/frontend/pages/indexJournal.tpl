@@ -52,6 +52,7 @@
     {/if}
 
     <main class="sahadeva-main column-wrapper ">
+        {* Left Column Content *}
         <div class="col-left">
             <div class="about">
                 <h2 class="about-label">
@@ -63,12 +64,12 @@
             </div>
             {load_menu name="belowAbout" id="belowAbout-nav"}
         </div>
-        <div class="col-right">
 
+        {* Right Column Content *}
+        <div class="col-right">
             <div class="current-issue">
                 {* Check If Issue Exists *}
                 {if $issue}
-
                 <div class="metabox">
                     <a href="{url page="issue"}">
                     <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2></a>
@@ -108,7 +109,6 @@
                         </div>
                     </div>
                 </div>
-
                 {else}
                     <h2>No Issues Published</h2>
                 {/if}

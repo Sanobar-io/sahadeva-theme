@@ -12,12 +12,7 @@
     <div class="popup-inner center">
         <div>
             <b>
-            {if $currentJournal->_data.abbreviation.en_US}
-                {$currentJournal->_data.abbreviation.en_US}
-            {else}
-                {$currentContext->getLocalizedName()}
-            {/if}
-            is using the free version of Sahadeva Theme.
+            This journal is using the free version of Sahadeva Theme.
             </b>
             Click the button to close this popup for 5 minutes and support the developers by viewing an ad.
         </div>
