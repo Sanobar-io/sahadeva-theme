@@ -77,8 +77,8 @@
         </section>
         {* Galley *}
         {assign var=galleys value=$publication->getData('galleys')}
-        {if $galleys|@count && $hasAccess}
         <section class="cta text-center">
+        {if $galleys|@count}
         {foreach from=$galleys item=galley}
             {if $galley->getFileType() == 'application/pdf'}
                 <p>Access the full text by clicking the button below.</p>
@@ -86,8 +86,10 @@
                 {break}
             {/if}
         {/foreach}
-        </section>
+        {else}
+            <p>No full text available.</p>
         {/if}
+        </section>
 
         {* References *}
         {if $parsedCitations || $publication->getData('citationsRaw')}
@@ -108,47 +110,54 @@
         </section>
         {/if}
     </article>
-    
     {/capture}
 
     {capture assign=rightCol}
-        <div class="article-publication-info">
-            {* Volume Info *}
-            <div class="label">Found In Issue</div>
-            <div class="section-text">
-                <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
-                    {if $issue->getVolume()}
-                        <span>Vol. {$issue->getVolume()}</span>
-                    {/if}
-                    {if $issue->getNumber()}
-                        <span>No. {$issue->getNumber()}</span>
-                    {/if}
-                    {if $issue->getYear()}
-                        <span>, {$issue->getYear()}</span>
-                    {/if}
-                </a>
-            </div>
-            {* Article Section *}
-            {if $section}
-            <div class="label">Section</div>
-            <div class="section-text">{$section->getLocalizedTitle()|escape}</div>
-            {/if}
-            {* DOI *}
-            {if $publication->getStoredPubId('doi')}
-            <div class="label">DOI</div>
-            <div class="section-text">
-                <a href="https://doi.org/{$publication->getStoredPubId('doi')}">{$publication->getStoredPubId('doi')}</a>
-            </div>
-            {/if}
-            {* Licensing Info *}
-            {if $publication->getLocalizedData('copyrightHolder')}
-            <div class="label">Licensing Terms</div>
-            <div class="section-text">
-                {assign var=licenseTerms value=$currentContext->getLocalizedData('licenseTerms')}
-                © {$publishDate|date_format:"Y"} {$article->getAuthorString()|escape}. {$licenseTerms}
-            </div>
-            {/if}
+    <div class="article-publication-info">
+        {* Volume Info *}
+        <div class="label">Found In Issue</div>
+        <div class="section-text">
+            <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
+                {if $issue->getVolume()}
+                    <span>Vol. {$issue->getVolume()}</span>
+                {/if}
+                {if $issue->getNumber()}
+                    <span>No. {$issue->getNumber()}</span>
+                {/if}
+                {if $issue->getYear()}
+                    <span>, {$issue->getYear()}</span>
+                {/if}
+            </a>
         </div>
+        {* Article Section *}
+        {if $section}
+        <div class="label">Section</div>
+        <div class="section-text">{$section->getLocalizedTitle()|escape}</div>
+        {/if}
+        {* DOI *}
+        {if $publication->getStoredPubId('doi')}
+        <div class="label">DOI</div>
+        <div class="section-text">
+            <a href="https://doi.org/{$publication->getStoredPubId('doi')}">{$publication->getStoredPubId('doi')}</a>
+        </div>
+        {/if}
+        {* Licensing Info *}
+        {if $publication->getLocalizedData('copyrightHolder')}
+        <div class="label">Licensing Terms</div>
+        <div class="section-text">
+            {assign var=licenseTerms value=$currentContext->getLocalizedData('licenseTerms')}
+            © {$publishDate|date_format:"Y"} {$article->getAuthorString()|escape}. {$licenseTerms}
+        </div>
+        {/if}
+        {* How to Cite *}
+        {* How to cite *}
+        {if $citation}
+        <div class="label">{translate key="submission.howToCite"}</div>
+        <div class="section-text">
+            {$citation}
+        </div>
+        {/if}
+    </div>
     {/capture}
 
     {include file="frontend/objects/content.tpl" sidebarDisabled=true}

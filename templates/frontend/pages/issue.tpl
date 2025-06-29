@@ -32,12 +32,12 @@
         <img class="cover" fetchpriority="high" loading="eager" decoding="async" src="{$issueCover|escape}" />
 
         <div class="overview text-wrapper">
-            <h2>{$currentJournal->getLocalizedName()}</h2>
             <div class="meta">
                 <div class="issue-meta">
-                    Volume {$issue->getVolume()} | Number {$issue->getNumber()} | {$issue->getDatePublished()|date_format:"%B %e, %Y"}
+                    Volume {$issue->getVolume()} | Number {$issue->getNumber()} | {$issue->getDatePublished()|date_format:"%Y"}
                 </div>
             </div>
+            <h2>{$currentJournal->getLocalizedName()}</h2>
             {if $doi}
             <div class="issue-pubid tab">
                 <icon data-type="doi"></icon>

@@ -62,7 +62,7 @@
         {if $doi}
         <div class="the-doi clickable tab">
             <icon data-type="doi"></icon>
-            <a href="https://doi.org/{$doi}" target="_blank" rel="noopener">https://doi.org/{$doi}</a>
+            <a href="https://doi.org/{$doi}" target="_blank" rel="noopener">{$doi}</a>
         </div>
         {/if}
     </li>
