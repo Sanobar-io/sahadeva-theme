@@ -58,9 +58,13 @@ function showAdPopup() {
 
   // check if it's been 5 minutes (300,000ms)
   if (!lastClick || now - parseInt(lastClick, 10) > 5 * 60 * 1000) {
+    popupEl.style.display = "block";
     popupEl.dataset.hidden = "false";
   } else {
     popupEl.dataset.hidden = "true";
+    setTimeout(() => {
+      popupEl.style.display = "none";
+    }, 1000);
   }
 }
 
