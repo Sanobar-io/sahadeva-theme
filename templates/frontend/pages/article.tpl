@@ -25,13 +25,13 @@
         <div class="meta">
             <ul class="process-meta">
             {if $submissionDate}
-                <li><b>Submitted:</b> {$submissionDate|date_format:$dateFormatShort}</li>
+                <li><b>Submitted:</b> {$submissionDate|date_format:"%B %e, %Y"}</li>
             {/if}
             {if $acceptanceDate}
-                <li><b>Accepted:</b> {$acceptanceDate|date_format:$dateFormatShort}</li>
+                <li><b>Accepted:</b> {$acceptanceDate|date_format:"%B %e, %Y"}</li>
             {/if}
             {if $publishDate}
-                <li><b>Published:</b> {$publishDate|date_format:$dateFormatShort}</li>
+                <li><b>Published:</b> {$publishDate|date_format:"%B %e, %Y"}</li>
             {/if}
             </ul>
         </div>
