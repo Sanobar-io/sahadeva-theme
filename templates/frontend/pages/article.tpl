@@ -22,19 +22,6 @@
     {capture assign=leftCol}
     <div class="article-meta">
         <h1>{$publication->getLocalizedTitle()|escape}</h1>
-        <div class="meta">
-            <ul class="process-meta">
-            {if $submissionDate}
-                <li><b>Submitted:</b> {$submissionDate|date_format:"%B %e, %Y"}</li>
-            {/if}
-            {if $acceptanceDate}
-                <li><b>Accepted:</b> {$acceptanceDate|date_format:"%B %e, %Y"}</li>
-            {/if}
-            {if $publishDate}
-                <li><b>Published:</b> {$publishDate|date_format:"%B %e, %Y"}</li>
-            {/if}
-            </ul>
-        </div>
         <div class="extra-content">
             {call_hook name="Templates::Article::Details"}
         </div>
@@ -134,6 +121,20 @@
         <div class="label">Section</div>
         <div class="section-text">{$section->getLocalizedTitle()|escape}</div>
         {/if}
+        <div class="label">Article History</div>
+        <div class="section-text">
+            <ul class="process-meta">
+            {if $submissionDate}
+                <li><b>Submitted:</b> {$submissionDate|date_format:"%B %e, %Y"}</li>
+            {/if}
+            {if $acceptanceDate}
+                <li><b>Accepted:</b> {$acceptanceDate|date_format:"%B %e, %Y"}</li>
+            {/if}
+            {if $publishDate}
+                <li><b>Published:</b> {$publishDate|date_format:"%B %e, %Y"}</li>
+            {/if}
+            </ul>
+        </div>
         {* DOI *}
         {if $publication->getStoredPubId('doi')}
         <div class="label">DOI</div>
