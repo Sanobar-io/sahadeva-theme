@@ -38,10 +38,15 @@
         <div class="meta">
             <h3 class="text-wrapper"><a href="{url page="article" op="view" path=$id}">{$title}</a></h3>
         </div>
-        <div class="author-date">
-            {$authorString} •
-            <span class="date">{$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span> •
-            <span class="issue"><a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">{$issueId}</a></span>
+        <div class="author-info">
+            {$authorString}
+        </div>
+        <div class="description">
+            {$abstract}
+        </div>
+        <div class="issue-data">
+            <span class="date">Published {$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span> •
+            <span class="issue">Found in <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">{$issueId}</a></span>
             {if $pages}
             <span class="pages">(pp. {$pages})</span>
             {/if}
@@ -61,9 +66,6 @@
                 <icon data-type="share"></icon>
                     Share This
             </div>
-        </div>
-        <div class="description">
-            {$abstract}
         </div>
     </li>
 {/foreach}
