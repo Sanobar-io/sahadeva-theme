@@ -153,6 +153,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => __('plugins.themes.sahadeva.option.additionalFooterInfo.label'),
 			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
 		]);
+
+		return false;
 	}
 
 	public function handleTemplateDisplay($hookName, $args) {
@@ -204,6 +206,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		}
 
 		$templateMgr->assign('jfhr1239hrf973', $data['valid']);
+
+		return false;
 	}
 
 	public function _rebuildKeyCache ($serialKey) {
@@ -300,6 +304,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'topArticles' => $topArticles,
 			'submissionIdsByViews' => $articlesByViews,
 		]);
+
+		return false;
 	}
 
 	public function _rebuildViewsCache() {
