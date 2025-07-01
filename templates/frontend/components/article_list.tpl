@@ -28,6 +28,7 @@
         {/if}
     {/capture}
     {assign var=views value=$submissionIdsByViews[$id]|default:0}
+    {assign var=pages value=$publication->getData('pages')}
     {assign var=doi value=$publication->getStoredPubId('doi')}
     {assign var=authorString value=$article->getAuthorString()|escape}
     {assign var=publishedDate value=$article->getDatePublished()|escape|date_format:"%B %e, %Y"}
@@ -39,15 +40,13 @@
         </div>
         <div class="author-date">
             {$authorString} •
-            <span class="date">{$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span>
+            <span class="date">{$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span> •
+            <span class="issue"><a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">{$issueId}</a></span>
+            {if $pages}
+            <span class="pages">(pp. {$pages})</span>
+            {/if}
         </div>
         <div class="meta-info">
-            <div class="clickable tab">
-                <icon data-type="book"></icon>
-                <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
-                    {$issueId}
-                </a>
-            </div>
             <div class="clickable tab see-views" data-text="Viewed {$views} times">
                 <icon data-type="eye"></icon>
                     {$views|viewcount}
