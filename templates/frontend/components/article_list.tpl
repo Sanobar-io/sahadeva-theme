@@ -47,6 +47,12 @@
             {/if}
         </div>
         <div class="meta-info">
+            {if $doi}
+            <div class="the-doi clickable tab">
+                <icon data-type="doi"></icon>
+                <a href="https://doi.org/{$doi}" target="_blank" rel="noopener">{$doi}</a>
+            </div>
+            {/if}
             <div class="clickable tab see-views" data-text="Viewed {$views} times">
                 <icon data-type="eye"></icon>
                     {$views|viewcount}
@@ -59,12 +65,6 @@
         <div class="description">
             {$abstract}
         </div>
-        {if $doi}
-        <div class="the-doi clickable tab">
-            <icon data-type="doi"></icon>
-            <a href="https://doi.org/{$doi}" target="_blank" rel="noopener">{$doi}</a>
-        </div>
-        {/if}
     </li>
 {/foreach}
 </ul>
