@@ -113,7 +113,8 @@
           gap: 1rem;
           padding-left: 1rem;
           @media (max-width: @screen-sm) {
-            flex-direction: row;
+            align-items: center;
+            padding: 0 1rem;
           }
           img {
             object-fit: contain;
@@ -128,9 +129,6 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            @media (max-width: @screen-sm) {
-              align-self: flex-end;
-            }
           }
         }
         .issue-articles {
@@ -152,6 +150,7 @@
           .viewToc-wrapper {
             margin-right: 1rem;
             margin-top: auto;
+            padding-top: 1rem;
           }
         }
       }
@@ -187,5 +186,11 @@
     line-height: 1;
     margin-bottom: 1.7rem;
     text-transform: uppercase;
+  }
+}
+
+.additional-content {
+  @media (max-width: @screen-md) {
+    padding: 0 1rem;
   }
 }
