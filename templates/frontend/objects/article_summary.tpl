@@ -18,20 +18,32 @@
 
 {assign var=articlePath value=$article->getBestId()}
 {assign var=publication value=$article->getCurrentPublication()}
-{assign var=submissionPages value=$publication->getData('pages')}
+{assign var=views value=$submissionIdsByViews[$id]|default:0}
+{assign var=doi value=$publication->getStoredPubId('doi')}
+{assign var=abstract value=$article->getLocalizedAbstract()|strip_tags}
 
 <div class="article-card">
-	<div class="meta">
-		<div class="authors">{$article->getAuthorString()|escape}</div>
-		<div class="pages">
-		{if $submissionPages}
-			pp. {$submissionPages}
-		{/if}
-		</div>
-	</div>
 	<h3>
 		<a href="{url page="article" op="view" path=$articlePath}">
 			{$article->getLocalizedTitle()|strip_unsafe_html}
 		</a>
 	</h3>
+	<div class="meta">
+		<div class="authors">{$article->getAuthorString()|escape}</div>
+	</div>
+	<div class="description">
+		{$abstract}
+	</div>
+	<div class="meta-info">
+		{if $doi}
+		<div class="the-doi clickable tab">
+			<icon data-type="doi"></icon>
+			<a href="https://doi.org/{$doi}" target="_blank" rel="noopener">{$doi}</a>
+		</div>
+		{/if}
+		<div class="clickable tab sharelink" data-url="{url page="article" op="view" path=$id}">
+			<icon data-type="share"></icon>
+				Share This
+		</div>
+	</div>
 </div>
