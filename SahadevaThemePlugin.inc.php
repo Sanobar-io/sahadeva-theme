@@ -323,9 +323,17 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$indexedIssues[$an_issue->getId()] = $an_issue;
 		}
 
+		$submissionById = [];
+		foreach ($submissions as $submission) {
+			$submissionById[$submission->getId()] = $submission;
+		}
+
 		$topArticles = [];
 
-		foreach ($submissions as $submission) {
+		foreach ($articlesByViews as $submissionId => $views) {
+			if (!isset($submissionById[$submissionId])) continue;
+
+			$submission = $submissionById[$submissionId];
 			$publication = $submission->getCurrentPublication();
 			$issueId = $publication->getData('issueId');
 
