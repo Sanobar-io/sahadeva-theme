@@ -14,21 +14,15 @@
 <div class="page page_announcements">
 	{include file="frontend/components/breadcrumbs.tpl" currentTitleKey="announcement.announcements"}
 
-	{capture assign=leftCol}
 	<h1>
 		{translate key="announcement.announcements"}
 	</h1>
 
-	<div class="text-wrapper center">
 	{include file="frontend/components/editLink.tpl" page="management" op="settings" path="announcements" anchor="announcements" sectionTitleKey="announcement.announcements"}
 
 	{$announcementsIntroduction}
 
 	{include file="frontend/components/announcements.tpl"}
-	</div>
-	{/capture}
-
-	{include file="frontend/objects/content.tpl"}
 	
 </div><!-- .page -->
 

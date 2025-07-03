@@ -145,7 +145,8 @@
         <div class="label">Licensing Terms</div>
         <div class="section-text">
             {assign var=licenseTerms value=$currentContext->getLocalizedData('licenseTerms')}
-            © {$publishDate|date_format:"Y"} {$article->getAuthorString()|escape}. {$licenseTerms}
+            © {$publishDate|date_format:"Y"} {$publication->getLocalizedData('copyrightHolder')}
+            {$licenseTerms}
         </div>
         {/if}
         {* How to Cite *}

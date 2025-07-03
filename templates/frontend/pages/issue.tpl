@@ -31,7 +31,9 @@
         
         <img class="cover" fetchpriority="high" loading="eager" decoding="async" src="{$issueCover|escape}" />
 
-        <div class="overview text-wrapper">
+        {/if}
+
+        <div class="overview">
             <div class="meta">
                 <div class="issue-meta">
                     Volume {$issue->getVolume()} | Number {$issue->getNumber()} | {$issue->getDatePublished()|date_format:"%Y"}
@@ -50,8 +52,6 @@
                 {/if}
             </div>
         </div>
-
-        {/if}
 
         {else}
             <h1>No articles have been published</h1>

@@ -5,11 +5,15 @@
 @import "announcement_summary.less";
 
 .cmp_announcements {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr;
   list-style-type: none;
   margin: 0;
   padding: 0;
   li {
-    margin-bottom: 3.4rem;
+    background-color: @lightgray;
+    padding: 1rem;
     a {
       text-decoration: underline;
       &:hover {
