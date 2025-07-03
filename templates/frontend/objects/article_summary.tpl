@@ -21,19 +21,18 @@
 {assign var=views value=$submissionIdsByViews[$id]|default:0}
 {assign var=doi value=$publication->getStoredPubId('doi')}
 {assign var=abstract value=$article->getLocalizedAbstract()|strip_tags}
+{assign var=pages value=$publication->getData('pages')}
 
 <div class="article-card">
+	<div class="meta">
+		<div class="authors">{$article->getAuthorString()|escape}</div>
+		<span class="pages">pp. {$pages}</span>
+	</div>
 	<h3>
 		<a href="{url page="article" op="view" path=$articlePath}">
 			{$article->getLocalizedTitle()|strip_unsafe_html}
 		</a>
 	</h3>
-	<div class="meta">
-		<div class="authors">{$article->getAuthorString()|escape}</div>
-	</div>
-	<div class="description">
-		{$abstract}
-	</div>
 	<div class="meta-info">
 		{if $doi}
 		<div class="the-doi clickable tab">
