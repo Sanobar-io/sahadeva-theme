@@ -324,8 +324,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		$the_limit = $this->getOption('mostViewedLimiter');
 
-		error_log('⏱ Rebuilding views cache at ' . date('c'));
-
 		$journal = $this->request->getContext();
 
 		// get most-viewed articles
@@ -348,7 +346,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		foreach($articles as $row) {
 			if($count > $the_limit) break;
 			$submission = $this->submissionDao->getByid($row['submission_id']);
-			if($submission) {
+			$publication = $submission->getData('datePublished');
+			if($submission && $publication) {
 				$articlesByViews[$row['submission_id']] = $row['metric'];
 				$count++;
 			}
