@@ -5,19 +5,10 @@
 .issues-wrapper {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   list-style-type: none;
   margin: 0;
   padding: 0;
-  @media (max-width: @screen-xl) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-  @media (max-width: @screen-lg) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @media (max-width: @screen-md) {
-    grid-template-columns: repeat(3, 1fr);
-  }
   @media (max-width: @screen-sm) {
     grid-template-columns: 1fr;
   }
