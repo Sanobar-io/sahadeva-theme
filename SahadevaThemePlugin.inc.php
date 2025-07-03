@@ -346,8 +346,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		foreach($articles as $row) {
 			if($count > $the_limit) break;
 			$submission = $this->submissionDao->getByid($row['submission_id']);
-			$publication = $submission->getData('datePublished');
-			if($submission && $publication) {
+			$publication = $submission->getCurrentPublication();
+			$published = $publication->getData('status');
+			if($submission && $published === STATUS_PUBLISHED) {
 				$articlesByViews[$row['submission_id']] = $row['metric'];
 				$count++;
 			}
