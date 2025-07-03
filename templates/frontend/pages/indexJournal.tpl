@@ -120,8 +120,7 @@
     {capture assign=leftCol}
         {if $topArticles}
             <h2>Most Viewed Articles</h2>
-            {assign var=articles value=$topArticles}
-            {include file="frontend/components/article_list.tpl" articles=$articles limit=$limiter}
+            {include file="frontend/components/article_list.tpl" articles=array_column($topArticles, 'submission') limit=$limiter}
         {/if}
     {/capture}
 

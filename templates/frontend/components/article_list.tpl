@@ -13,21 +13,23 @@
 *}
 <ul class="articles-wrapper">
 {foreach name=articles from=$articles item=article}
-    {if $limit && $smarty.foreach.articles.iteration > $limit}
+    {assign var=the_index value=$smarty.foreach.articles.iteration}
+    {if $limit && $the_index > $limit}
         {break}
     {/if}
     {assign var=id value=$article->getBestId()}
     {assign var=publication value=$article->getCurrentPublication()}
     {assign var=title value=$article->getLocalizedTitle()|strip_unsafe_html}
+    {assign var=the_issue value=$allIssues[$publication->getData('issueId')]}
     {capture assign=issueId}
-        {if $issue->getVolume()}
-            <span>Vol. {$issue->getVolume()}</span>
+        {if $the_issue->getVolume()}
+            <span>Vol. {$the_issue->getVolume()}</span>
         {/if}
-        {if $issue->getNumber()}
-            <span>No. {$issue->getNumber()}</span>
+        {if $the_issue->getNumber()}
+            <span>No. {$the_issue->getNumber()}</span>
         {/if}
-        {if $issue->getYear()}
-            <span>, {$issue->getYear()}</span>
+        {if $the_issue->getYear()}
+            <span>, {$the_issue->getYear()}</span>
         {/if}
     {/capture}
     {assign var=views value=$submissionIdsByViews[$id]|default:0}

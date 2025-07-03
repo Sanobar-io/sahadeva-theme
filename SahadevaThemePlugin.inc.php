@@ -310,10 +310,35 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$articlesByViews = $data['articlesByViews'];
 		$ids = array_keys($articlesByViews);
 		
-		$topArticles = $this->submissionDao->getByIds($ids);
+		$submissions = $this->submissionDao->getByIds($ids);
+		$journal = $this->request->getContext();
+		$issues = Services::get('issue')->getMany([
+			'contextId' => $journal->getId(),
+			'isPublished' => true,
+			'count' => 1000, // or however many you want
+		]);
+
+		$indexedIssues = [];
+		foreach(iterator_to_array($issues) as $an_issue) {
+			$indexedIssues[$an_issue->getId()] = $an_issue;
+		}
+
+		$topArticles = [];
+
+		foreach ($submissions as $submission) {
+			$publication = $submission->getCurrentPublication();
+			$issueId = $publication->getData('issueId');
+
+			$topArticles[] = [
+				'submission' => $submission,
+				'publication' => $publication,
+				'issue' => $issueId,
+			];
+		}
 
 		$templateMgr->assign([
 			'topArticles' => $topArticles,
+			'allIssues' => iterator_to_array($indexedIssues),
 			'submissionIdsByViews' => $articlesByViews,
 		]);
 
