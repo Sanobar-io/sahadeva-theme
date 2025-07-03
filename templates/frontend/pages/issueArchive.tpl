@@ -44,7 +44,7 @@
                         <img src="{$issue->getLocalizedCoverImageUrl()}" />
                         <div class="issue-info">
                             <div class="date">
-                                {$issue->getData('datePublished')|date_format:"%B %e, %Y"}
+                                {$issue->getData('datePublished')|date_format:"%Y"}
                             </div>
                             <div class="issue">
                                 Volume {$issue->getVolume()} • No. {$issue->getNumber()}
