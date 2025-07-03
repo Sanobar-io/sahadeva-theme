@@ -42,23 +42,62 @@
 
     <hr />
 
-    <article class="article inner-wrapper">
-        <section class="abstract text-wrapper center">
-            <h2>Abstract</h2>
-            {$publication->getLocalizedData('abstract')}
-            {* Keywords *}
-            {if $publication->getData('keywords')}
+    <article id="the-article" class="article inner-wrapper">
+    <div id="abstract-wrapper" class="text-wrapper center">
+    {assign var=abstracts value=$publication->getData('abstract')}
+    {assign var=keywords value=$publication->getData('keywords')}
+    {if $abstracts}
+        <div id="lang-selector">
+        {assign var=langIndex value=0}
+        {foreach from=$abstracts key=locale item=abstract}
+            <button onclick="showAbstract({$langIndex}, this)">{$locale}</button>
+            {assign var=langIndex value=$langIndex + 1}
+        {/foreach}
+        </div>
+        <div id="abstracts-slider">
+        {foreach from=$abstracts key=locale item=abstract}
+        {if $locale === $currentLocale}
+        <section class="abstract">
+            <h2>{translate key="article.abstract" locale=$locale}</h2>
+            {$abstract|strip_unsafe_html}
             <hr />
+            {* Keywords *}
+            {if $keywords[$locale]}
             <div class="keywords-wrapper">
-                <div class="label">Keywords</div>
+                <div class="label">{translate key="article.subject" locale=$locale}</div>
                 <ul class="keywords">
-                    {foreach from=$publication->getLocalizedData('keywords') item=keyword}
+                    {foreach from=$keywords[$locale] item=keyword}
                     <li class="keyword">{$keyword}</li>
                     {/foreach}
                 </ul>
             </div>
             {/if}
         </section>
+        {/if}
+        {/foreach}
+        {foreach from=$abstracts key=locale item=abstract}
+        {if $locale !== $currentLocale}
+        <section class="abstract">
+            <h2>{translate key="article.abstract" locale=$locale}</h2>
+            {$abstract|strip_unsafe_html}
+            <hr />
+            {* Keywords *}
+            {if $keywords[$locale]}
+            <div class="keywords-wrapper">
+                <div class="label">{translate key="article.subject" locale=$locale}</div>
+                <ul class="keywords">
+                    {foreach from=$keywords[$locale] item=keyword}
+                    <li class="keyword">{$keyword}</li>
+                    {/foreach}
+                </ul>
+            </div>
+            {/if}
+        </section>
+        {/if}
+        {/foreach}
+        </div>
+    {/if}
+    </div>
         {* Galley *}
         {assign var=galleys value=$publication->getData('galleys')}
         <section class="cta text-center">
@@ -94,6 +133,7 @@
         </section>
         {/if}
     </article>
+
     {/capture}
 
     {capture assign=rightCol}

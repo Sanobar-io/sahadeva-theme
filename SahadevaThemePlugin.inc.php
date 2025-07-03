@@ -67,6 +67,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		// Load custom JavaScript for this theme
 		$this->addScript('sahadeva', 'js/sahadeva.js');
+		$this->addScript('swapperJs', 'js/swapper.js');
 
 		/**
 		 * Menu Areas setup
