@@ -111,6 +111,14 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		/**
+		 * Most-viewed Limit Options
+		 */
+		$this->addOption('mostViewedLimiter', 'FieldText', [
+			'label' => 'Number of most-viewed posts to show on front page (Default: 5)',
+			'inputType' => 'number',
+		]);
+
+		/**
 		 * ISSN Options
 		 */
 		$this->addOption('issnPrint', 'FieldText', [
@@ -169,6 +177,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 			strpos($template, 'frontend/pages/issue.tpl') !== false ||
 			strpos($template, 'frontend/pages/article.tpl') !== false) {
 			$this->getArticleViews($templateMgr);
+		}
+
+		if (strpos($template, 'frontend/pages/indexJournal.tpl') !== false) {
+			$this->getArticleLimiter($templateMgr);
 		}
 
 		// Article page logic (submission dates)
@@ -310,6 +322,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	public function _rebuildViewsCache() {
 
+		$the_limit = $this->getOption('mostViewedLimiter');
+
 		error_log('⏱ Rebuilding views cache at ' . date('c'));
 
 		$journal = $this->request->getContext();
@@ -329,11 +343,14 @@ class SahadevaThemePlugin extends ThemePlugin {
 		
 		// load the article objects
 		$articlesByViews = [];
+		$count = 0;
 
 		foreach($articles as $row) {
+			if($count > $the_limit) break;
 			$submission = $this->submissionDao->getByid($row['submission_id']);
 			if($submission) {
 				$articlesByViews[$row['submission_id']] = $row['metric'];
+				$count++;
 			}
 		}
 
@@ -393,6 +410,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		return false;
+	}
+
+	public function getArticleLimiter($templateMgr) {
+		$limiter = $this->getOption('mostViewedLimiter') ?? 5;
+		$templateMgr->assign('limiter', $limiter);
 	}
 
 	/**

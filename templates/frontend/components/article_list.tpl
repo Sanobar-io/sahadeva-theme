@@ -13,6 +13,9 @@
 *}
 <ul class="articles-wrapper">
 {foreach name=articles from=$articles item=article}
+    {if $limit && $smarty.foreach.articles.iteration > $limit}
+        {break}
+    {/if}
     {assign var=id value=$article->getBestId()}
     {assign var=publication value=$article->getCurrentPublication()}
     {assign var=title value=$article->getLocalizedTitle()|strip_unsafe_html}

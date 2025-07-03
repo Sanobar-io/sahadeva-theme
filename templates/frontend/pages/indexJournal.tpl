@@ -121,7 +121,7 @@
         {if $topArticles}
             <h2>Most Viewed Articles</h2>
             {assign var=articles value=$topArticles}
-            {include file="frontend/components/article_list.tpl" articles=$articles}
+            {include file="frontend/components/article_list.tpl" articles=$articles limit=$limiter}
         {/if}
     {/capture}
 
