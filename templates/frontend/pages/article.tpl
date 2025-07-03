@@ -47,6 +47,7 @@
     {assign var=abstracts value=$publication->getData('abstract')}
     {assign var=keywords value=$publication->getData('keywords')}
     {if $abstracts}
+        {if $abstracts|@count > 1}
         <div id="lang-selector">
         {assign var=langIndex value=0}
         {foreach from=$abstracts key=locale item=abstract}
@@ -54,6 +55,7 @@
             {assign var=langIndex value=$langIndex + 1}
         {/foreach}
         </div>
+        {/if}
         <div id="abstracts-slider">
         {foreach from=$abstracts key=locale item=abstract}
         {if $locale === $currentLocale}
