@@ -22,9 +22,6 @@
     {capture assign=leftCol}
     <div class="article-meta">
         <h1>{$publication->getLocalizedTitle()|escape}</h1>
-        <div class="extra-content">
-            {call_hook name="Templates::Article::Details"}
-        </div>
         <ul class="authors">
         {foreach from=$publication->getData('authors') item=author}
             <li>
@@ -138,7 +135,8 @@
         {* DOI *}
         {if $publication->getStoredPubId('doi')}
         <div class="label">DOI</div>
-        <div class="section-text">
+        <div class="section-text doi-section">
+            <icon data-type="doi"></icon>
             <a href="https://doi.org/{$publication->getStoredPubId('doi')}">{$publication->getStoredPubId('doi')}</a>
         </div>
         {/if}
@@ -151,13 +149,15 @@
         </div>
         {/if}
         {* How to Cite *}
-        {* How to cite *}
         {if $citation}
         <div class="label">{translate key="submission.howToCite"}</div>
         <div class="section-text">
             {$citation}
         </div>
         {/if}
+        <div class="extra-content">
+            {call_hook name="Templates::Article::Details"}
+        </div>
     </div>
     {/capture}
 
