@@ -99,9 +99,8 @@
       }
       .issue-details {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 3fr;
         gap: 2rem;
-        padding: 0 2rem;
         @media (max-width: @screen-md) {
           grid-template-columns: 1fr 2fr;
         }
@@ -112,6 +111,7 @@
           display: flex;
           flex-direction: column;
           gap: 1rem;
+          padding-left: 1rem;
           @media (max-width: @screen-sm) {
             align-items: center;
             padding: 0 1rem;
@@ -126,13 +126,9 @@
             }
           }
           .overview-ctas {
-            align-items: center;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            a {
-              width: max-content;
-            }
           }
         }
         .issue-articles {
@@ -144,8 +140,12 @@
             flex-direction: column;
             max-height: 440px;
             overflow-y: auto;
+            padding-right: 16px;
             scrollbar-width: thin;
             scrollbar-color: @bg-base #3d3d3d;
+            @media (max-width: @screen-sm) {
+              padding-left: 16px;
+            }
           }
           .viewToc-wrapper {
             margin-right: 1rem;
