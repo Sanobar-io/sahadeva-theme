@@ -51,73 +51,72 @@
 
     {/if}
 
-    <main class="sahadeva-main column-wrapper ">
-        {* Left Column Content *}
-        <div class="col-left">
-            <div class="about">
-                <h2 class="about-label">
-                    About
-                    <div class="jakpp">{$currentJournal->_data.abbreviation.en_US}</div>
-                </h2>
-                <p>{$currentContext->getLocalizedData('description')}</p>
-                <a class="cta-arrow" href="{url page='about'}">Read More</a>
-            </div>
-            {load_menu name="belowAbout" id="belowAbout-nav"}
-        </div>
-
-        {* Right Column Content *}
-        <div class="col-right">
-            <div class="current-issue">
-                {* Check If Issue Exists *}
-                {if $issue}
-                <div class="metabox">
-                    <a href="{url page="issue"}">
-                    <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2></a>
-                    <div class="issue-info">
-                        Volume {$issue->getVolume()} | Number {$issue->getNumber()} | {$issue->getYear()}
-                    </div>
-                </div>
-                <div class="issue-details">
-                    <div class="overview">
-                    {if $issue}
-                        <a href="{url page="issue"}">
-                            <img
-                                loading="lazy"
-                                decoding="async"
-                                src="{$issue->getLocalizedCoverImageUrl()}" />
-                        </a>
-                    {/if}
-                        <div class="overview-ctas">
-                            <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
-                            <a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
-                        </div>
-                    </div>
-                    <div class="issue-articles">
-                        <div class="articles-wrapper">
-                        {if $issue}
-
-                        {foreach name=sections from=$publishedSubmissions item=section}
-                            {foreach name=articles from=$section.articles item=article}
-                                {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
-                            {/foreach}
-                        {/foreach}
-
-                        {/if}
-                        </div>
-                        <div class="viewToc-wrapper">
-                            <a class="cta-arrow" href="{url page="issue"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
-                        </div>
-                    </div>
-                </div>
-                {else}
-                    <h2>No Issues Published</h2>
-                {/if}
-            </div>
-            
-        </div>
-    </main>
-
     {capture assign=leftCol}
+        <main class="sahadeva-main column-wrapper ">
+            {* Left Column Content *}
+            <div class="col-left">
+                <div class="about">
+                    <h2 class="about-label">
+                        About
+                        <div class="jakpp">{$currentJournal->_data.abbreviation.en_US}</div>
+                    </h2>
+                    <p>{$currentContext->getLocalizedData('description')}</p>
+                    <a class="cta-arrow" href="{url page='about'}">Read More</a>
+                </div>
+                {load_menu name="belowAbout" id="belowAbout-nav"}
+            </div>
+
+            {* Right Column Content *}
+            <div class="col-right">
+                <div class="current-issue">
+                    {* Check If Issue Exists *}
+                    {if $issue}
+                    <div class="metabox">
+                        <a href="{url page="issue"}">
+                        <h2 class="label">{translate key="plugins.themes.sahadeva.currentIssue"}</h2></a>
+                        <div class="issue-info">
+                            Volume {$issue->getVolume()} | Number {$issue->getNumber()} | {$issue->getYear()}
+                        </div>
+                    </div>
+                    <div class="issue-details">
+                        <div class="overview">
+                        {if $issue}
+                            <a href="{url page="issue"}">
+                                <img
+                                    loading="lazy"
+                                    decoding="async"
+                                    src="{$issue->getLocalizedCoverImageUrl()}" />
+                            </a>
+                        {/if}
+                            <div class="overview-ctas">
+                                <a class="cta-rounded" href="{url page='about' op='submissions'}">Author Guidelines</a>
+                                <a class="cta-rounded" href="{url page='submission' op='wizard'}">{translate key="plugins.themes.sahadeva.submitManuscript.label"}</a>
+                            </div>
+                        </div>
+                        <div class="issue-articles">
+                            <div class="articles-wrapper">
+                            {if $issue}
+
+                            {foreach name=sections from=$publishedSubmissions item=section}
+                                {foreach name=articles from=$section.articles item=article}
+                                    {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
+                                {/foreach}
+                            {/foreach}
+
+                            {/if}
+                            </div>
+                            <div class="viewToc-wrapper">
+                                <a class="cta-arrow" href="{url page="issue"}">{translate key="plugins.themes.sahadeva.viewTOC"}</a>
+                            </div>
+                        </div>
+                    </div>
+                    {else}
+                        <h2>No Issues Published</h2>
+                    {/if}
+                </div>
+                
+            </div>
+        </main>
         {if $topArticles}
             <h2>Most Viewed Articles</h2>
             {include file="frontend/components/article_list.tpl" articles=array_column($topArticles, 'submission') limit=$limiter}

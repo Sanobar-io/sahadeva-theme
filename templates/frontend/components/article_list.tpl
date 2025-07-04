@@ -21,17 +21,19 @@
     {assign var=publication value=$article->getCurrentPublication()}
     {assign var=title value=$article->getLocalizedTitle()|strip_unsafe_html}
     {assign var=the_issue value=$allIssues[$publication->getData('issueId')]}
-    {capture assign=issueId}
-        {if $the_issue->getVolume()}
-            <span>Vol. {$the_issue->getVolume()}</span>
-        {/if}
-        {if $the_issue->getNumber()}
-            <span>No. {$the_issue->getNumber()}</span>
-        {/if}
-        {if $the_issue->getYear()}
-            <span>, {$the_issue->getYear()}</span>
-        {/if}
-    {/capture}
+    {if $the_issue}
+        {capture assign=issueId}
+            {if $the_issue->getVolume()}
+                <span>Vol. {$the_issue->getVolume()}</span>
+            {/if}
+            {if $the_issue->getNumber()}
+                <span>No. {$the_issue->getNumber()}</span>
+            {/if}
+            {if $the_issue->getYear()}
+                <span>, {$the_issue->getYear()}</span>
+            {/if}
+        {/capture}
+    {/if}
     {assign var=views value=$submissionIdsByViews[$id]|default:0}
     {assign var=pages value=$publication->getData('pages')}
     {assign var=doi value=$publication->getStoredPubId('doi')}
@@ -50,10 +52,12 @@
             {$abstract}
         </div>
         <div class="issue-data">
-            <span class="date">Published {$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span> •
-            <span class="issue">Found in <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">{$issueId}</a></span>
-            {if $pages}
-            <span class="pages">(pp. {$pages})</span>
+            <span class="date">Published {$article->getDatePublished()|escape|date_format:"%B %e, %Y"}</span>
+            {if $the_issue}
+                • <span class="issue">Found in <a href="{url page="issue" op="view" path=$the_issue->getBestIssueId()}">{$issueId}</a></span>
+                {if $pages}
+                <span class="pages">(pp. {$pages})</span>
+                {/if}
             {/if}
         </div>
         <div class="meta-info">
