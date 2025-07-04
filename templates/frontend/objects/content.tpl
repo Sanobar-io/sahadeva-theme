@@ -10,7 +10,7 @@
     </div>
     <div class="col-right">
     {if $rightCol}
-    <div class="additionalColContent">
+    <div class="additionalColContent{if $theContext && $theContext == 'article'} articleAdditional{/if}">
         {$rightCol}
     </div>
     {/if}

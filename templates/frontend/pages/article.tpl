@@ -204,7 +204,7 @@
     </div>
     {/capture}
 
-    {include file="frontend/objects/content.tpl" sidebarDisabled=true}
+    {include file="frontend/objects/content.tpl" sidebarDisabled=true theContext=article}
 
     <section class="footer-content">
         {call_hook name="Templates::Article::Footer::PageFooter"}
