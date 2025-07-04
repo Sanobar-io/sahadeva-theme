@@ -244,7 +244,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 				'method'  => 'POST',
 				'content' => json_encode($data),
 				'ignore_errors' => true, // Get response even if HTTP error
-				'timeout' => 2,
+				'timeout' => 60,
 			],
 		];
 
