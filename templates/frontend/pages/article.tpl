@@ -62,7 +62,6 @@
         <section class="abstract">
             <h2>{translate key="article.abstract" locale=$locale}</h2>
             {$abstract|strip_unsafe_html}
-            <hr />
             {* Keywords *}
             {if $keywords[$locale]}
             <div class="keywords-wrapper">
@@ -82,7 +81,6 @@
         <section class="abstract">
             <h2>{translate key="article.abstract" locale=$locale}</h2>
             {$abstract|strip_unsafe_html}
-            <hr />
             {* Keywords *}
             {if $keywords[$locale]}
             <div class="keywords-wrapper">
