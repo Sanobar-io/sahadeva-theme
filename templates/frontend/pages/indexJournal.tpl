@@ -86,8 +86,8 @@
                         </a>
                     {/if}
                         <div class="overview-ctas">
-                            <a class="cta-rounded">Author Guidelines</a>
-                            <a class="cta-rounded">Submit Manuscript</a>
+                            <a class="cta-rounded" href="{url page="about" op="submissions"}">Author Guidelines</a>
+                            <a class="cta-rounded" href="{url page="submission" op="wizard"}">Submit Manuscript</a>
                         </div>
                     </div>
                     <div class="issue-articles">
