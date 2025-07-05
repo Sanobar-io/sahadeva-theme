@@ -99,13 +99,22 @@
     {/if}
     </div>
         {* Galley *}
+        {if $hasAccess}
         {assign var=galleys value=$publication->getData('galleys')}
         <section class="cta text-center">
         {if $galleys|@count}
         {foreach from=$galleys item=galley}
             {if $galley->getFileType() == 'application/pdf'}
                 <p>Access the full text by clicking the button below.</p>
-                <a class="center" href="{url page="article" op="download" path=$article->getBestId()|to_array:$galley->getBestGalleyId()}">Read Full Text <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" /></a>
+                <a
+                    class="center download"
+                    href="{url page="article"
+                    op="download"
+                    path=$article->getBestId()|to_array:$galley->getBestGalleyId()}"
+                >
+                Read Full Text
+                <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" />
+                </a>
                 {break}
             {/if}
         {/foreach}
@@ -113,6 +122,14 @@
             <p>No full text available.</p>
         {/if}
         </section>
+        {else}
+        <section class="cta text-center">
+            <p>You don't have access to this text.</p>
+            {if $subscriptionRequired}
+            <p>This article is available to subscribers only. <a href="{url page="login"}">Log in</a> to access this content.</p>
+            {/if}
+        </section>
+        {/if}
 
         {* References *}
         {if $parsedCitations || $publication->getData('citationsRaw')}
