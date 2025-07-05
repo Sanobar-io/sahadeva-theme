@@ -5,6 +5,7 @@
 @import "mobile_menu.less";
 
 @header-text: contrast(@bg-base, black, white);
+@header-complementary: darken(@bg-base, 10%);
 
 .logo-adjust() when (@header-text = white) {
   filter: brightness(0) invert(1);
@@ -88,7 +89,7 @@
         background-position: center;
         background-repeat: no-repeat;
         &[data-toggle="true"] {
-          background-color: darken(@bg-base, 35%);
+          background-color: @header-complementary;
         }
         img {
           object-fit: contain;
@@ -163,12 +164,12 @@
           right: 0;
         }
         &:last-child {
-          background-color: darken(@bg-base, 50%);
+          background-color: @header-complementary;
           &:hover {
-            border: 0;
+            border-color: transparent;
           }
           & > a {
-            color: contrast(darken(@bg-base, 50%), black, white);
+            color: contrast(@header-complementary, black, white);
           }
         }
       }
