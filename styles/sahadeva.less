@@ -32,7 +32,7 @@ html,
 body {
   color: #1a1a1a;
   font-family: "Inter", sans-serif;
-  font-size: 16px;
+  font-size: ~"clamp(12px, 4vw, 16px)";
   font-weight: 300;
   line-height: 1.5;
   margin: 0;
@@ -223,8 +223,8 @@ a.cta-rounded {
 
 .column-wrapper {
   display: grid;
-  gap: 2rem;
-  grid-template-columns: 1fr;
+  gap: 1rem;
+  grid-template-columns: 2fr 3fr;
   @media (max-width: @screen-md) {
     grid-template-columns: 1fr;
   }
