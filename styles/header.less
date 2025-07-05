@@ -4,8 +4,14 @@
 
 @import "mobile_menu.less";
 
+@header-text: contrast(@bg-base, black, white);
+
+.logo-adjust() when (@header-text = white) {
+  filter: brightness(0) invert(1);
+}
+
 .sahadeva-header {
-  background-color: #fff;
+  background-color: @bg-base;
   box-shadow: 0 0 16px 2px fade(darken(@bg-base, 25%), 25%);
   height: 60px;
   position: fixed;
@@ -19,7 +25,9 @@
     margin: 0;
     a {
       align-items: center;
+      color: @header-text;
       display: flex;
+      font-size: 15px;
       gap: 0.5rem;
       height: 100%;
       padding: 0 ~"clamp(0.75rem, 1.5vw, 1.5rem)";
@@ -58,6 +66,7 @@
         }
         a {
           background-color: transparent;
+          color: contrast(#fff, black, white);
           height: 100%;
           padding: 0.5rem 1rem;
         }
@@ -71,21 +80,20 @@
     .burger-menu {
       align-self: center;
       #burger-menu-btn {
-        background: url("@{baseUrl}/plugins/themes/sahadeva/images/burger-icon.svg");
-        background-size: 32px 32px;
+        background: none;
         border: 0;
         cursor: pointer;
-        padding-left: 1rem;
-        width: 48px;
+        width: 64px;
         height: 60px;
         background-position: center;
         background-repeat: no-repeat;
         &[data-toggle="true"] {
-          background-color: lighten(@bg-base, 35%);
+          background-color: darken(@bg-base, 35%);
         }
         img {
           object-fit: contain;
           width: 32px;
+          .logo-adjust();
         }
       }
     }
@@ -98,6 +106,10 @@
         font-weight: 600;
         margin-right: 4rem;
         padding-top: 4px;
+        a {
+          display: inline-block;
+        }
+        .logo-adjust();
         @media (max-width: @screen-lg) {
           margin-right: 0;
         }
@@ -125,6 +137,7 @@
       align-self: center;
       display: block;
       margin-right: 2rem;
+      .logo-adjust();
       @media (min-width: @screen-sm) and(max-width: @screen-md) {
         display: none;
       }
@@ -138,20 +151,25 @@
       @media (max-width: @screen-sm) {
         display: none;
       }
-      li {
+      & > li {
         align-items: center;
         display: flex;
+        > a {
+          font-weight: 500;
+        }
         ul {
           color: black;
           left: auto;
           right: 0;
         }
-        &:first-child {
-          border-left: 1px solid @lightgray;
-        }
         &:last-child {
-          background-color: @bg-base;
-          color: contrast(@bg-base, black, white);
+          background-color: darken(@bg-base, 50%);
+          &:hover {
+            border: 0;
+          }
+          & > a {
+            color: contrast(darken(@bg-base, 50%), black, white);
+          }
         }
       }
       .task_count {

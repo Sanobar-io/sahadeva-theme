@@ -33,6 +33,7 @@
 
         <div class="burger-menu">
             <button id="burger-menu-btn" data-toggle="false">
+                <img src="{$baseUrl}/plugins/themes/sahadeva/images/burger-icon.svg" />
             </button>
         </div>
 

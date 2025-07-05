@@ -17,8 +17,8 @@
 
     {capture assign=leftCol}
 	{* Display book details *}
-    <div class="text-wrapper center">
-	{include file="frontend/objects/announcement_full.tpl"}
+    <div>
+	    {include file="frontend/objects/announcement_full.tpl"}
     </div>
     {/capture}
 
