@@ -133,7 +133,7 @@ a.cta-arrow {
   position: fixed;
   text-align: center;
   transition: bottom 1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-  width: 100%;
+  width: 100vw;
   z-index: 100;
   &[data-hidden="true"] {
     bottom: -400px;
@@ -150,9 +150,6 @@ a.cta-arrow {
         text-decoration: none;
       }
     }
-  }
-  @media (max-width: @screen-md) {
-    width: 100%;
   }
   h1 {
     font-family: "Inter", sans-serif;
