@@ -195,8 +195,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public function checkSerialKey($templateMgr, $template) {
 		$serialKey = $this->getOption('serialKey') ?? false;
 
-		if(!$serialKey) return false;
-
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
 			'isValid',
@@ -206,12 +204,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 		);
 
 		$data = $cache->getContents();
-		$now = time();
 
-		// check if expired or not valid
+		// check if never checked or not valid
 		if(
-			!isset($data['checkedAt']) ||
-			($now - $data['checkedAt'] > 86400) ||
+			!isset($data['checkedAt']) || // never checked
 			$data['serial'] !== $serialKey) {
 			// refresh cache
 			$data = $this->_rebuildKeyCache($serialKey);
@@ -244,7 +240,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 				'method'  => 'POST',
 				'content' => json_encode($data),
 				'ignore_errors' => true, // Get response even if HTTP error
-				'timeout' => 2,
+				'timeout' => 60,
 			],
 		];
 
