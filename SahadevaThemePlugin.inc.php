@@ -286,6 +286,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function getArticleViews($templateMgr) {
+		$the_limit = $this->getOption('mostViewedLimiter');
+		// make sure the limit is 0 or a positive integer, otherwise default to 5
+		$the_limit = is_numeric($the_limit) && (int)$the_limit > 0 ? (int)$the_limit : 5;
+
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
 			'viewsCache',
@@ -298,9 +302,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if(
 			!is_array($data) ||
 			($now - $data['checkedAt'] > 86400) ||
+			$data['limiter'] !== $the_limit ||
 			$data['articlesByViews'] == null
 		) {
-			$data = $this->_rebuildViewsCache();
+			$data = $this->_rebuildViewsCache($the_limit);
 			$cache->setEntireCache($data);
 		}
 
@@ -312,7 +317,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$issues = Services::get('issue')->getMany([
 			'contextId' => $journal->getId(),
 			'isPublished' => true,
-			'count' => 1000, // or however many you want
+			'count' => $the_limit, // or however many you want
 		]);
 
 		$indexedIssues = [];
@@ -350,9 +355,17 @@ class SahadevaThemePlugin extends ThemePlugin {
 		return false;
 	}
 
-	public function _rebuildViewsCache() {
+	public function _rebuildViewsCache($the_limit) {
 
-		$the_limit = $this->getOption('mostViewedLimiter');
+		if($the_limit <= 0) { // return an empty array if limit is zero
+			return [
+				'articlesByViews' => [],
+				'limit' => $the_limit,
+				'checkedAt' => time(),
+			];
+		}
+
+		$limiter = new DBResultRange($the_limit * 2);
 
 		$journal = $this->request->getContext();
 
@@ -367,25 +380,26 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'metric' => STATISTICS_ORDER_DESC,
 		];
 
-		$articles = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy);
+		$articles = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, null, $limiter);
 		
 		// load the article objects
 		$articlesByViews = [];
 		$count = 0;
 
 		foreach($articles as $row) {
-			if($count > $the_limit) break;
+			if($count >= $the_limit) break;
 			$submission = $this->submissionDao->getByid($row['submission_id']);
 			$publication = $submission->getCurrentPublication();
 			$published = $publication->getData('status');
-			if($submission && $published === STATUS_PUBLISHED) {
-				$articlesByViews[$row['submission_id']] = $row['metric'];
-				$count++;
-			}
+			if($submission && $published !== STATUS_PUBLISHED) continue;
+
+			$articlesByViews[$row['submission_id']] = $row['metric'];
+			$count++;
 		}
 
 		return [
 			'articlesByViews' => $articlesByViews,
+			'limit' => $the_limit,
 			'checkedAt' => time(),
 		];
 	}
