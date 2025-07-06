@@ -336,6 +336,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			if (!isset($submissionById[$submissionId])) continue;
 
 			$submission = $submissionById[$submissionId];
+			if(!$submission) continue;
 			$publication = $submission->getCurrentPublication();
 			$issueId = $publication->getData('issueId');
 
