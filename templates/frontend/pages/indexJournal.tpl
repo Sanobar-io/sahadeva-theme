@@ -132,6 +132,10 @@
         {$additionalHomeContent}
     </section>
 
+    <section class="additional-content">
+        {call_hook name="Templates::Index::journal"}
+    </section>
+
     {if $activeTheme->getOption('aboveFooterCtaHeading') || $activeTheme->getOption('aboveFooterCtaContent')}
 
     {include file="frontend/components/abovefooter_cta.tpl"}
