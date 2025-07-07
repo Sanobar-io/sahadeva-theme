@@ -105,8 +105,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$versionString = 'Unknown';
 		}
 
-		require_once BASE_SYS_DIR . '/lib/pkp/classes/components/forms/FieldHtml.inc.php';
-
 		$this->addOption('themeVersion', 'FieldHtml', [
 			'label' => "Sahadeva Theme Version $versionString",
 			'description' => "<ul>
@@ -329,7 +327,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if(
 			!is_array($data) ||
 			($now - $data['checkedAt'] > 86400) ||
-			$data['limiter'] !== $the_limit ||
+			$data['limit'] !== $the_limit ||
 			$data['articlesByViews'] == null
 		) {
 			$data = $this->_rebuildViewsCache();
