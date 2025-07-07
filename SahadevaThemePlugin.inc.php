@@ -13,6 +13,7 @@
 
 import('lib.pkp.classes.plugins.ThemePlugin');
 import('lib.pkp.classes.cache.CacheManager');
+import('lib.pkp.classes.site.VersionCheck');
 
 class SahadevaThemePlugin extends ThemePlugin {
 
@@ -88,6 +89,30 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	private function addSahadevaOptions() {
+
+
+		/**
+		 * Show theme version in backend
+		 */
+		$versionFile = $this->getPluginPath() . '/version.xml';
+
+		if (file_exists($versionFile)) {
+			$versionInfo = VersionCheck::parseVersionXML($versionFile);
+			$versionString = $versionInfo['release'] ? $versionInfo['release'] : 'Unknown';
+			$versionDate = $versionInfo['date'] ? $versionInfo['date'] : 'Unknown';
+			$versionInstalled = $versionInfo['version'] ? date('Y-m-d', strtotime($versionInfo['version']->getDateInstalled())): 'Unknown';
+		} else {
+			$versionString = 'Unknown';
+		}
+
+		$this->addOption('themeVersion', 'FieldHtml', [
+			'label' => "Sahadeva Theme Version $versionString",
+			'description' => "<ul>
+			<li>Version Released: $versionDate</li>
+			<li>Plugin Installed: $versionInstalled</li>
+			</ul>",
+		]);
+
 		/**
 		 * Serial Key Options
 		 */
