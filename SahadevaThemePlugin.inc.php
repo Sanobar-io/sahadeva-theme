@@ -105,6 +105,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$versionString = 'Unknown';
 		}
 
+		require_once BASE_SYS_DIR . '/lib/pkp/classes/components/forms/FieldHtml.inc.php';
+
 		$this->addOption('themeVersion', 'FieldHtml', [
 			'label' => "Sahadeva Theme Version $versionString",
 			'description' => "<ul>
