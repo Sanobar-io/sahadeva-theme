@@ -105,7 +105,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$versionString = 'Unknown';
 		}
 
-		$this->addOption('themeVersion', 'FieldHtml', [
+		$this->addOption('themeVersion', 'FieldHTML', [
 			'label' => "Sahadeva Theme Version $versionString",
 			'description' => "<ul>
 			<li>Version Released: $versionDate</li>
