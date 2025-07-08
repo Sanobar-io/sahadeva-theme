@@ -43,13 +43,13 @@
         {/if}
         </div>
         <ul class="contact-info">
-        {if $currentJournal->getData('contactPhone')}
+        {if $currentJournal->getData('supportPhone')}
             <li>Phone:<br />
-            {$currentJournal->getData('contactPhone')}</li>
+            {$currentJournal->getData('supportPhone')}</li>
         {/if}
-        {if $currentJournal->getData('contactEmail')}
-            <li>Email:<br/>
-            <a href="mailto:{$currentJournal->getData('contactEmail')}"> {$currentJournal->getData('contactEmail')}</a></li>
+        {if $currentJournal->getData('supportEmail')}
+            <li>Support Email:<br/>
+            <a href="mailto:{$currentJournal->getData('supportEmail')}"> {$currentJournal->getData('supportEmail')}</a></li>
         {/if}
         </ul>
         {assign var=instagram value=$activeTheme->getOption('instagram')}

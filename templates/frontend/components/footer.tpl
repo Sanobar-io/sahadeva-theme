@@ -42,11 +42,11 @@
             {/if}
             </ul>
             <ul class="contact-info">
-            {if $currentJournal->getData('contactPhone')}
-                <li>{$currentJournal->getData('contactPhone')}</li>
+            {if $currentJournal->getData('supportPhone')}
+                <li>{$currentJournal->getData('supportPhone')}</li>
             {/if}
-            {if $currentJournal->getData('contactEmail')}
-                <li><a href="mailto:{$currentJournal->getData('contactEmail')}">{$currentJournal->getData('contactEmail')}</a></li>
+            {if $currentJournal->getData('supportEmail')}
+                <li><a href="mailto:{$currentJournal->getData('supportEmail')}">{$currentJournal->getData('supportEmail')}</a></li>
             {/if}
             </ul>
             <ul class="social-media">
