@@ -50,14 +50,19 @@
             {/if}
             </ul>
             <ul class="social-media">
+            {assign var=instagram value=$activeTheme->getOption('instagram')}
+            {assign var=tiktok value=$activeTheme->getOption('tiktok')}
+            {assign var=facebook value=$activeTheme->getOption('facebook')}
+            {if ($instagram || $tiktok || $facebook)}
                 <li><b>{translate key='plugins.themes.sahadeva.footer.followUs'}</b></li>
-            {if $activeTheme->getOption('instagram')}
+            {/if}
+            {if $instagram}
                 <li><a href="http://instagram.com/{$activeTheme->getOption('instagram')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/instagram-social.png" /></a></li>
             {/if}
-            {if $activeTheme->getOption('tiktok')}
+            {if $tiktok}
                 <li><a href="http://tiktok.com/@{$activeTheme->getOption('tiktok')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/tiktok-social.png" /></a></li>
             {/if}
-            {if $activeTheme->getOption('facebook')}
+            {if $facebook}
                 <li><a href="https://facebook.com/profile.php?id={$activeTheme->getOption('facebook')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/facebook-social.png" /></a></li>
             {/if}
             </ul>

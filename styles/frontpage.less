@@ -17,7 +17,7 @@
     }
     .announcements-card {
       background-color: lighten(@lightgray, 5%);
-      border: 1px solid fade(@bg-base, 15%);
+      border: 1px solid rgba(0, 0, 0, 0.15);
       border-radius: 6px;
       height: 100%;
       padding: 0.5rem;
@@ -45,7 +45,7 @@
   margin-bottom: 2.5rem;
   .col-left {
     .about {
-      background-color: desaturate(lighten(@bg-base, 50%), 33%);
+      background-color: desaturate(lighten(@bg-base, 35%), 50%);
       border-radius: 6px 6px 0 0;
       padding: 2rem;
       .about-label {
@@ -102,8 +102,8 @@
     max-width: 65ch;
   }
   a.cta-rounded {
-    background-color: white;
-    color: @bg-base;
+    background-color: contrast(@bg-base, black, white);
+    color: contrast(contrast(@bg-base, black, white), black, white);
     display: inline-block;
     font-size: 0.875rem;
     font-weight: 600;
