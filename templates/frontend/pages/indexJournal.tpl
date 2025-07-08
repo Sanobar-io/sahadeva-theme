@@ -49,9 +49,14 @@
         </div>
     </section>
 
+    <main class="sahadeva-main column-wrapper">
+
+    {else}
+
+    <main class="sahadeva-main column-wrapper" style="margin-top: 4rem;">
+
     {/if}
 
-    <main class="sahadeva-main column-wrapper ">
         {* Left Column Content *}
         <div class="col-left">
             <div class="about">
