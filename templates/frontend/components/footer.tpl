@@ -12,6 +12,8 @@
 <footer class="sahadeva-footer">
     <div class="footer-inner inner-wrapper">
         <div class="left-col">
+
+            {* Footer Logo *}
             <div class="site-name">
             {capture assign="homeUrl"}
                 {url page="index" router=$smarty.const.ROUTE_PAGE}
@@ -28,11 +30,16 @@
                 </a>
             {/if}
             </div>
-            <ul class="address-info">
+
+            {* Address *}
             {if $currentJournal->getData('mailingAddress')}
+            <ul class="address-info">
                 <li>{$currentJournal->getData('mailingAddress')}</li>
+                </ul>
             {/if}
-            </ul>
+            
+            {* ISSN Numbers *}
+            {if ($activeTheme->getOption('issnPrint') || $activeTheme->getOption('issnElectronic'))}
             <ul class="issn-info">
             {if $activeTheme->getOption('issnPrint')}
                 <li>ISSN Print: <a href="https://portal.issn.org/resource/ISSN/{$activeTheme->getOption('issnPrint')}" target="_blank">{$activeTheme->getOption('issnPrint')}</a></li>
@@ -41,6 +48,10 @@
                 <li>ISSN Online: <a href="https://portal.issn.org/resource/ISSN/{$activeTheme->getOption('issnElectronic')}" target="_blank">{$activeTheme->getOption('issnElectronic')}</a></li>
             {/if}
             </ul>
+            {/if}
+
+            {* Contact Info *}
+            {if ($currentJournal->getData('supportPhone') || $currentJournal->getData('supportEmail'))}
             <ul class="contact-info">
             {if $currentJournal->getData('supportPhone')}
                 <li>{$currentJournal->getData('supportPhone')}</li>
@@ -49,6 +60,8 @@
                 <li><a href="mailto:{$currentJournal->getData('supportEmail')}">{$currentJournal->getData('supportEmail')}</a></li>
             {/if}
             </ul>
+            {/if}
+
             <ul class="social-media">
             {assign var=instagram value=$activeTheme->getOption('instagram')}
             {assign var=tiktok value=$activeTheme->getOption('tiktok')}
