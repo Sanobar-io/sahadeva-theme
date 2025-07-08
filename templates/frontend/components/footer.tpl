@@ -24,7 +24,7 @@
                 <a href="{$homeUrl}" class="is_text">{$displayPageHeaderTitle|escape}</a>
             {else}
                 <a href="{$homeUrl}" class="is_img">
-                    <img src="{$baseUrl}/templates/images/structure/logo.png" alt="{$applicationName|escape}" title="{$applicationName|escape}" width="180" height="90" />
+                    <img src="/templates/images/structure/logo.png" alt="{$applicationName|escape}" title="{$applicationName|escape}" width="180" height="90" />
                 </a>
             {/if}
             </div>
@@ -57,13 +57,13 @@
                 <li><b>{translate key='plugins.themes.sahadeva.footer.followUs'}</b></li>
             {/if}
             {if $instagram}
-                <li><a href="http://instagram.com/{$activeTheme->getOption('instagram')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/instagram-social.png" /></a></li>
+                <li><a href="http://instagram.com/{$activeTheme->getOption('instagram')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/instagram-social.png" /></a></li>
             {/if}
             {if $tiktok}
-                <li><a href="http://tiktok.com/@{$activeTheme->getOption('tiktok')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/tiktok-social.png" /></a></li>
+                <li><a href="http://tiktok.com/@{$activeTheme->getOption('tiktok')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/tiktok-social.png" /></a></li>
             {/if}
             {if $facebook}
-                <li><a href="https://facebook.com/profile.php?id={$activeTheme->getOption('facebook')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/facebook-social.png" /></a></li>
+                <li><a href="https://facebook.com/profile.php?id={$activeTheme->getOption('facebook')}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/facebook-social.png" /></a></li>
             {/if}
             </ul>
         </div>

@@ -38,31 +38,37 @@
             <a href="{$homeUrl}" class="is_text">{$displayPageHeaderTitle|escape}</a>
         {else}
             <a href="{$homeUrl}" class="is_img">
-                <img src="{$baseUrl}/templates/images/structure/logo.png" alt="{$applicationName|escape}" title="{$applicationName|escape}" width="180" height="90" />
+                <img src="/templates/images/structure/logo.png" alt="{$applicationName|escape}" title="{$applicationName|escape}" width="180" height="90" />
             </a>
         {/if}
         </div>
-        <ul class="contact-info">Phone:<br />
+        <ul class="contact-info">
         {if $currentJournal->getData('contactPhone')}
-            <li>{$currentJournal->getData('contactPhone')}</li>
+            <li>Phone:<br />
+            {$currentJournal->getData('contactPhone')}</li>
         {/if}
         {if $currentJournal->getData('contactEmail')}
             <li>Email:<br/>
             <a href="mailto:{$currentJournal->getData('contactEmail')}"> {$currentJournal->getData('contactEmail')}</a></li>
         {/if}
         </ul>
+        {assign var=instagram value=$activeTheme->getOption('instagram')}
+        {assign var=tiktok value=$activeTheme->getOption('tiktok')}
+        {assign var=facebook value=$activeTheme->getOption('facebook')}
+        {if ($instagram || $tiktok || $facebook)}
         <ul class="social-media">
             <li><b>{translate key='plugins.themes.sahadeva.footer.followUs'}</b></li>
-        {if $activeTheme->getOption('instagram')}
-            <li><a href="http://instagram.com/{$activeTheme->getOption('instagram')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/instagram-social.png" /></a></li>
+        {if $instagram}
+            <li><a href="http://instagram.com/{$instagram}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/instagram-social.png" /></a></li>
         {/if}
-        {if $activeTheme->getOption('tiktok')}
-            <li><a href="http://tiktok.com/@{$activeTheme->getOption('tiktok')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/tiktok-social.png" /></a></li>
+        {if $tiktok}
+            <li><a href="http://tiktok.com/@{$tiktok}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/tiktok-social.png" /></a></li>
         {/if}
-        {if $activeTheme->getOption('facebook')}
-            <li><a href="https://facebook.com/profile.php?id={$activeTheme->getOption('facebook')}" target="_blank"><img class="icon" src="{$baseUrl}/plugins/themes/sahadeva/images/facebook-social.png" /></a></li>
+        {if $facebook}
+            <li><a href="https://facebook.com/profile.php?id={$facebook}" target="_blank"><img class="icon" src="/plugins/themes/sahadeva/images/facebook-social.png" /></a></li>
         {/if}
         </ul>
+        {/if}
     </div>
 </div>
 <div id="defocus"></div>

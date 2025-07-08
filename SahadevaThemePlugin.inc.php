@@ -52,7 +52,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			[
 				'addLessVariables' =>
 					"@bg-base: $bgBase;",
-					"@base-url: $baseUrl;",
 			]
 		);
 
@@ -60,8 +59,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		 * Get jQuery from CDN
 		 */
 		$min = Config::getVar('general', 'enable_minified') ? '.min' : '';
-		$jquery = $this->request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jquery/jquery' . $min . '.js';
-		$jqueryUI = $this->request->getBaseUrl() . '/lib/pkp/lib/vendor/components/jqueryui/jquery-ui' . $min . '.js';
+		$jquery = $baseUrl . '/lib/pkp/lib/vendor/components/jquery/jquery' . $min . '.js';
+		$jqueryUI = $baseUrl . '/lib/pkp/lib/vendor/components/jqueryui/jquery-ui' . $min . '.js';
 
 		$this->addScript('jQuery', $jquery, array('baseUrl' => ''));
 		$this->addScript('jQueryUI', $jqueryUI, array('baseUrl' => ''));
@@ -223,9 +222,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
 			'isValid',
-			function($cache) use ($serialKey) {
+			function() use ($serialKey) {
 				return $this->_rebuildKeyCache($serialKey);
-			},
+			}
 		);
 
 		$data = $cache->getContents();
@@ -383,10 +382,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	public function _rebuildViewsCache() {
 		$the_limit = $this->getOption('mostViewedLimiter');
-		// make sure the limit is 0 or a positive integer, otherwise default to 5
 		$the_limit = is_numeric($the_limit) && (int)$the_limit > 0 ? (int)$the_limit : 5;
 
-		if($the_limit <= 0) { // return an empty array if limit is zero
+		if ($the_limit <= 0) {
 			return [
 				'articlesByViews' => [],
 				'limit' => $the_limit,
@@ -394,36 +392,54 @@ class SahadevaThemePlugin extends ThemePlugin {
 			];
 		}
 
-		$limiter = new DBResultRange($the_limit * 2);
-
 		$journal = $this->request->getContext();
+		if (!$journal) {
+			error_log("Sahadeva: No journal context available.");
+			return [
+				'articlesByViews' => [],
+				'limit' => $the_limit,
+				'checkedAt' => time(),
+			];
+		}
 
-		// get most-viewed articles
+		$limiter = new DBResultRange($the_limit * 2); // buffer to catch invalids
 		$metricsDao = DAORegistry::getDAO('MetricsDAO');
-		$columns = ['submission_id', 'metric'];
-		$filters = [
-			'context_id' => $journal->getId(),
-			'assoc_type' => ASSOC_TYPE_SUBMISSION,
-		];
-		$orderBy = [
-			'metric' => STATISTICS_ORDER_DESC,
-		];
-
-		$articles = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, null, $limiter);
-		
-		// load the article objects
 		$articlesByViews = [];
 		$count = 0;
 
-		foreach($articles as $row) {
-			if($count >= $the_limit) break;
-			$submission = $this->submissionDao->getById($row['submission_id']);
-			$publication = $submission->getCurrentPublication();
-			$published = $publication->getData('status');
-			if($submission && $published !== STATUS_PUBLISHED) continue;
+		try {
+			$columns = ['submission_id', 'metric'];
+			$filters = [
+				'context_id' => $journal->getId(),
+				'assoc_type' => ASSOC_TYPE_SUBMISSION,
+			];
+			$orderBy = ['metric' => STATISTICS_ORDER_DESC];
 
-			$articlesByViews[$row['submission_id']] = $row['metric'];
-			$count++;
+			$articles = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, null, $limiter);
+
+			if (!is_iterable($articles)) {
+				error_log("Sahadeva: Metrics data not iterable.");
+				$articles = [];
+			}
+
+			foreach ($articles as $row) {
+				if ($count >= $the_limit) break;
+				if (empty($row['submission_id'])) continue;
+
+				$submission = $this->submissionDao->getById($row['submission_id']);
+				if (!$submission) continue;
+
+				$publication = $submission->getCurrentPublication();
+				if (!$publication) continue;
+
+				$status = $publication->getData('status');
+				if ($status !== STATUS_PUBLISHED) continue;
+
+				$articlesByViews[$row['submission_id']] = (int) $row['metric'];
+				$count++;
+			}
+		} catch (Throwable $e) {
+			error_log("Sahadeva: Exception in _rebuildViewsCache - " . $e->getMessage());
 		}
 
 		return [
@@ -432,6 +448,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'checkedAt' => time(),
 		];
 	}
+
 
 	/**
 	 * Assigns submission-related dates to the template for display on the article page.

@@ -113,7 +113,7 @@
                     path=$article->getBestId()|to_array:$galley->getBestGalleyId()}"
                 >
                 Read Full Text
-                <img src="{$baseUrl}/plugins/themes/sahadeva/images/pdf.png" />
+                <img src="/plugins/themes/sahadeva/images/pdf.png" />
                 </a>
                 {break}
             {/if}

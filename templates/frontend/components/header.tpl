@@ -33,7 +33,7 @@
 
         <div class="burger-menu">
             <button id="burger-menu-btn" data-toggle="false">
-                <img src="{$baseUrl}/plugins/themes/sahadeva/images/burger-icon.svg" />
+                <img src="/plugins/themes/sahadeva/images/burger-icon.svg" />
             </button>
         </div>
 
@@ -50,7 +50,7 @@
                     <a href="{$homeUrl}" class="is_text">{$displayPageHeaderTitle|escape}</a>
                 {else}
                     <a href="{$homeUrl}" class="is_img">
-                        <img src="{$baseUrl}/templates/images/structure/logo.png" alt="{$applicationName|escape}" title="{$applicationName|escape}"/>
+                        <img src="/templates/images/structure/logo.png" alt="{$applicationName|escape}" title="{$applicationName|escape}"/>
                     </a>
                 {/if}
             </div>
@@ -64,7 +64,7 @@
                 <div class="search-wrapper">
                     <a href="{url page="search"}" class="pkp_search pkp_search_desktop">
                         <span class="fa fa-search" aria-hidden="true"></span>
-                        <img src="{$baseUrl}/plugins/themes/sahadeva/images/search.svg" />
+                        <img src="/plugins/themes/sahadeva/images/search.svg" />
                     </a>
                 </div>
             {/if}
