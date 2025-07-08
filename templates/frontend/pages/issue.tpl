@@ -55,7 +55,7 @@
         </div>
 
         {else}
-            <h1>No articles have been published</h1>
+            <h2>No articles have been published</h2>
 
         {/if}
     </section>
