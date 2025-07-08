@@ -15,8 +15,6 @@
  * @uses $primaryGenreIds array List of file genre IDs for primary types
  *}
  
-{assign var=issueCover value=$issue->getLocalizedCoverImageUrl()}
-{assign var=doi value=$issue->getStoredPubId('doi')}
 {include file="frontend/components/header.tpl" pageTitleTranslated=$issueIdentification}
 
 <div class="page">
@@ -26,6 +24,9 @@
 
     <section class="issue-wrapper">
         {if $issue}
+
+        {assign var=issueCover value=$issue->getLocalizedCoverImageUrl()}
+        {assign var=doi value=$issue->getStoredPubId('doi')}
 
         {if $issueCover}
         
