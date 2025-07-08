@@ -113,7 +113,9 @@
                     </div>
                 </div>
                 {else}
-                    <h2>No Issues Published</h2>
+                <div class="metabox">
+                    <h2 class="label">No issues have been published.</h2>
+                </div>
                 {/if}
             </div>
         </div>
