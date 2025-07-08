@@ -50,8 +50,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->modifyStyle(
 			'stylesheet',
 			[
-				'addLessVariables' =>
-					"@bg-base: $bgBase;",
+				'addLessVariables' => "
+					@bg-base: $bgBase;
+					@base-url: '$baseUrl';
+				"
 			]
 		);
 
