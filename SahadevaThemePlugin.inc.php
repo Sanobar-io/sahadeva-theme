@@ -327,7 +327,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		
 		$submissions = $this->submissionDao->getByIds($ids);
 		$issues = Services::get('issue')->getMany([
-			'contextId' => $this->journal->getId(),
+			'contextId' => $this->journalId,
 			'isPublished' => true,
 			'count' => $this->the_limit, // or however many you want
 		]);
@@ -396,7 +396,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		try {
 			$columns = ['submission_id', 'metric'];
 			$filters = [
-				'context_id' => $this->journal->getId(),
+				'context_id' => $this->journalId,
 				'assoc_type' => ASSOC_TYPE_SUBMISSION,
 			];
 			$orderBy = ['metric' => STATISTICS_ORDER_DESC];

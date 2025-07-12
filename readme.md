@@ -6,7 +6,7 @@ Created by Janisa Pascawati and Andi Nuruljihad
 >
 > Get the **PRO VERSION** license to **remove all ads forever**. Contact us at [hello(at)sanobario.com](mailto:hello@sanobario.com).
 >
-> See a live demo of the theme at: <https://sanobario.com/journal/index.php/refsi/index>
+> See a live demo of the theme at: <https://sanobario.com/journal/index.php/sahadeva/index>
 
 ## About Sahadeva Theme
 
