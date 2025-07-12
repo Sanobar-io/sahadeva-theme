@@ -23,6 +23,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		 */
 		$this->request = Application::get()->getRequest();
 		$this->issueDao = DAORegistry::getDAO('IssueDAO');
+		$this->journal = $this->request->getContext();
+		$this->journalId = $this->journal->getId();
 
 		import('plugins.themes.sahadeva.classes.SahadevaSubmissionDAO');
 		$this->submissionDao = new SahadevaSubmissionDAO();
@@ -91,7 +93,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	private function addSahadevaOptions() {
 
-
 		/**
 		 * Show theme version in backend
 		 */
@@ -101,7 +102,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$versionInfo = VersionCheck::parseVersionXML($versionFile);
 			$versionString = $versionInfo['release'] ? $versionInfo['release'] : 'Unknown';
 			$versionDate = $versionInfo['date'] ? $versionInfo['date'] : 'Unknown';
-			$versionInstalled = $versionInfo['version'] ? date('Y-m-d', strtotime($versionInfo['version']->getDateInstalled())): 'Unknown';
 		} else {
 			$versionString = 'Unknown';
 		}
@@ -110,7 +110,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'label' => "Sahadeva Theme Version $versionString",
 			'description' => "<ul>
 			<li>Version Released: $versionDate</li>
-			<li>Plugin Installed: $versionInstalled</li>
 			</ul>",
 		]);
 
@@ -203,6 +202,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 			strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
 			strpos($template, 'frontend/pages/issue.tpl') !== false ||
 			strpos($template, 'frontend/pages/article.tpl') !== false) {
+			$this->the_limit =
+				is_numeric($this->getOption('mostViewedLimiter')) &&
+				(int)$this->getOption('mostViewedLimiter') > 0 ?
+				(int)$this->getOption('mostViewedLimiter') :
+				5;
 			$this->getArticleViews($templateMgr);
 		}
 
@@ -223,7 +227,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
-			'isValid',
+			'isValid_' . $this->journalId,
 			function() use ($serialKey) {
 				return $this->_rebuildKeyCache($serialKey);
 			}
@@ -240,7 +244,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$cache->setEntireCache($data);
 		}
 
-		$templateMgr->assign('jfhr1239hrf973', $data['valid']);
+		$templateMgr->assign('jfhr1239hrf973', $data['valid'] ?? false);
 
 		return false;
 	}
@@ -282,43 +286,26 @@ class SahadevaThemePlugin extends ThemePlugin {
 		} else {
 			$json = json_decode($response, true);
 			if (json_last_error() !== JSON_ERROR_NONE) {
-				echo "Whoa! There's an error!";
+				error_log("Sahadeva: JSON parse error in license validation");
+				return [
+					'valid' => false,
+					'serial' => $serialKey,
+					'checkedAt' => time(),
+				];
 			}
 			return [
-				'valid' => $json['valid'],
+				'valid' => $json['valid'] ?? false,
 				'serial' => $serialKey,
 				'checkedAt' => time(),
 			];
 		}
 	}
-	
-	public function getIssuesbyYear($templateMgr) {
-
-		$journal = $this->request->getJournal();
-		$issues = $this->issueDao->getPublishedIssues($journal->getId())->toArray();
-
-		$grouped = [];
-
-		foreach($issues as $issue) {
-			$year = date('Y', strtotime($issue->getDatePublished()));
-			$grouped[$year][] = $issue;
-		}
-
-		krsort($grouped);
-
-		$templateMgr->assign('groupedIssuesByYear', $grouped);
-
-		return false;
-	}
 
 	public function getArticleViews($templateMgr) {
-		$the_limit = $this->getOption('mostViewedLimiter');
-		// make sure the limit is 0 or a positive integer, otherwise default to 5
-		$the_limit = is_numeric($the_limit) && (int)$the_limit > 0 ? (int)$the_limit : 5;
 
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
-			'viewsCache',
+			'viewsCache_' . $this->journalId,
 			[$this, '_rebuildViewsCache'],
 		);
 
@@ -328,7 +315,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if(
 			!is_array($data) ||
 			($now - $data['checkedAt'] > 86400) ||
-			$data['limit'] !== $the_limit ||
+			$data['limit'] !== $this->the_limit ||
 			$data['articlesByViews'] == null
 		) {
 			$data = $this->_rebuildViewsCache();
@@ -339,11 +326,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$ids = array_keys($articlesByViews);
 		
 		$submissions = $this->submissionDao->getByIds($ids);
-		$journal = $this->request->getContext();
 		$issues = Services::get('issue')->getMany([
-			'contextId' => $journal->getId(),
+			'contextId' => $this->journal->getId(),
 			'isPublished' => true,
-			'count' => $the_limit, // or however many you want
+			'count' => $this->the_limit, // or however many you want
 		]);
 
 		$indexedIssues = [];
@@ -383,13 +369,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function _rebuildViewsCache() {
-		$the_limit = $this->getOption('mostViewedLimiter');
-		$the_limit = is_numeric($the_limit) && (int)$the_limit > 0 ? (int)$the_limit : 5;
 
-		if ($the_limit <= 0) {
+		if ($this->the_limit <= 0) {
 			return [
 				'articlesByViews' => [],
-				'limit' => $the_limit,
+				'limit' => $this->the_limit,
 				'checkedAt' => time(),
 			];
 		}
@@ -399,12 +383,12 @@ class SahadevaThemePlugin extends ThemePlugin {
 			error_log("Sahadeva: No journal context available.");
 			return [
 				'articlesByViews' => [],
-				'limit' => $the_limit,
+				'limit' => $this->the_limit,
 				'checkedAt' => time(),
 			];
 		}
 
-		$limiter = new DBResultRange($the_limit * 2); // buffer to catch invalids
+		$limiter = new DBResultRange($this->the_limit * 2); // buffer to catch invalids
 		$metricsDao = DAORegistry::getDAO('MetricsDAO');
 		$articlesByViews = [];
 		$count = 0;
@@ -412,7 +396,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		try {
 			$columns = ['submission_id', 'metric'];
 			$filters = [
-				'context_id' => $journal->getId(),
+				'context_id' => $this->journal->getId(),
 				'assoc_type' => ASSOC_TYPE_SUBMISSION,
 			];
 			$orderBy = ['metric' => STATISTICS_ORDER_DESC];
@@ -425,7 +409,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			}
 
 			foreach ($articles as $row) {
-				if ($count >= $the_limit) break;
+				if ($count >= $this->the_limit) break;
 				if (empty($row['submission_id'])) continue;
 
 				$submission = $this->submissionDao->getById($row['submission_id']);
@@ -446,7 +430,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		return [
 			'articlesByViews' => $articlesByViews,
-			'limit' => $the_limit,
+			'limit' => $this->the_limit,
 			'checkedAt' => time(),
 		];
 	}
@@ -481,7 +465,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		// // 2. Acceptance date — look through editor decisions
 		$editDecisionDao = DAORegistry::getDAO('EditDecisionDAO');
-		$decisions = $editDecisionDao->getEditorDecisions($submission->getId());
+		$decisions = $editDecisionDao->getEditorDecisions($submissionId);
 
 		$acceptanceDate = null;
 		foreach ($decisions as $decision) {
