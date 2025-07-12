@@ -12,8 +12,8 @@
 <version>
 	<application>sahadeva</application>
 	<type>plugins.themes</type>
-	<release>1.0.3.8</release>
-	<date>2025-07-07</date>
+	<release>1.0.4.0</release>
+	<date>2025-07-12</date>
 	<lazy-load>1</lazy-load>
 	<class>SahadevaThemePlugin</class>
 </version>
