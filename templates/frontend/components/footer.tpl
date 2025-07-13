@@ -32,7 +32,7 @@
             </div>
 
             {* Address *}
-            {if $currentJournal->getData('mailingAddress')}
+            {if $currentJournal && $currentJournal->getData('mailingAddress')}
             <ul class="address-info">
                 <li>{$currentJournal->getData('mailingAddress')}</li>
                 </ul>
@@ -51,7 +51,7 @@
             {/if}
 
             {* Contact Info *}
-            {if ($currentJournal->getData('supportPhone') || $currentJournal->getData('supportEmail'))}
+            {if $currentJournal && ($currentJournal->getData('supportPhone') || $currentJournal->getData('supportEmail'))}
             <ul class="contact-info">
             {if $currentJournal->getData('supportPhone')}
                 <li>{$currentJournal->getData('supportPhone')}</li>

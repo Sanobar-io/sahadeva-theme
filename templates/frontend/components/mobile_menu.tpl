@@ -42,6 +42,9 @@
             </a>
         {/if}
         </div>
+        
+        {** Contact Information **}
+        {if $currentJournal}
         <ul class="contact-info">
         {if $currentJournal->getData('supportPhone')}
             <li>Phone:<br />
@@ -52,6 +55,8 @@
             <a href="mailto:{$currentJournal->getData('supportEmail')}"> {$currentJournal->getData('supportEmail')}</a></li>
         {/if}
         </ul>
+        {/if}
+
         {assign var=instagram value=$activeTheme->getOption('instagram')}
         {assign var=tiktok value=$activeTheme->getOption('tiktok')}
         {assign var=facebook value=$activeTheme->getOption('facebook')}

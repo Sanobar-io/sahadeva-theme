@@ -24,7 +24,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$this->request = Application::get()->getRequest();
 		$this->issueDao = DAORegistry::getDAO('IssueDAO');
 		$this->journal = $this->request->getContext();
-		$this->journalId = $this->journal->getId();
+		$this->journalId = $this->journal?->getId();
 
 		import('plugins.themes.sahadeva.classes.SahadevaSubmissionDAO');
 		$this->submissionDao = new SahadevaSubmissionDAO();
@@ -87,7 +87,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 		 * The Hooks
 		 */
 		HookRegistry::register('TemplateManager::display', [$this, 'handleTemplateDisplay']);
-		HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
+		if($this->journal) {
+			HookRegistry::register('Templates::Issue::Archive::Issues', [$this, 'groupIssuesByYear']);
+		}
+
+		return;
 
 	}
 
@@ -197,26 +201,28 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// Serial key check (applies to all pages)
 		$this->checkSerialKey($templateMgr, $template);
 
-		// Homepage logic (load current/previous/next issue)
-		if (strpos($template, 'frontend/pages/indexSite.tpl') !== false ||
-			strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
-			strpos($template, 'frontend/pages/issue.tpl') !== false ||
-			strpos($template, 'frontend/pages/article.tpl') !== false) {
-			$this->the_limit =
-				is_numeric($this->getOption('mostViewedLimiter')) &&
-				(int)$this->getOption('mostViewedLimiter') > 0 ?
-				(int)$this->getOption('mostViewedLimiter') :
-				5;
-			$this->getArticleViews($templateMgr);
-		}
-
-		if (strpos($template, 'frontend/pages/indexJournal.tpl') !== false) {
-			$this->getArticleLimiter($templateMgr);
-		}
-
-		// Article page logic (submission dates)
-		if (strpos($template, 'frontend/pages/article.tpl') !== false) {
-			$this->addSubmissionDates($templateMgr);
+		if($this->journal) {
+			// Homepage logic (load current/previous/next issue)
+			if (strpos($template, 'frontend/pages/indexSite.tpl') !== false ||
+				strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
+				strpos($template, 'frontend/pages/issue.tpl') !== false ||
+				strpos($template, 'frontend/pages/article.tpl') !== false) {
+				$this->the_limit =
+					is_numeric($this->getOption('mostViewedLimiter')) &&
+					(int)$this->getOption('mostViewedLimiter') > 0 ?
+					(int)$this->getOption('mostViewedLimiter') :
+					5;
+				$this->getArticleViews($templateMgr);
+			}
+	
+			if (strpos($template, 'frontend/pages/indexJournal.tpl') !== false) {
+				$this->getArticleLimiter($templateMgr);
+			}
+	
+			// Article page logic (submission dates)
+			if (strpos($template, 'frontend/pages/article.tpl') !== false) {
+				$this->addSubmissionDates($templateMgr);
+			}
 		}
 
 		return false;
@@ -225,9 +231,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public function checkSerialKey($templateMgr, $template) {
 		$serialKey = $this->getOption('serialKey') ?? false;
 
+		$contextId = $this->journalId ?? 'site';
+
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
-			'isValid_' . $this->journalId,
+			'isValid_' . $contextId,
 			function() use ($serialKey) {
 				return $this->_rebuildKeyCache($serialKey);
 			}
@@ -250,7 +258,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function _rebuildKeyCache ($serialKey) {
-		$context = $this->request->getContext();
+		$context = $this->journal;
 		$contextPath = $this->request->getDispatcher()->url(
 			$this->request,
 			ROUTE_PAGE,
@@ -378,8 +386,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 			];
 		}
 
-		$journal = $this->request->getContext();
-		if (!$journal) {
+		if (!$this->journal) {
 			error_log("Sahadeva: No journal context available.");
 			return [
 				'articlesByViews' => [],
