@@ -248,7 +248,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		}
 
 		$totalTime = microtime(true) - $start;
-		error_log("addOptions() took $totalTime<br>");
+		error_log("handleTemplateDisplay() took $totalTime<br>");
 
 		return false;
 	}
@@ -383,7 +383,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		$totalTime = microtime(true) - $start;
-		error_log("addOptions() took $totalTime<br>");
+		error_log("getArticlesView() took $totalTime<br>");
 
 		return false;
 	}
