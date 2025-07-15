@@ -23,23 +23,12 @@ class SahadevaThemePlugin extends ThemePlugin {
 		 */
 		$this->request = Application::get()->getRequest();
 		$this->issueDao = DAORegistry::getDAO('IssueDAO');
-		$this->journal = $this->request->getContext();
+		$this->journal = $this->request?->getContext();
 		$this->journalId = $this->journal?->getId();
 
 		import('plugins.themes.sahadeva.classes.SahadevaSubmissionDAO');
-		$this->submissionDao = new SahadevaSubmissionDAO();
-
 		$this->cacheManager = CacheManager::getManager();
-		$this->templateMgr = TemplateManager::getManager($this->request);
-
-		/**
-		 * Register plugins
-		 */
-		if (!isset($GLOBALS['__viewcountPluginRegistered'])) {
-			require_once(__DIR__ . '/plugins/modifier.viewcount.php');
-			$this->templateMgr->registerPlugin('modifier', 'viewcount', 'smarty_modifier_viewcount');
-			$GLOBALS['__viewcountPluginRegistered'] = true;
-		}
+	
 		
 		/**
 		 * Styles setup
@@ -198,31 +187,42 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public function handleTemplateDisplay($hookName, $args) {
 		[$templateMgr, $template] = $args;
 
+		if($this->journal)
+			$this->submissionDao = new SahadevaSubmissionDAO();
+
+		// Register plugins
+		if (!isset($GLOBALS['__viewcountPluginRegistered'])) {
+			require_once(__DIR__ . '/plugins/modifier.viewcount.php');
+			$templateMgr->registerPlugin('modifier', 'viewcount', 'smarty_modifier_viewcount');
+			$GLOBALS['__viewcountPluginRegistered'] = true;
+		}
+
 		// Serial key check (applies to all pages)
 		$this->checkSerialKey($templateMgr, $template);
 
-		if($this->journal) {
-			// Homepage logic (load current/previous/next issue)
-			if (strpos($template, 'frontend/pages/indexSite.tpl') !== false ||
-				strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
-				strpos($template, 'frontend/pages/issue.tpl') !== false ||
-				strpos($template, 'frontend/pages/article.tpl') !== false) {
-				$this->the_limit =
-					is_numeric($this->getOption('mostViewedLimiter')) &&
-					(int)$this->getOption('mostViewedLimiter') > 0 ?
-					(int)$this->getOption('mostViewedLimiter') :
-					5;
-				$this->getArticleViews($templateMgr);
-			}
-	
-			if (strpos($template, 'frontend/pages/indexJournal.tpl') !== false) {
-				$this->getArticleLimiter($templateMgr);
-			}
-	
-			// Article page logic (submission dates)
-			if (strpos($template, 'frontend/pages/article.tpl') !== false) {
-				$this->addSubmissionDates($templateMgr);
-			}
+		
+		if(!$this->journal) return false;
+
+		// Homepage logic (load current/previous/next issue)
+		if (strpos($template, 'frontend/pages/indexSite.tpl') !== false ||
+			strpos($template, 'frontend/pages/indexJournal.tpl') !== false ||
+			strpos($template, 'frontend/pages/issue.tpl') !== false ||
+			strpos($template, 'frontend/pages/article.tpl') !== false) {
+			$this->the_limit =
+				is_numeric($this->getOption('mostViewedLimiter')) &&
+				(int)$this->getOption('mostViewedLimiter') > 0 ?
+				(int)$this->getOption('mostViewedLimiter') :
+				5;
+			$this->getArticleViews($templateMgr);
+		}
+
+		if (strpos($template, 'frontend/pages/indexJournal.tpl') !== false) {
+			$this->getArticleLimiter($templateMgr);
+		}
+
+		// Article page logic (submission dates)
+		if (strpos($template, 'frontend/pages/article.tpl') !== false) {
+			$this->addSubmissionDates($templateMgr);
 		}
 
 		return false;
@@ -231,7 +231,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public function checkSerialKey($templateMgr, $template) {
 		$serialKey = $this->getOption('serialKey') ?? false;
 
-		$contextId = $this->journalId ?? 'site';
+		$contextId = $this->journalId ?? 'site__';
 
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
@@ -311,9 +311,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	public function getArticleViews($templateMgr) {
 
+		$contextId = $this->journalId ?? 'site__';
+
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
-			'viewsCache_' . $this->journalId,
+			'viewsCache_' . $contextId,
 			[$this, '_rebuildViewsCache'],
 		);
 
@@ -331,9 +333,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		}
 
 		$articlesByViews = $data['articlesByViews'];
-		$ids = array_keys($articlesByViews);
 		
-		$submissions = $this->submissionDao->getByIds($ids);
 		$issues = Services::get('issue')->getMany([
 			'contextId' => $this->journalId,
 			'isPublished' => true,
@@ -345,32 +345,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$indexedIssues[$an_issue->getId()] = $an_issue;
 		}
 
-		$submissionById = [];
-		foreach ($submissions as $submission) {
-			$submissionById[$submission->getId()] = $submission;
-		}
-
-		$topArticles = [];
-
-		foreach ($articlesByViews as $submissionId => $views) {
-			if (!isset($submissionById[$submissionId])) continue;
-
-			$submission = $submissionById[$submissionId];
-			if(!$submission) continue;
-			$publication = $submission->getCurrentPublication();
-			$issueId = $publication->getData('issueId');
-
-			$topArticles[] = [
-				'submission' => $submission,
-				'publication' => $publication,
-				'issue' => $issueId,
-			];
-		}
-
 		$templateMgr->assign([
-			'topArticles' => $topArticles,
+			'topArticles' => $articlesByViews,
 			'allIssues' => iterator_to_array($indexedIssues),
-			'submissionIdsByViews' => $articlesByViews,
 		]);
 
 		return false;
@@ -381,7 +358,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if ($this->the_limit <= 0) {
 			return [
 				'articlesByViews' => [],
-				'limit' => $this->the_limit,
+				'limit' => 0,
 				'checkedAt' => time(),
 			];
 		}
@@ -397,8 +374,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		$limiter = new DBResultRange($this->the_limit * 2); // buffer to catch invalids
 		$metricsDao = DAORegistry::getDAO('MetricsDAO');
-		$articlesByViews = [];
-		$count = 0;
+
+		if(!$this->journalId) {
+			error_log("Sahadeva: Not within journal context.");
+			return false;
+		}
 
 		try {
 			$columns = ['submission_id', 'metric'];
@@ -410,17 +390,24 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 			$articles = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, null, $limiter);
 
-			if (!is_iterable($articles)) {
-				error_log("Sahadeva: Metrics data not iterable.");
-				$articles = [];
+			// Index view counts by submission_id
+			$viewCounts = [];
+			foreach ($articles as $row) {
+				if (!empty($row['submission_id'])) {
+					$viewCounts[(int) $row['submission_id']] = (int) $row['metric'];
+				}
 			}
 
-			foreach ($articles as $row) {
-				if ($count >= $this->the_limit) break;
-				if (empty($row['submission_id'])) continue;
+			$submissionIds = array_keys($viewCounts);
+			$submissions = $this->submissionDao->getByIds($submissionIds);
 
-				$submission = $this->submissionDao->getById($row['submission_id']);
-				if (!$submission) continue;
+			$articlesByViews = [];
+			$count = 0;
+			foreach ($submissions as $submission) {
+				if ($count >= $this->the_limit) break;
+
+				$submissionId = $submission->getId();
+				$viewCount = $viewCounts[$submissionId] ?? 0;
 
 				$publication = $submission->getCurrentPublication();
 				if (!$publication) continue;
@@ -428,8 +415,20 @@ class SahadevaThemePlugin extends ThemePlugin {
 				$status = $publication->getData('status');
 				if ($status !== STATUS_PUBLISHED) continue;
 
-				$articlesByViews[$row['submission_id']] = (int) $row['metric'];
-				$count++;
+				$articlesByViews[] = [
+					'submission' => [
+						'submissionId' => $submission->getBestId(),
+						'publicationId' => $publication->getData('issueId'),
+						'title' => $submission->getLocalizedTitle(),
+						'pages' => $publication->getData('pages'),
+						'doi' => $publication->getStoredPubId('doi') ?? '',
+						'authors' => $submission->getAuthorString(),
+						'publishedDate' => $submission->getDatePublished(),
+						'abstract' => $submission->getLocalizedAbstract(),
+					],
+					'views' => $viewCount,
+				];
+
 			}
 		} catch (Throwable $e) {
 			error_log("Sahadeva: Exception in _rebuildViewsCache - " . $e->getMessage());
@@ -462,9 +461,12 @@ class SahadevaThemePlugin extends ThemePlugin {
 	{
 
 		$publication = $templateMgr->getTemplateVars('publication');
-		$submissionId = $publication->getData('submissionId');
-		$submission = $this->submissionDao->getById($submissionId);
+		if(!$publication) return false;
 
+		$submissionId = $publication->getData('submissionId');
+		if(!$submissionId) return false;
+
+		$submission = $this->submissionDao->getById($submissionId);
 		if (!$submission) return;
 
 		// 1. Submission date

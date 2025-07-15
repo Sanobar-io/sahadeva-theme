@@ -29,7 +29,13 @@
 
 	<div class="welcome text-wrapper center">
 
-	<p>Welcome to the manuscript submission and review portal for authors, reviewers, and editors of {$currentContext->getLocalizedName()}.</p>
+	<p>Welcome to the manuscript submission and review portal for authors, reviewers, and editors of
+	{if $currentContext}
+		{$currentContext->getLocalizedName()}
+	{else}
+		{$siteTitle}
+	{/if}
+	</p>
 
 	<p>After signing in or creating an account, you may:</p>
 
@@ -44,7 +50,13 @@
 
 	<p>We sincerely thank you for contributing to the advancement of knowledge by submitting your work to our journal and supporting the peer review process.</p>
 
-	<p>{$currentContext->getLocalizedName()} is committed to promoting scholarly excellence by supporting researchers, educators, and practitioners through rigorous peer-reviewed publishing and open academic collaboration.</p>
+	<p>
+	{if $currentContext}
+		{$currentContext->getLocalizedName()}
+	{else}
+		{$siteTitle}
+	{/if}
+	is committed to promoting scholarly excellence by supporting researchers, educators, and practitioners through rigorous peer-reviewed publishing and open academic collaboration.</p>
 
 	</div>
 

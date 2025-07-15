@@ -1,17 +1,17 @@
 {**
- * templates/frontend/pages/indexSite.tpl
- *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * Site index.
- *
- *}
+* Sahadeva Theme
+*
+* Copyright (c) 2025 Sanobario
+* Licensed under the GNU GPL v3.
+*
+* This is the template for the disclaimer that appears in the bottom of free version of Sahadeva
+*
+* @template sahadeva:frontend/pages/indexSite.tpl
+*}
+
 {include file="frontend/components/header.tpl"}
 
-<h1>This is a Test</h1>
-<div class="page_index_site">
+<div class="page page_index_site">
 
 	{if $about}
 		<div class="about_site">

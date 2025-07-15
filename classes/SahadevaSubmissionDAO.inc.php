@@ -15,13 +15,15 @@ class SahadevaSubmissionDAO extends SubmissionDAO {
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
         $sql = 'SELECT * FROM submissions WHERE submission_id IN (' . $placeholders . ')';
-        $result = $this->retrieve($sql, $ids);
+        $results = $this->retrieve($sql, $ids);
 
         $submissions = [];
-        foreach($result as $row) {
+        foreach($results as $row) {
             $rowArray = (array) $row;
             $submission = $this->_fromRow($rowArray);
-            $submissions[$submission->getId()] = $submission;
+            if($submission && $submission->getId()) {
+                $submissions[$submission->getId()] = $submission;
+            }
         }
 
         return $submissions;
