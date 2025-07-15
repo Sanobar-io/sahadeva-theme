@@ -418,12 +418,12 @@ class SahadevaThemePlugin extends ThemePlugin {
 				$articlesByViews[] = [
 					'submission' => [
 						'submissionId' => $submission->getBestId(),
-						'publicationId' => $publication->getData('issueId'),
+						'issueId' => $publication->getData('issueId'),
 						'title' => $submission->getLocalizedTitle(),
 						'pages' => $publication->getData('pages'),
 						'doi' => $publication->getStoredPubId('doi') ?? '',
 						'authors' => $submission->getAuthorString(),
-						'publishedDate' => $submission->getDatePublished(),
+						'datePublished' => $submission->getDatePublished(),
 						'abstract' => $submission->getLocalizedAbstract(),
 					],
 					'views' => $viewCount,

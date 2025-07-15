@@ -43,7 +43,7 @@
     {assign var=pages value=$article.submission.pages}
     {assign var=doi value=$article.submission.doi}
     {assign var=authorString value=$article.submission.authors|escape}
-    {assign var=publishedDate value=$article.submission.datePublished|escape|date_format:"%B %e, %Y"}
+    {assign var=datePublished value=$article.submission.datePublished|escape|date_format:"%B %e, %Y"}
     {assign var=abstract value=$article.submission.abstract|strip_tags}
 
     <li>
@@ -57,7 +57,7 @@
             {$abstract}
         </div>
         <div class="issue-data">
-            <span class="date">Published {$publishedDate}</span>
+            <span class="date">Published {$datePublished}</span>
             {if $the_issue}
                 • <span class="issue">Found in <a href="{url page="issue" op="view" path=$the_issue->getBestIssueId()}">{$issueId}</a></span>
                 {if $pages}
