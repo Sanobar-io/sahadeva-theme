@@ -101,6 +101,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	private function addSahadevaOptions() {
 
+		// make sure it's run only once
+		static $alreadyRan = false;
+		if($alreadyRan) return false;
+		$alreadyRan = true;
+
 		$start = microtime(true);
 
 		/**
@@ -205,6 +210,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function handleTemplateDisplay($hookName, $args) {
+		// make sure it's run only once
+		static $alreadyRan = false;
+		if($alreadyRan) return false;
+		$alreadyRan = true;
+
 		$start = microtime(true);
 
 		[$templateMgr, $template] = $args;
@@ -254,6 +264,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function checkSerialKey($templateMgr, $template) {
+		// make sure it's run only once
+		static $alreadyRan = false;
+		if($alreadyRan) return false;
+		$alreadyRan = true;
+		
 		$start = microtime(true);
 
 		$serialKey = $this->getOption('serialKey') ?? false;
