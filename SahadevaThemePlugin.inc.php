@@ -11,11 +11,19 @@
 * @class SahadevaThemePlugin
 */
 
+ini_set('log_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 import('lib.pkp.classes.plugins.ThemePlugin');
 import('lib.pkp.classes.cache.CacheManager');
 import('lib.pkp.classes.site.VersionCheck');
 
 class SahadevaThemePlugin extends ThemePlugin {
+
+	public function __construct() {
+		parent::__construct();
+		error_log("SahadevaThemePlugin instantiated");
+	}
 
 	public $request;
 	public $issueDao;
@@ -200,7 +208,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		$totalTime = microtime(true) - $start;
-		// error_log("addOptions() took $totalTime<br>");
+		error_log("addOptions() took $totalTime<br>");
 
 		return false;
 	}
@@ -253,7 +261,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		}
 
 		$totalTime = microtime(true) - $start;
-		// error_log("handleTemplateDisplay() took $totalTime<br>");
+		error_log("handleTemplateDisplay() took $totalTime<br>");
 
 		return false;
 	}
@@ -291,7 +299,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$templateMgr->assign('jfhr1239hrf973', $data['valid'] ?? false);
 
 		$totalTime = microtime(true) - $start;
-		// error_log("checkSerialkey() took $totalTime<br>");
+		error_log("checkSerialkey() took $totalTime<br>");
 
 		return false;
 	}
@@ -392,7 +400,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		$totalTime = microtime(true) - $start;
-		// error_log("getArticlesView() took $totalTime<br>");
+		error_log("getArticlesView() took $totalTime<br>");
 
 		return false;
 	}
@@ -542,7 +550,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		$totalTime = microtime(true) - $start;
-		// error_log("addSubmissionDates() took $totalTime<br>");
+		error_log("addSubmissionDates() took $totalTime<br>");
 
 		return false;
 	}
