@@ -358,6 +358,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	public function getArticleViews($templateMgr) {
 
+		// make sure it's run only once
+		if (!empty($GLOBALS['__sahadeva']['getArticleViewsRan'])) return false;
+		$GLOBALS['__sahadeva']['getArticleViewsRan'] = true;
+
 		$start = microtime(true);
 
 		$contextId = $this->journalId ?? 'site__';
@@ -512,6 +516,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 	 * @return false Always returns false to continue normal template rendering flow
 	 */
 	public function addSubmissionDates($templateMgr) {
+
+		// make sure it's run only once
+		if (!empty($GLOBALS['__sahadeva']['addSubmissionDatesRan'])) return false;
+		$GLOBALS['__sahadeva']['addSubmissionDatesRan'] = true;
 
 		$start = microtime(true);
 
