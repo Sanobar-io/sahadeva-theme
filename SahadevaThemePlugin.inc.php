@@ -18,6 +18,7 @@ import('lib.pkp.classes.site.VersionCheck');
 class SahadevaThemePlugin extends ThemePlugin {
 
 	public function init() {
+
 		/**
 		 * Initial method calls to reduce excessive calls down the line
 		 */
@@ -28,7 +29,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		import('plugins.themes.sahadeva.classes.SahadevaSubmissionDAO');
 		$this->cacheManager = CacheManager::getManager();
-	
+
+		/**
+		 * Check if in backend
+		 */
 		
 		/**
 		 * Styles setup
@@ -325,6 +329,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if(
 			!is_array($data) ||
 			($now - $data['checkedAt'] > 86400) ||
+			$this->isBackend || // always rebuild if in backend
 			$data['limit'] !== $this->the_limit ||
 			$data['articlesByViews'] == null
 		) {
@@ -354,6 +359,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function _rebuildViewsCache() {
+
+		error_log("Rebuilding views cache...");
 
 		if ($this->the_limit <= 0) {
 			return [
