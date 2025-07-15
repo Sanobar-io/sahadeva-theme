@@ -11,6 +11,9 @@
 * @class SahadevaThemePlugin
 */
 
+ini_set('log_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 import('lib.pkp.classes.plugins.ThemePlugin');
 import('lib.pkp.classes.cache.CacheManager');
 import('lib.pkp.classes.site.VersionCheck');
@@ -89,6 +92,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	private function addSahadevaOptions() {
+
+		$start = microtime(true);
 
 		/**
 		 * Show theme version in backend
@@ -185,10 +190,15 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
 		]);
 
+		$totalTime = microtime(true) - $start;
+		error_log("addOptions() took $totalTime<br>");
+
 		return false;
 	}
 
 	public function handleTemplateDisplay($hookName, $args) {
+		$start = microtime(true);
+
 		[$templateMgr, $template] = $args;
 
 		if($this->journal)
@@ -229,10 +239,15 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$this->addSubmissionDates($templateMgr);
 		}
 
+		$totalTime = microtime(true) - $start;
+		error_log("addOptions() took $totalTime<br>");
+
 		return false;
 	}
 
 	public function checkSerialKey($templateMgr, $template) {
+		$start = microtime(true);
+
 		$serialKey = $this->getOption('serialKey') ?? false;
 
 		$contextId = $this->journalId ?? 'site__';
@@ -257,6 +272,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 		}
 
 		$templateMgr->assign('jfhr1239hrf973', $data['valid'] ?? false);
+
+		$totalTime = microtime(true) - $start;
+		error_log("checkSerialkey() took $totalTime<br>");
 
 		return false;
 	}
@@ -315,6 +333,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 	public function getArticleViews($templateMgr) {
 
+		$start = microtime(true);
+
 		$contextId = $this->journalId ?? 'site__';
 
 		$cache = $this->cacheManager->getFileCache(
@@ -354,6 +374,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'topArticles' => $articlesByViews,
 			'allIssues' => iterator_to_array($indexedIssues),
 		]);
+
+		$totalTime = microtime(true) - $start;
+		error_log("addOptions() took $totalTime<br>");
 
 		return false;
 	}
@@ -464,8 +487,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 	 * @param TemplateManager $templateMgr
 	 * @return false Always returns false to continue normal template rendering flow
 	 */
-	public function addSubmissionDates($templateMgr)
-	{
+	public function addSubmissionDates($templateMgr) {
+
+		$start = microtime(true);
 
 		$publication = $templateMgr->getTemplateVars('publication');
 		if(!$publication) return false;
@@ -500,6 +524,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'acceptanceDate' => $acceptanceDate,
 			'publishDate' => $publishDate,
 		]);
+
+		$totalTime = microtime(true) - $start;
+		error_log("addSubmissionDates() took $totalTime<br>");
 
 		return false;
 	}
