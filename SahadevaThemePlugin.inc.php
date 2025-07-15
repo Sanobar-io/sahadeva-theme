@@ -20,6 +20,11 @@ import('lib.pkp.classes.site.VersionCheck');
 
 class SahadevaThemePlugin extends ThemePlugin {
 
+	public function __construct() {
+		parent::__construct();
+		error_log("SahadevaThemePlugin instantiated");
+	}
+
 	public $request;
 	public $issueDao;
 	public $journal;
@@ -268,7 +273,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		static $alreadyRan = false;
 		if($alreadyRan) return false;
 		$alreadyRan = true;
-		
+
 		$start = microtime(true);
 
 		$serialKey = $this->getOption('serialKey') ?? false;
