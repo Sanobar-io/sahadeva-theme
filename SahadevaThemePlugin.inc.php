@@ -20,6 +20,14 @@ import('lib.pkp.classes.site.VersionCheck');
 
 class SahadevaThemePlugin extends ThemePlugin {
 
+	public $request;
+	public $issueDao;
+	public $journal;
+	public $journalId;
+	public $cacheManager;
+	public $submissionDao;
+	public int $the_limit;
+
 	public function init() {
 
 		/**
@@ -349,7 +357,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if(
 			!is_array($data) ||
 			($now - $data['checkedAt'] > 86400) ||
-			$this->isBackend || // always rebuild if in backend
 			$data['limit'] !== $this->the_limit ||
 			$data['articlesByViews'] == null
 		) {
