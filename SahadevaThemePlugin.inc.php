@@ -32,16 +32,16 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public $cacheManager;
 	public $submissionDao;
 	public int $the_limit;
+	public $metricsDao;
 
 	public function init() {
 
-		/**
-		 * Initial method calls to reduce excessive calls down the line
-		 */
+		// Initial method calls to reduce excessive calls down the line
 		$this->request = Application::get()->getRequest();
 		$this->issueDao = DAORegistry::getDAO('IssueDAO');
 		$this->journal = $this->request?->getContext();
 		$this->journalId = $this->journal?->getId();
+		$this->metricsDao = DAORegistry::getDAO('MetricsDAO');
 
 		import('plugins.themes.sahadeva.classes.SahadevaSubmissionDAO');
 		$this->cacheManager = CacheManager::getManager();
@@ -234,7 +234,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		// Serial key check (applies to all pages)
 		$this->checkSerialKey($templateMgr, $template);
-
 		
 		if(!$this->journal) return false;
 
@@ -253,6 +252,12 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 		if (strpos($template, 'frontend/pages/indexJournal.tpl') !== false) {
 			$this->getArticleLimiter($templateMgr);
+		}
+
+		// Issue page logic (enrich with views)
+		error_log("This is the template: $template");
+		if (strpos($template, 'frontend/pages/issue.tpl') !== false) {
+			$this->addViewsToIssueArticles($templateMgr);
 		}
 
 		// Article page logic (submission dates)
@@ -430,9 +435,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			];
 		}
 
-		$limiter = new DBResultRange($this->the_limit * 2); // buffer to catch invalids
-		$metricsDao = DAORegistry::getDAO('MetricsDAO');
-
 		if(!$this->journalId) {
 			error_log("Sahadeva: Not within journal context.");
 			return false;
@@ -445,8 +447,9 @@ class SahadevaThemePlugin extends ThemePlugin {
 				'assoc_type' => ASSOC_TYPE_SUBMISSION,
 			];
 			$orderBy = ['metric' => STATISTICS_ORDER_DESC];
+			$limiter = new DBResultRange($this->the_limit * 2); // buffer to catch invalids
 
-			$articles = $metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, null, $limiter);
+			$articles = $this->metricsDao->getMetrics('ojs::counter', $columns, $filters, $orderBy, null, $limiter);
 
 			// Index view counts by submission_id
 			$viewCounts = [];
@@ -566,6 +569,62 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public function getArticleLimiter($templateMgr) {
 		$limiter = $this->getOption('mostViewedLimiter') ?? 5;
 		$templateMgr->assign('limiter', $limiter);
+	}
+
+	public function getSubmissionViewCount($submissionId) {
+		$columns = ['submission_id', 'metric'];
+		$filters = [
+			'context_id' => $this->journalId,
+			'assoc_type' => ASSOC_TYPE_SUBMISSION,
+			'assoc_id' => $submissionId,
+		];
+
+		$results = $this->metricsDao->getMetrics(
+			'ojs::counter',
+			$columns,
+			$filters,
+		);
+
+		$total = 0;
+		if (!empty($results)) {
+			foreach ($results as $row) {
+				if (isset($row['metric'])) {
+					$total += (int) $row['metric'];
+				}
+			}
+		}
+
+		error_log("The total views are: $total");
+		return $total;
+	}
+
+	public function addViewsToIssueArticles($templateMgr) {
+
+		$sections = $templateMgr->getTemplateVars('publishedSubmissions');
+
+		if (!$sections || !is_array($sections)) return false;
+
+		$sectionsWithViews = [];
+
+		foreach ($sections as $section) {
+			$articlesWithViews = [];
+
+			foreach ($section['articles'] as $submission) {
+				$articlesWithViews[] = [
+					'submission' => $submission,
+					'views' => $this->getSubmissionViewCount($submission->getId()),
+				];
+			}
+			
+			$sectionsWithViews[] = [
+				'title' => $section['title'],
+				'articles' => $articlesWithViews,
+			];
+		}
+
+		$templateMgr->assign('sectionsWithViews', $sectionsWithViews);
+
+		return false;
 	}
 
 	/**

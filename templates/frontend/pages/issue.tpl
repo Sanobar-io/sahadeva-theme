@@ -61,7 +61,9 @@
     </section>
 
     {capture assign=leftCol}
-        {foreach name=sections from=$publishedSubmissions item=section}
+        {foreach name=sections from=$sectionsWithViews item=section}
+            {* Prepare articles for article_list *}
+
             <div class="section">
             {if $section.articles}
                 <h2>{$section.title|escape}</h2>
