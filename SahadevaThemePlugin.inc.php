@@ -20,11 +20,6 @@ import('lib.pkp.classes.site.VersionCheck');
 
 class SahadevaThemePlugin extends ThemePlugin {
 
-	public function __construct() {
-		parent::__construct();
-		error_log("SahadevaThemePlugin instantiated");
-	}
-
 	public $request;
 	public $issueDao;
 	public $journal;
@@ -110,7 +105,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if (!empty($GLOBALS['__sahadeva']['addOptionsRan'])) return false;
 		$GLOBALS['__sahadeva']['addOptionsRan'] = true;
 
-		$start = microtime(true);
+		
 
 		/**
 		 * Show theme version in backend
@@ -207,9 +202,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'description' => __('plugins.themes.sahadeva.option.additionalFooterInfo.description')
 		]);
 
-		$totalTime = microtime(true) - $start;
-		error_log("addOptions() took $totalTime<br>");
-
 		return false;
 	}
 
@@ -217,8 +209,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// make sure it's run only once
 		if (!empty($GLOBALS['__sahadeva']['handleTemplateDisplayRan'])) return false;
 		$GLOBALS['__sahadeva']['handleTemplateDisplayRan'] = true;
-
-		$start = microtime(true);
 
 		[$templateMgr, $template] = $args;
 
@@ -255,7 +245,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		}
 
 		// Issue page logic (enrich with views)
-		error_log("This is the template: $template");
 		if (strpos($template, 'frontend/pages/issue.tpl') !== false) {
 			$this->addViewsToIssueArticles($templateMgr);
 		}
@@ -265,8 +254,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			$this->addSubmissionDates($templateMgr);
 		}
 
-		$totalTime = microtime(true) - $start;
-		error_log("handleTemplateDisplay() took $totalTime<br>");
 
 		return false;
 	}
@@ -276,12 +263,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if (!empty($GLOBALS['__sahadeva']['checkSerialKeyRan'])) return false;
 		$GLOBALS['__sahadeva']['checkSerialKeyRan'] = true;
 
-		$start = microtime(true);
-
 		$serialKey = $this->getOption('serialKey') ?? false;
-
 		$contextId = $this->journalId ?? 'site__';
-
 		$cache = $this->cacheManager->getFileCache(
 			'sahadeva',
 			'isValid_' . $contextId,
@@ -289,7 +272,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 				return $this->_rebuildKeyCache($serialKey);
 			}
 		);
-
 		$data = $cache->getContents();
 
 		// check if never checked or not valid
@@ -302,9 +284,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		}
 
 		$templateMgr->assign('jfhr1239hrf973', $data['valid'] ?? false);
-
-		$totalTime = microtime(true) - $start;
-		error_log("checkSerialkey() took $totalTime<br>");
 
 		return false;
 	}
@@ -367,7 +346,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if (!empty($GLOBALS['__sahadeva']['getArticleViewsRan'])) return false;
 		$GLOBALS['__sahadeva']['getArticleViewsRan'] = true;
 
-		$start = microtime(true);
+		
 
 		$contextId = $this->journalId ?? 'site__';
 
@@ -408,15 +387,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'allIssues' => iterator_to_array($indexedIssues),
 		]);
 
-		$totalTime = microtime(true) - $start;
-		error_log("getArticlesView() took $totalTime<br>");
-
 		return false;
 	}
 
 	public function _rebuildViewsCache() {
-
-		error_log("Rebuilding views cache...");
 
 		if ($this->the_limit <= 0) {
 			return [
@@ -524,7 +498,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		if (!empty($GLOBALS['__sahadeva']['addSubmissionDatesRan'])) return false;
 		$GLOBALS['__sahadeva']['addSubmissionDatesRan'] = true;
 
-		$start = microtime(true);
+		
 
 		$publication = $templateMgr->getTemplateVars('publication');
 		if(!$publication) return false;
@@ -560,9 +534,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'publishDate' => $publishDate,
 		]);
 
-		$totalTime = microtime(true) - $start;
-		error_log("addSubmissionDates() took $totalTime<br>");
-
 		return false;
 	}
 
@@ -594,7 +565,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 			}
 		}
 
-		error_log("The total views are: $total");
 		return $total;
 	}
 
