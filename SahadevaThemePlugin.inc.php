@@ -378,13 +378,13 @@ class SahadevaThemePlugin extends ThemePlugin {
 		]);
 
 		$indexedIssues = [];
-		foreach(iterator_to_array($issues) as $an_issue) {
+		foreach($issues as $an_issue) {
 			$indexedIssues[$an_issue->getId()] = $an_issue;
 		}
 
 		$templateMgr->assign([
 			'topArticles' => $articlesByViews,
-			'allIssues' => iterator_to_array($indexedIssues),
+			'allIssues' => $indexedIssues,
 		]);
 
 		return false;
