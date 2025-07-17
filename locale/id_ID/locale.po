@@ -55,3 +55,9 @@ msgstr "Lihat Isi Terbitan Terbaru"
 
 msgid "plugins.themes.sahadeva.currentIssue"
 msgstr "Terbitan Terbaru"
+
+msgid "plugins.themes.sahadeva.option.additionalFooterInfo.label"
+msgstr "Info Kontak"
+
+msgid "plugins.themes.sahadeva.option.additionalFooterInfo.description"
+msgstr "Ditampilkan di bawah info kontak di footer."

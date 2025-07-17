@@ -22,20 +22,23 @@
     {capture assign=leftCol}
     <div class="article-meta">
         <h1>{$publication->getLocalizedTitle()|escape}</h1>
+        {assign var=authors value=$publication->getData('authors')}
+        {if $authors}
         <ul class="authors">
-        {foreach from=$publication->getData('authors') item=author}
-            <li>
-                <div class="name">{$author->getFullName()|escape}</div>
-                {if $author->getLocalizedData('affiliation')}
-                
-                <div class="affiliation">
-                    {$author->getLocalizedData('affiliation')}
-                </div>
-                
-                {/if}
-            </li>
-        {/foreach}
+            {foreach from=$authors item=author}
+                <li>
+                    <div class="name">{$author->getFullName()|escape}</div>
+                    {if $author->getLocalizedData('affiliation')}
+                    
+                    <div class="affiliation">
+                        {$author->getLocalizedData('affiliation')}
+                    </div>
+                    
+                    {/if}
+                </li>
+            {/foreach}
         </ul>
+        {/if}
         <div class="toolbox">
         </div>
     </div>
@@ -46,8 +49,7 @@
     <div id="abstract-wrapper" class="text-wrapper center">
     {assign var=abstracts value=$publication->getData('abstract')}
     {assign var=keywords value=$publication->getData('keywords')}
-    {if $abstracts}
-        {if $abstracts|@count > 1}
+    {if $abstracts && $abstracts|@count > 1}
         <div id="lang-selector">
         {assign var=langIndex value=0}
         {foreach from=$abstracts key=locale item=abstract}
@@ -55,7 +57,6 @@
             {assign var=langIndex value=$langIndex + 1}
         {/foreach}
         </div>
-        {/if}
         <div id="abstracts-slider">
         {foreach from=$abstracts key=locale item=abstract}
         {if $locale === $currentLocale}
@@ -63,7 +64,7 @@
             <h2>{translate key="article.abstract" locale=$locale}</h2>
             {$abstract|strip_unsafe_html}
             {* Keywords *}
-            {if $keywords[$locale]}
+            {if isset($keywords[$locale])}
             <div class="keywords-wrapper">
                 <div class="label">{translate key="article.subject" locale=$locale}</div>
                 <ul class="keywords">
@@ -82,7 +83,7 @@
             <h2>{translate key="article.abstract" locale=$locale}</h2>
             {$abstract|strip_unsafe_html}
             {* Keywords *}
-            {if $keywords[$locale]}
+            {if isset($keywords[$locale])}
             <div class="keywords-wrapper">
                 <div class="label">{translate key="article.subject" locale=$locale}</div>
                 <ul class="keywords">
@@ -102,7 +103,7 @@
         {if $hasAccess}
         {assign var=galleys value=$publication->getData('galleys')}
         <section class="cta text-center">
-        {if $galleys|@count}
+        {if $galleys && $galleys|@count}
         {foreach from=$galleys item=galley}
             {if $galley->getFileType() == 'application/pdf'}
                 <p>Access the full text by clicking the button below.</p>
@@ -156,6 +157,7 @@
     {capture assign=rightCol}
     <div class="article-publication-info">
         {* Volume Info *}
+        {if $issue}
         <div class="label">Found In Issue</div>
         <div class="section-text">
             <a href="{url page="issue" op="view" path=$issue->getBestIssueId()}">
@@ -170,6 +172,7 @@
                 {/if}
             </a>
         </div>
+        {/if}
         {* Article Section *}
         {if $section}
         <div class="label">Section</div>
@@ -190,11 +193,12 @@
             </ul>
         </div>
         {* DOI *}
-        {if $publication->getStoredPubId('doi')}
+        {assign var=doi value=$publication->getStoredPubId('doi')}
+        {if $doi}
         <div class="label">DOI</div>
         <div class="section-text doi-section">
             <icon data-type="doi"></icon>
-            <a href="https://doi.org/{$publication->getStoredPubId('doi')}">{$publication->getStoredPubId('doi')}</a>
+            <a href="https://doi.org/{$doi}">{$doi}</a>
         </div>
         {/if}
         {* Licensing Info *}

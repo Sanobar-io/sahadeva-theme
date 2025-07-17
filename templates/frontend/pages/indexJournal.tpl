@@ -22,7 +22,7 @@
 
 <div class="page">
 
-    {if $announcements|@count}
+    {if $announcements && $announcements|@count}
 
     <section class="announcements">
         <div class="announcements-wrapper">
@@ -100,9 +100,11 @@
                         {if $issue}
 
                         {foreach name=sections from=$publishedSubmissions item=section}
-                            {foreach name=articles from=$section.articles item=article}
-                                {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
-                            {/foreach}
+                            {if $section.articles}
+                                {foreach name=articles from=$section.articles item=article}
+                                    {include file="frontend/objects/article_summary.tpl" heading=$articleHeading}
+                                {/foreach}
+                            {/if}
                         {/foreach}
 
                         {/if}

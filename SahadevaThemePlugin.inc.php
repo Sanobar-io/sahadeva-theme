@@ -26,7 +26,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 	public $journalId;
 	public $cacheManager;
 	public $submissionDao;
-	public int $the_limit;
+	public $the_limit;
 	public $metricsDao;
 
 	public function init() {
@@ -34,8 +34,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// Initial method calls to reduce excessive calls down the line
 		$this->request = Application::get()->getRequest();
 		$this->issueDao = DAORegistry::getDAO('IssueDAO');
-		$this->journal = $this->request?->getContext();
-		$this->journalId = $this->journal?->getId();
+		$this->journal = $this->request ? $this->request->getContext() : null;
+		$this->journalId = $this->journal ? $this->journal->getId() : null;
 		$this->metricsDao = DAORegistry::getDAO('MetricsDAO');
 
 		import('plugins.themes.sahadeva.classes.SahadevaSubmissionDAO');
@@ -377,8 +377,10 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'count' => $this->the_limit, // or however many you want
 		]);
 
+		$issuesIterable = $issues instanceof Traversable ? iterator_to_array($issues) : $issues;
+
 		$indexedIssues = [];
-		foreach($issues as $an_issue) {
+		foreach($issuesIterable as $an_issue) {
 			$indexedIssues[$an_issue->getId()] = $an_issue;
 		}
 

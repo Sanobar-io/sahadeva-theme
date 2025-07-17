@@ -21,7 +21,7 @@
     {capture assign=leftCol}
 
 	<div class="cmp_notification">
-		{if $sections|@count == 0 || $currentContext->getData('disableSubmissions')}
+		{if $sections && $sections|@count == 0 || $currentContext->getData('disableSubmissions')}
 			{translate key="author.submit.notAccepting"}
 		{else}
 			{if $isUserLoggedIn}
