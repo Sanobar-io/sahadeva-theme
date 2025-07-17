@@ -11,9 +11,6 @@
 * @class SahadevaThemePlugin
 */
 
-ini_set('log_errors', 1);
-ini_set('error_reporting', E_ALL);
-
 import('lib.pkp.classes.plugins.ThemePlugin');
 import('lib.pkp.classes.cache.CacheManager');
 import('lib.pkp.classes.site.VersionCheck');
@@ -440,6 +437,15 @@ class SahadevaThemePlugin extends ThemePlugin {
 
 			$articlesByViews = [];
 			$count = 0;
+
+			if(!$submissions || !is_iterable($submissions)) {
+				return [
+					'articlesByViews' => [],
+					'limit' => $this->the_limit,
+					'checkedAt' => time(),
+				];
+			}
+			
 			foreach ($submissions as $submission) {
 				if ($count >= $this->the_limit) break;
 
@@ -499,8 +505,6 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// make sure it's run only once
 		if (!empty($GLOBALS['__sahadeva']['addSubmissionDatesRan'])) return false;
 		$GLOBALS['__sahadeva']['addSubmissionDatesRan'] = true;
-
-		
 
 		$publication = $templateMgr->getTemplateVars('publication');
 		if(!$publication) return false;
