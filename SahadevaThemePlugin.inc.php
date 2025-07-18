@@ -274,7 +274,8 @@ class SahadevaThemePlugin extends ThemePlugin {
 		// check if never checked or not valid
 		if(
 			!isset($data['checkedAt']) || // never checked
-			$data['serial'] !== $serialKey) {
+			$data['serial'] !== $serialKey // changed
+		) {
 			// refresh cache
 			$data = $this->_rebuildKeyCache($serialKey);
 			$cache->setEntireCache($data);
@@ -286,6 +287,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 	}
 
 	public function _rebuildKeyCache ($serialKey) {
+		error_log("Attempting to rebuild serial key cache.");
 		$context = $this->journal;
 		$contextPath = $this->request->getDispatcher()->url(
 			$this->request,
