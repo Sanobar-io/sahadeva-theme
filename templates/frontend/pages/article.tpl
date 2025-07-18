@@ -49,7 +49,7 @@
     <div id="abstract-wrapper" class="text-wrapper center">
     {assign var=abstracts value=$publication->getData('abstract')}
     {assign var=keywords value=$publication->getData('keywords')}
-    {if $abstracts|@count > 1}
+    {if $abstracts}
         <div id="lang-selector">
         {assign var=langIndex value=0}
         {foreach from=$abstracts key=locale item=abstract}
