@@ -7,10 +7,6 @@
 @header-text: contrast(@bg-base, black, white);
 @header-complementary: darken(@bg-base, 10%);
 
-.logo-adjust() when (@header-text = white) {
-  filter: brightness(0) invert(1);
-}
-
 .sahadeva-header {
   background-color: @bg-base;
   box-shadow: 0 0 16px 2px fade(darken(@bg-base, 25%), 25%);
@@ -94,7 +90,6 @@
         img {
           object-fit: contain;
           width: 32px;
-          .logo-adjust();
         }
       }
     }
@@ -113,7 +108,6 @@
         a {
           display: inline-block;
         }
-        .logo-adjust();
         @media (max-width: @screen-lg) {
           margin-right: 0;
         }
@@ -141,7 +135,6 @@
       align-self: center;
       display: block;
       margin-right: 2rem;
-      .logo-adjust();
       @media (min-width: @screen-sm) and(max-width: @screen-md) {
         display: none;
       }
