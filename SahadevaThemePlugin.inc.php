@@ -302,42 +302,48 @@ class SahadevaThemePlugin extends ThemePlugin {
 			'origin' => $origin,
 		];
 
-		$options = [
-			'http' => [
-				'header'  => "Content-Type: application/json\r\nAccept: application/json\r\n",
-				'method'  => 'POST',
-				'content' => json_encode($data),
-				'ignore_errors' => true, // Get response even if HTTP error
-				'timeout' => 60,
-			],
-		];
+	   // Use cURL for the API request
+	   $ch = curl_init('https://api.komkom.id/license/validate/');
+	   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	   curl_setopt($ch, CURLOPT_POST, true);
+	   curl_setopt($ch, CURLOPT_HTTPHEADER, [
+		   'Content-Type: application/json',
+		   'Accept: application/json',
+	   ]);
+	   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+	   curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+	   // Optionally, follow redirects and ignore SSL issues (not recommended for production)
+	   // curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	   // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-		$validateContext = stream_context_create($options);
-		$response = file_get_contents('https://api.komkom.id/license/validate/', false, $validateContext);
+	   $response = curl_exec($ch);
+	   $curlErr = curl_error($ch);
+	   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	   curl_close($ch);
 
-		if($response === false) {
-			error_log("Sahadeva: Failed to validate serial key. Check your internet connection or API availability.");
-			return [
-				'valid' => false,
-				'serial' => $serialKey,
-				'checkedAt' => time(),
-			];
-		} else {
-			$json = json_decode($response, true);
-			if (json_last_error() !== JSON_ERROR_NONE) {
-				error_log("Sahadeva: JSON parse error in license validation");
-				return [
-					'valid' => false,
-					'serial' => $serialKey,
-					'checkedAt' => time(),
-				];
-			}
-			return [
-				'valid' => $json['valid'] ?? false,
-				'serial' => $serialKey,
-				'checkedAt' => time(),
-			];
-		}
+	   if($response === false || $httpCode < 200 || $httpCode >= 300) {
+		   error_log("Sahadeva: Failed to validate serial key. cURL error: $curlErr HTTP code: $httpCode");
+		   return [
+			   'valid' => false,
+			   'serial' => $serialKey,
+			   'checkedAt' => time(),
+		   ];
+	   } else {
+		   $json = json_decode($response, true);
+		   if (json_last_error() !== JSON_ERROR_NONE) {
+			   error_log("Sahadeva: JSON parse error in license validation");
+			   return [
+				   'valid' => false,
+				   'serial' => $serialKey,
+				   'checkedAt' => time(),
+			   ];
+		   }
+		   return [
+			   'valid' => $json['valid'] ?? false,
+			   'serial' => $serialKey,
+			   'checkedAt' => time(),
+		   ];
+	   }
 	}
 
 	public function getArticleViews($templateMgr) {
