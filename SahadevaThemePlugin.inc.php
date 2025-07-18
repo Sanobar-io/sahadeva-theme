@@ -314,6 +314,7 @@ class SahadevaThemePlugin extends ThemePlugin {
 		$response = file_get_contents('https://api.komkom.id/license/validate/', false, $validateContext);
 
 		if($response === false) {
+			error_log("Sahadeva: Failed to validate serial key. Check your internet connection or API availability.");
 			return [
 				'valid' => false,
 				'serial' => $serialKey,
@@ -471,6 +472,11 @@ class SahadevaThemePlugin extends ThemePlugin {
 					],
 					'views' => $viewCount,
 				];
+
+				// Sort articlesByViews by 'views' descending
+				usort($articlesByViews, function($a, $b) {
+					return $b['views'] <=> $a['views'];
+				});
 
 			}
 		} catch (Throwable $e) {
