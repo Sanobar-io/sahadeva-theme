@@ -4,11 +4,12 @@
 
 @import "mobile_menu.less";
 
-@header-text: contrast(@bg-base, black, white);
-@header-complementary: darken(@bg-base, 10%);
+@header-bg: white;
+@header-text: contrast(@header-bg, black, white);
+@header-complementary: darken(@header-bg, 10%);
 
 .sahadeva-header {
-  background-color: @bg-base;
+  background-color: @header-bg;
   box-shadow: 0 0 16px 2px fade(darken(@bg-base, 25%), 25%);
   height: 60px;
   position: fixed;
